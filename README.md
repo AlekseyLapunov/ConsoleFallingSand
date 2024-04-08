@@ -12,3 +12,10 @@ Project can be built either via Visual Studio or using compilers such as MinGW:
 cd ConsoleSand
 g++ *.cpp -o ./app.exe
 ```
+Console Application controls:
+```
+Move cursor: W A S D
+Choose material: Q E
+Spawn material particle: Space
+Toggle cursor visibility: H
+```
