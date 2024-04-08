@@ -19,3 +19,5 @@ Choose material: Q E
 Spawn material particle: Space
 Toggle cursor visibility: H
 ```
+Quick Demo GIF:
+![](https://github.com/AlekseyLapunov/ConsoleFallingSand/blob/main/_.gif)
