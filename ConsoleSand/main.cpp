@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
 	viewer.hideCarriage();
 	viewer.displayControlsHint();
 
-	materialId currentMaterialId = Air;
+	MaterialId currentMaterialId = MaterialId::Air;
 
 	while (true)
 	{
@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
 
 		inputManager.moveCursor();
 		inputManager.cursorVisibility();
-		inputManager.materialChoice(currentMaterialId, Air, Gas);
+		inputManager.materialChoice(currentMaterialId, MaterialId::Air, MaterialId::Gas);
 
 		if (inputManager.clearGrid())
 			grid.clearAll();

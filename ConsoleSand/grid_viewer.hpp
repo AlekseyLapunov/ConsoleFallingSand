@@ -11,7 +11,7 @@ public:
 
 	void display() const;
 	void displayControlsHint() const;
-	void displayMaterialHint(materialId materialId) const;
+	void displayMaterialHint(MaterialId materialId) const;
 	void hideCarriage() const;
 	void showCarriage() const;
 

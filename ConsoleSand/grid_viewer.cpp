@@ -97,7 +97,7 @@ void GridViewer::displayControlsHint() const
 		<< STANDARD_STYLE << ": Escape";
 }
 
-void GridViewer::displayMaterialHint(materialId materialId) const
+void GridViewer::displayMaterialHint(MaterialId materialId) const
 {
 	const Material material = materials.at(materialId);
 
@@ -105,8 +105,8 @@ void GridViewer::displayMaterialHint(materialId materialId) const
 		<< "Current Material"
 		<< STANDARD_STYLE
 		<< ": "
-		<< (materialId == 0 ? ""			: material.color)
-		<< (materialId == 0 ? "Air (clear)" : material.displayName)
+		<< (materialId == MaterialId::Air ? ""			  : material.color)
+		<< (materialId == MaterialId::Air ? "Air (clear)" : material.displayName)
 		<< "                                               "
 		<< STANDARD_STYLE;
 		

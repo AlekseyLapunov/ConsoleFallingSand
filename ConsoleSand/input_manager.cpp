@@ -63,14 +63,14 @@ void InputManager::cursorVisibility()
 	}
 }
 
-void InputManager::materialChoice(materialId& choice, materialId minId, materialId maxId)
+void InputManager::materialChoice(MaterialId& choice, MaterialId minId, MaterialId maxId)
 {
 	if (KEY_DOWN('Q'))
 	{
 		if (choice == minId)
 			choice = maxId;
 		else
-			choice = static_cast<materialId>(choice - 1);
+			choice = static_cast<MaterialId>((int)choice - 1);
 
 		while (KEY_DOWN('Q'));
 	}
@@ -79,7 +79,7 @@ void InputManager::materialChoice(materialId& choice, materialId minId, material
 		if (choice == maxId)
 			choice = minId;
 		else
-			choice = static_cast<materialId>(choice + 1);
+			choice = static_cast<MaterialId>((int)choice + 1);
 
 		while (KEY_DOWN('E'));
 	}

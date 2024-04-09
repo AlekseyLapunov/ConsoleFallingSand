@@ -36,18 +36,18 @@ void Grid::process()
 		{
 			Cell& cell = m_grid[row][col];
 
-			if (cell.mId == Air)
+			if (cell.mId == MaterialId::Air)
 				continue;
 
 			if (cell.hasMoved)
 				continue;
 
-			if (cell.mId == Sand)
+			if (cell.mId == MaterialId::Sand)
 			{
 				if (trespassing(row, GridBorder::Bottom))
 					continue;
 
-				if (m_grid[row + 1][col].mId == Air)
+				if (m_grid[row + 1][col].mId == MaterialId::Air)
 				{
 					Cell temp = m_grid[row + 1][col];
 					cell.hasMoved = true;
@@ -55,7 +55,7 @@ void Grid::process()
 					m_grid[row][col] = temp;
 				}
 				else
-					if (m_grid[row + 1][col - 1].mId == Air && !trespassing(col, GridBorder::Left))
+					if (m_grid[row + 1][col - 1].mId == MaterialId::Air && !trespassing(col, GridBorder::Left))
 					{
 						Cell temp = m_grid[row + 1][col - 1];
 						cell.hasMoved = true;
@@ -63,7 +63,7 @@ void Grid::process()
 						m_grid[row][col] = temp;
 					}
 					else
-						if (m_grid[row + 1][col + 1].mId == Air && !trespassing(col, GridBorder::Right))
+						if (m_grid[row + 1][col + 1].mId == MaterialId::Air && !trespassing(col, GridBorder::Right))
 						{
 							Cell temp = m_grid[row + 1][col + 1];
 							cell.hasMoved = true;
@@ -73,40 +73,40 @@ void Grid::process()
 
 			}
 			else
-			if (cell.mId == Water)
+			if (cell.mId == MaterialId::Water)
 			{
 				if (trespassing(row, GridBorder::Bottom))
 					continue;
 
-				if (m_grid[row + 1][col].mId == Air)
+				if (m_grid[row + 1][col].mId == MaterialId::Air)
 				{
 					Cell temp = m_grid[row + 1][col];
 					cell.hasMoved = true;
 					m_grid[row + 1][col] = cell;
 					m_grid[row][col] = temp;
 				}
-				else if (m_grid[row][col - 1].mId == Air && !trespassing(col, GridBorder::Left))
+				else if (m_grid[row][col - 1].mId == MaterialId::Air && !trespassing(col, GridBorder::Left))
 				{
 					Cell temp = m_grid[row][col - 1];
 					cell.hasMoved = true;
 					m_grid[row][col - 1] = cell;
 					m_grid[row][col] = temp;
 				}
-				else if (m_grid[row][col + 1].mId == Air && !trespassing(col, GridBorder::Right))
+				else if (m_grid[row][col + 1].mId == MaterialId::Air && !trespassing(col, GridBorder::Right))
 				{
 					Cell temp = m_grid[row][col + 1];
 					cell.hasMoved = true;
 					m_grid[row][col + 1] = cell;
 					m_grid[row][col] = temp;
 				}
-				else if (m_grid[row + 1][col - 1].mId == Air && !trespassing(col, GridBorder::Left))
+				else if (m_grid[row + 1][col - 1].mId == MaterialId::Air && !trespassing(col, GridBorder::Left))
 				{
 					Cell temp = m_grid[row + 1][col - 1];
 					cell.hasMoved = true;
 					m_grid[row + 1][col - 1] = cell;
 					m_grid[row][col] = temp;
 				}
-				else if (m_grid[row + 1][col + 1].mId == Air && !trespassing(col, GridBorder::Right))
+				else if (m_grid[row + 1][col + 1].mId == MaterialId::Air && !trespassing(col, GridBorder::Right))
 				{
 					Cell temp = m_grid[row + 1][col + 1];
 					cell.hasMoved = true;
@@ -116,40 +116,40 @@ void Grid::process()
 
 			}
 			else
-				if (cell.mId == Gas)
+				if (cell.mId == MaterialId::Gas)
 				{
 					if (trespassing(row, GridBorder::Upper))
 						continue;
 
-					if (m_grid[row - 1][col].mId == Air)
+					if (m_grid[row - 1][col].mId == MaterialId::Air)
 					{
 						Cell temp = m_grid[row - 1][col];
 						cell.hasMoved = true;
 						m_grid[row - 1][col] = cell;
 						m_grid[row][col] = temp;
 					}
-					else if (m_grid[row][col - 1].mId == Air && !trespassing(col, GridBorder::Left))
+					else if (m_grid[row][col - 1].mId == MaterialId::Air && !trespassing(col, GridBorder::Left))
 					{
 						Cell temp = m_grid[row][col - 1];
 						cell.hasMoved = true;
 						m_grid[row][col - 1] = cell;
 						m_grid[row][col] = temp;
 					}
-					else if (m_grid[row][col + 1].mId == Air && !trespassing(col, GridBorder::Right))
+					else if (m_grid[row][col + 1].mId == MaterialId::Air && !trespassing(col, GridBorder::Right))
 					{
 						Cell temp = m_grid[row][col + 1];
 						cell.hasMoved = true;
 						m_grid[row][col + 1] = cell;
 						m_grid[row][col] = temp;
 					}
-					else if (m_grid[row - 1][col - 1].mId == Air && !trespassing(col, GridBorder::Left))
+					else if (m_grid[row - 1][col - 1].mId == MaterialId::Air && !trespassing(col, GridBorder::Left))
 					{
 						Cell temp = m_grid[row - 1][col - 1];
 						cell.hasMoved = true;
 						m_grid[row - 1][col - 1] = cell;
 						m_grid[row][col] = temp;
 					}
-					else if (m_grid[row - 1][col + 1].mId == Air && !trespassing(col, GridBorder::Right))
+					else if (m_grid[row - 1][col + 1].mId == MaterialId::Air && !trespassing(col, GridBorder::Right))
 					{
 						Cell temp = m_grid[row - 1][col + 1];
 						cell.hasMoved = true;
@@ -163,7 +163,7 @@ void Grid::process()
 	clearMoveState();
 }
 
-void Grid::spawnMaterial(uint8_t row, uint8_t col, materialId mId)
+void Grid::spawnMaterial(uint8_t row, uint8_t col, MaterialId mId)
 {
 	Cell cell =  {mId, materials.at(mId)};
 	m_grid[row][col] = cell;
@@ -176,8 +176,8 @@ void Grid::clearAll()
 		{
 			Cell& current = m_grid[row][col];
 
-			current.mId		 = Air;
-			current.material = materials.at(Air);
+			current.mId		 = MaterialId::Air;
+			current.material = materials.at(MaterialId::Air);
 			current.hasMoved = false;
 		}
 }

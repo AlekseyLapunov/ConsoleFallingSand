@@ -11,7 +11,7 @@ public:
 
 	void moveCursor();
 	void cursorVisibility();
-	void materialChoice(materialId& choice, materialId minId, materialId maxId);
+	void materialChoice(MaterialId& choice, MaterialId minId, MaterialId maxId);
 	bool spawnMaterial();
 	bool clearGrid();
 	bool endSimulation();

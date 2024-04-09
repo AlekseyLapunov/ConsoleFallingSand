@@ -20,8 +20,8 @@ public:
 
 	struct Cell
 	{
-		materialId	mId			= Air;
-		Material	material	= materials.at(Air);
+		MaterialId	mId			= MaterialId::Air;
+		Material	material	= materials.at(MaterialId::Air);
 		bool		hasMoved	= false;
 	};
 
@@ -29,7 +29,7 @@ public:
 
 	void process();
 
-	void spawnMaterial(uint8_t row, uint8_t col, materialId mId);
+	void spawnMaterial(uint8_t row, uint8_t col, MaterialId mId);
 
 	void clearAll();
 
