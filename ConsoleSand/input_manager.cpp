@@ -71,6 +71,8 @@ void InputManager::materialChoice(materialId& choice, materialId minId, material
 			choice = maxId;
 		else
 			choice = static_cast<materialId>(choice - 1);
+
+		while (KEY_DOWN('Q'));
 	}
 	if (KEY_DOWN('E'))
 	{
@@ -78,6 +80,8 @@ void InputManager::materialChoice(materialId& choice, materialId minId, material
 			choice = minId;
 		else
 			choice = static_cast<materialId>(choice + 1);
+
+		while (KEY_DOWN('E'));
 	}
 }
 
