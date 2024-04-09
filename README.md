@@ -19,3 +19,14 @@ Spawn material particle: Space
 ```
 Quick Demo GIF:
 ![](https://github.com/AlekseyLapunov/ConsoleFallingSand/blob/main/_.gif)
+
+Output Terminal Settings (Windows):
+```
+Type: Developer PowerShell
+Size at launch (characters): 120 x 30 (Columns x Rows)
+Color scheme: Campbell
+Font size: 12 (in points)
+Font face: Cascadia Mono / Consolas
+Line height: 1.2
+Cursor shape: Bar "|"
+```
