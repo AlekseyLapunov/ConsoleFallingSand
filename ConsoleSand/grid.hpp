@@ -42,6 +42,8 @@ private:
 	typedef enum class GridBorder { Left = 0, Upper, Right, Bottom } gridBorderSpecify;
 	bool inline trespassing(int8_t val, gridBorderSpecify whatBorder) const;
 
+	void inline replaceCellBy(Cell& cell, int8_t row, int8_t col, Cell newCell);
+
 	const uint8_t m_height;
 	const uint8_t m_width;
 	Cell** m_grid;
