@@ -35,6 +35,10 @@ int main(int argc, char* argv[])
 		inputManager.moveCursor();
 		inputManager.cursorVisibility();
 		inputManager.materialChoice(currentMaterialId, Air, Gas);
+
+		if (inputManager.clearGrid())
+			grid.clearAll();
+
 		if (inputManager.spawnMaterial())
 			grid.spawnMaterial(cursor->y, cursor->x, currentMaterialId);
 

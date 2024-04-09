@@ -89,3 +89,13 @@ bool InputManager::spawnMaterial()
 {
 	return KEY_DOWN(VK_SPACE);
 }
+
+bool InputManager::clearGrid()
+{
+	if (KEY_DOWN('C'))
+	{
+		while (KEY_DOWN('C'));
+		return true;
+	}
+	return false;
+}

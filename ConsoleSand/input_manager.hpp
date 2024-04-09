@@ -13,6 +13,7 @@ public:
 	void cursorVisibility();
 	void materialChoice(materialId& choice, materialId minId, materialId maxId);
 	bool spawnMaterial();
+	bool clearGrid();
 
 private:
 	GridViewer::Cursor* m_cursor;
