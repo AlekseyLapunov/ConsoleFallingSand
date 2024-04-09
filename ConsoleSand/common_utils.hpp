@@ -4,10 +4,10 @@
 #include <string>
 #include <unordered_map>
 
-#define CURSOR	'O'
+#define CURSOR	'4'
 
 // Types to Char
-#define AIR		'X'
+#define AIR		' '
 #define SAND	'S'
 #define WATER	'W'
 #define STONE	'T'

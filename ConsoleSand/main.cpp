@@ -5,10 +5,10 @@
 #include "grid_viewer.hpp"
 #include "input_manager.hpp"
 
-#define GRID_HEIGHT	25
-#define GRID_WIDTH	120
+#define GRID_HEIGHT	22
+#define GRID_WIDTH	50
 
-#define FREQUENCY 2000
+#define FREQUENCY 500
 
 int main(int argc, char* argv[])
 {
@@ -38,11 +38,11 @@ int main(int argc, char* argv[])
 		if (inputManager.spawnMaterial() && currentMaterialId != Air)
 			grid.spawnMaterial(cursor->y, cursor->x, currentMaterialId);
 
-		/*std::this_thread::sleep_for(
+		std::this_thread::sleep_for(
 			std::chrono::milliseconds(
 				int(1000.0f / FREQUENCY)
 			)
-		);*/
+		);
 	}
 
 	viewer.showCarriage();
