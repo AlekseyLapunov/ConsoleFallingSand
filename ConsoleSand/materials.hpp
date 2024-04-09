@@ -1,6 +1,6 @@
 #include "common_utils.hpp"
 
-typedef enum { Air = 0, Sand, Water, Stone } materialId;
+typedef enum { Air = 0, Sand, Water, Stone, Gas } materialId;
 
 struct Material
 {
@@ -14,5 +14,6 @@ static const std::unordered_map<materialId, Material> materials
   {Air,		{AIR_SIGN,		BLACK,		"Air"}},
   {Sand,	{SAND_SIGN,		YELLOW_BR,	"Sand"}},
   {Water,	{WATER_SIGN,	BLUE_BR,	"Water"}},
-  {Stone,	{STONE_SIGN,	BLACK_BR,	"Stone"}}
+  {Stone,	{STONE_SIGN,	BLACK_BR,	"Stone"}},
+  {Gas,		{GAS_SIGN,		GREEN,		"Gas"}}
 };

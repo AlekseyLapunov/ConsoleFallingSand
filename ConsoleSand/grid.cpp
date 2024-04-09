@@ -115,6 +115,49 @@ void Grid::process()
 				}
 
 			}
+			else
+				if (cell.mId == Gas)
+				{
+					if (row - 1 < 0)
+						continue;
+
+					if (m_grid[row - 1][col].mId == Air)
+					{
+						Cell temp = m_grid[row - 1][col];
+						cell.hasMoved = true;
+						m_grid[row - 1][col] = cell;
+						m_grid[row][col] = temp;
+					}
+					else if (m_grid[row][col - 1].mId == Air && (col - 1) >= 0)
+					{
+						Cell temp = m_grid[row][col - 1];
+						cell.hasMoved = true;
+						m_grid[row][col - 1] = cell;
+						m_grid[row][col] = temp;
+					}
+					else if (m_grid[row][col + 1].mId == Air && (col + 1) < m_width)
+					{
+						Cell temp = m_grid[row][col + 1];
+						cell.hasMoved = true;
+						m_grid[row][col + 1] = cell;
+						m_grid[row][col] = temp;
+					}
+					else if (m_grid[row - 1][col - 1].mId == Air && (col - 1) >= 0)
+					{
+						Cell temp = m_grid[row - 1][col - 1];
+						cell.hasMoved = true;
+						m_grid[row - 1][col - 1] = cell;
+						m_grid[row][col] = temp;
+					}
+					else if (m_grid[row - 1][col + 1].mId == Air && (col + 1) < m_width)
+					{
+						Cell temp = m_grid[row - 1][col + 1];
+						cell.hasMoved = true;
+						m_grid[row - 1][col + 1] = cell;
+						m_grid[row][col] = temp;
+					}
+
+				}
 		}
 
 	clearMoveState();

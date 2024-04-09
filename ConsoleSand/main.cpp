@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
 
 		inputManager.moveCursor();
 		inputManager.cursorVisibility();
-		inputManager.materialChoice(currentMaterialId, Air, Stone);
+		inputManager.materialChoice(currentMaterialId, Air, Gas);
 		if (inputManager.spawnMaterial())
 			grid.spawnMaterial(cursor->y, cursor->x, currentMaterialId);
 
