@@ -94,8 +94,8 @@ void GridViewer::displayMaterialHint(uint8_t materialId)
 		<< "Current Material"
 		<< STANDARD_STYLE
 		<< ": "
-		<< (materialId == 0 ? ""     : material.color)
-		<< (materialId == 0 ? "None" : material.displayName)
+		<< (materialId == 0 ? ""			: material.color)
+		<< (materialId == 0 ? "Air (clear)" : material.displayName)
 		<< "                                               "
 		<< STANDARD_STYLE;
 		

@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
 		inputManager.moveCursor();
 		inputManager.cursorVisibility();
 		inputManager.materialChoice(currentMaterialId, Air, Stone);
-		if (inputManager.spawnMaterial() && currentMaterialId != Air)
+		if (inputManager.spawnMaterial())
 			grid.spawnMaterial(cursor->y, cursor->x, currentMaterialId);
 
 		std::this_thread::sleep_for(
