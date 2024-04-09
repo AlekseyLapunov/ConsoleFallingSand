@@ -2,6 +2,8 @@
 
 #include <windows.h>
 
+#define KEY_DOWN(key) GetKeyState(key) & 0x8000
+
 InputManager::InputManager(GridViewer::Cursor* const cursorPtr, uint8_t xBound, uint8_t yBound)
 	: m_cursor(cursorPtr)
 {
@@ -23,28 +25,28 @@ void InputManager::moveCursor()
 	if (m_cursor->y >= m_boundaries.y)
 		m_cursor->y = m_boundaries.y - 1;
 
-	if (GetKeyState('A') & 0x8000)
+	if (KEY_DOWN('A'))
 	{
 		if (m_cursor->x == 0)
 			m_cursor->x = m_boundaries.x - 1;
 		else
 			m_cursor->x -= 1;
 	}
-	if (GetKeyState('D') & 0x8000)
+	if (KEY_DOWN('D'))
 	{
 		if (m_cursor->x == m_boundaries.x - 1)
 			m_cursor->x = 0;
 		else
 			m_cursor->x += 1;
 	}
-	if (GetKeyState('W') & 0x8000)
+	if (KEY_DOWN('W'))
 	{
 		if (m_cursor->y == 0)
 			m_cursor->y = m_boundaries.y - 1;
 		else
 			m_cursor->y -= 1;
 	}
-	if (GetKeyState('S') & 0x8000)
+	if (KEY_DOWN('S'))
 	{
 		if (m_cursor->y == m_boundaries.y - 1)
 			m_cursor->y = 0;
@@ -55,7 +57,7 @@ void InputManager::moveCursor()
 
 void InputManager::cursorVisibility()
 {
-	if (GetKeyState('H') & 0x8000)
+	if (KEY_DOWN('H'))
 	{
 		m_cursor->isHidden = !m_cursor->isHidden;
 	}
@@ -63,23 +65,23 @@ void InputManager::cursorVisibility()
 
 void InputManager::materialChoice(materialId& choice, materialId minId, materialId maxId)
 {
-	if (GetKeyState('Q') & 0x8000)
+	if (KEY_DOWN('Q'))
 	{
 		if (choice == minId)
 			choice = maxId;
 		else
 			choice = static_cast<materialId>(choice - 1);
 	}
-	if (GetKeyState('E') & 0x8000)
+	if (KEY_DOWN('E'))
 	{
 		if (choice == maxId)
 			choice = minId;
 		else
-			choice = static_cast<materialId>(choice + 1);;
+			choice = static_cast<materialId>(choice + 1);
 	}
 }
 
 bool InputManager::spawnMaterial()
 {
-	return GetKeyState(VK_SPACE) & 0x8000;
+	return KEY_DOWN(VK_SPACE);
 }
