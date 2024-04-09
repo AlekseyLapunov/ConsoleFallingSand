@@ -18,7 +18,7 @@ Grid::~Grid()
 	m_grid = nullptr;
 }
 
-std::pair<uint8_t, uint8_t> Grid::size()
+std::pair<uint8_t, uint8_t> Grid::size() const
 {
 	return {m_height, m_width};
 }

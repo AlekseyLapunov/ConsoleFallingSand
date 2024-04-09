@@ -9,11 +9,11 @@ public:
 			   uint8_t cursorPosX, uint8_t cursorPosY);
 	~GridViewer();
 
-	void display();
-	void displayControlsHint();
-	void displayMaterialHint(materialId materialId);
-	void hideCarriage();
-	void showCarriage();
+	void display() const;
+	void displayControlsHint() const;
+	void displayMaterialHint(materialId materialId) const;
+	void hideCarriage() const;
+	void showCarriage() const;
 
 	struct Cursor
 	{
@@ -23,7 +23,7 @@ public:
 		bool	isHidden = false;
 	};
 
-	Cursor* cursor();
+	Cursor* cursor() const;
 
 private:
 	Grid* const m_gridPtr;

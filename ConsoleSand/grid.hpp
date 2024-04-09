@@ -16,7 +16,7 @@ public:
 	Grid(Grid& otherGrid) = delete;
 	Grid& operator= (Grid& otherGrid) = delete;
 
-	std::pair<uint8_t, uint8_t> size();
+	std::pair<uint8_t, uint8_t> size() const;
 
 	struct Cell
 	{

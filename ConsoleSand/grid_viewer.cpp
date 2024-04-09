@@ -20,17 +20,17 @@ GridViewer::~GridViewer()
 	m_cursor = nullptr;
 }
 
-void GridViewer::hideCarriage()
+void GridViewer::hideCarriage() const
 {
 	std::cout << HIDE_CARRIAGE;
 }
 
-void GridViewer::showCarriage()
+void GridViewer::showCarriage() const
 {
 	std::cout << SHOW_CARRIAGE;
 }
 
-void GridViewer::display()
+void GridViewer::display() const
 {
 	if (m_gridPtr == nullptr)
 		return;
@@ -70,7 +70,7 @@ void GridViewer::display()
 	}
 }
 
-void GridViewer::displayControlsHint()
+void GridViewer::displayControlsHint() const
 {
 	display();
 	std::cout << "\n" << UNDERLINE
@@ -90,7 +90,7 @@ void GridViewer::displayControlsHint()
 		<< STANDARD_STYLE << ": Space";
 }
 
-void GridViewer::displayMaterialHint(materialId materialId)
+void GridViewer::displayMaterialHint(materialId materialId) const
 {
 	const Material material = materials.at(materialId);
 
@@ -105,7 +105,7 @@ void GridViewer::displayMaterialHint(materialId materialId)
 		
 }
 
-GridViewer::Cursor* GridViewer::cursor()
+GridViewer::Cursor* GridViewer::cursor() const
 {
 	return m_cursor;
 }
