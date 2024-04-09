@@ -165,7 +165,7 @@ void Grid::process()
 
 void Grid::spawnMaterial(uint8_t row, uint8_t col, MaterialId mId)
 {
-	Cell cell =  {mId, materials.at(mId)};
+	Cell cell(mId);
 	m_grid[row][col] = cell;
 }
 

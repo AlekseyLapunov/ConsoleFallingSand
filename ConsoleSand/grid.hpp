@@ -20,9 +20,12 @@ public:
 
 	struct Cell
 	{
-		MaterialId	mId			= MaterialId::Air;
-		Material	material	= materials.at(MaterialId::Air);
+		MaterialId	mId;
+		Material	material;
 		bool		hasMoved	= false;
+
+		Cell() : mId(MaterialId::Air), material(materials.at(mId)), hasMoved(false) {}
+		Cell(MaterialId mId) : mId(mId), material(materials.at(mId)), hasMoved(false) {}
 	};
 
 	Cell** cells();
