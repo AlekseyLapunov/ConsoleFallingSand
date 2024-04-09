@@ -31,12 +31,15 @@ Grid::Cell** Grid::cells()
 // Not readable code below, it will get optimized in the future
 void Grid::process()
 {
-	for (int8_t row = m_height - 1; row >= 0; row--)
-		for (int8_t col = m_width - 1; col >= 0; col--)
+	for (int8_t row = 0; row < m_height; row++)
+		for (int8_t col = 0; col < m_width; col++)
 		{
 			Cell& cell = m_grid[row][col];
 
 			if (cell.mId == Air)
+				continue;
+
+			if (cell.hasMoved)
 				continue;
 
 			if (cell.mId == Sand)
@@ -47,6 +50,7 @@ void Grid::process()
 				if (m_grid[row + 1][col].mId == Air)
 				{
 					Cell temp = m_grid[row + 1][col];
+					cell.hasMoved = true;
 					m_grid[row + 1][col] = cell;
 					m_grid[row][col] = temp;
 				}
@@ -54,6 +58,7 @@ void Grid::process()
 					if (m_grid[row + 1][col - 1].mId == Air && (col - 1) >= 0)
 					{
 						Cell temp = m_grid[row + 1][col - 1];
+						cell.hasMoved = true;
 						m_grid[row + 1][col - 1] = cell;
 						m_grid[row][col] = temp;
 					}
@@ -61,6 +66,7 @@ void Grid::process()
 						if (m_grid[row + 1][col + 1].mId == Air && (col + 1) < m_width)
 						{
 							Cell temp = m_grid[row + 1][col + 1];
+							cell.hasMoved = true;
 							m_grid[row + 1][col + 1] = cell;
 							m_grid[row][col] = temp;
 						}
@@ -75,40 +81,54 @@ void Grid::process()
 				if (m_grid[row + 1][col].mId == Air)
 				{
 					Cell temp = m_grid[row + 1][col];
+					cell.hasMoved = true;
 					m_grid[row + 1][col] = cell;
 					m_grid[row][col] = temp;
 				}
 				else if (m_grid[row][col - 1].mId == Air && (col - 1) >= 0)
 				{
 					Cell temp = m_grid[row][col - 1];
+					cell.hasMoved = true;
 					m_grid[row][col - 1] = cell;
 					m_grid[row][col] = temp;
 				}
 				else if (m_grid[row][col + 1].mId == Air && (col + 1) < m_width)
 				{
 					Cell temp = m_grid[row][col + 1];
+					cell.hasMoved = true;
 					m_grid[row][col + 1] = cell;
 					m_grid[row][col] = temp;
 				}
 				else if (m_grid[row + 1][col - 1].mId == Air && (col - 1) >= 0)
 				{
 					Cell temp = m_grid[row + 1][col - 1];
+					cell.hasMoved = true;
 					m_grid[row + 1][col - 1] = cell;
 					m_grid[row][col] = temp;
 				}
 				else if (m_grid[row + 1][col + 1].mId == Air && (col + 1) < m_width)
 				{
 					Cell temp = m_grid[row + 1][col + 1];
+					cell.hasMoved = true;
 					m_grid[row + 1][col + 1] = cell;
 					m_grid[row][col] = temp;
 				}
 
 			}
 		}
+
+	clearMoveState();
 }
 
 void Grid::spawnMaterial(uint8_t row, uint8_t col, materialId mId)
 {
 	Cell cell =  {mId, materials.at(mId)};
 	m_grid[row][col] = cell;
+}
+
+void Grid::clearMoveState()
+{
+	for (int8_t row = 0; row < m_height; row++)
+		for (int8_t col = 0; col < m_width; col++)
+			m_grid[row][col].hasMoved = false;
 }

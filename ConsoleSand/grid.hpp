@@ -22,6 +22,7 @@ public:
 	{
 		materialId	mId			= Air;
 		Material	material	= materials.at(Air);
+		bool		hasMoved	= false;
 	};
 
 	Cell** cells();
@@ -31,6 +32,8 @@ public:
 	void spawnMaterial(uint8_t row, uint8_t col, materialId mId);
 
 private:
+	void clearMoveState();
+
 	const uint8_t m_height;
 	const uint8_t m_width;
 	Cell** m_grid;
