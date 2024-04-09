@@ -70,7 +70,7 @@ void GridViewer::display()
 	}
 }
 
-void GridViewer::displayHint()
+void GridViewer::displayControlsHint()
 {
 	display();
 	std::cout << "\n" << UNDERLINE
@@ -84,6 +84,10 @@ void GridViewer::displayHint()
 	std::cout << "\n"
 		<< UNDERLINE << "Material choice:"
 		<< STANDARD_STYLE << ": Q E";
+
+	std::cout << "\n"
+		<< UNDERLINE << "Material placement:"
+		<< STANDARD_STYLE << ": Space";
 }
 
 void GridViewer::displayMaterialHint(uint8_t materialId)

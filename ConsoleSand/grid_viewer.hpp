@@ -10,7 +10,7 @@ public:
 	~GridViewer();
 
 	void display();
-	void displayHint();
+	void displayControlsHint();
 	void displayMaterialHint(uint8_t materialId);
 	void hideCarriage();
 	void showCarriage();

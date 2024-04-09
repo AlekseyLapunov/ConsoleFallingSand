@@ -21,7 +21,7 @@ int main(int argc, char* argv[])
 	InputManager inputManager(cursor, GRID_WIDTH, GRID_HEIGHT);
 
 	viewer.hideCarriage();
-	viewer.displayHint();
+	viewer.displayControlsHint();
 
 	uint8_t currentMaterialId = 0;
 
