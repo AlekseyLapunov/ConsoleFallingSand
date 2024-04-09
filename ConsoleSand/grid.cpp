@@ -169,7 +169,7 @@ void Grid::spawnMaterial(uint8_t row, uint8_t col, materialId mId)
 	m_grid[row][col] = cell;
 }
 
-void Grid::clearMoveState()
+void inline Grid::clearMoveState()
 {
 	for (int8_t row = 0; row < m_height; row++)
 		for (int8_t col = 0; col < m_width; col++)
