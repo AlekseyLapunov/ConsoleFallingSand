@@ -16,7 +16,6 @@ GridViewer::GridViewer(Grid* const gridPtr, char cursorSymbol,
 GridViewer::~GridViewer()
 {
 	delete m_cursor;
-
 	m_cursor = nullptr;
 }
 
@@ -82,11 +81,11 @@ void GridViewer::displayControlsHint() const
 		<< STANDARD_STYLE << ": H";
 
 	std::cout << "\n"
-		<< UNDERLINE << "Material choice:"
+		<< UNDERLINE << "Material choice"
 		<< STANDARD_STYLE << ": Q E";
 
 	std::cout << "\n"
-		<< UNDERLINE << "Material placement:"
+		<< UNDERLINE << "Material placement"
 		<< STANDARD_STYLE << ": Space";
 }
 
