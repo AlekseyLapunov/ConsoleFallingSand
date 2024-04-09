@@ -28,7 +28,6 @@ Grid::Cell** Grid::cells()
 	return m_grid;
 }
 
-// Not readable code below, it will get optimized in the future
 void Grid::process()
 {
 	for (int8_t row = 0; row < m_height; row++)
@@ -42,60 +41,60 @@ void Grid::process()
 			if (cell.hasMoved)
 				continue;
 
-			if (cell.mId == MaterialId::Sand)
+			if (cell.material.type == MaterialType::Powdery)
 			{
 				if (trespassing(row, GridBorder::Bottom))
 					continue;
 
-				if (m_grid[row + 1][col].mId == MaterialId::Air)
+				if (m_grid[row + 1][col].material.type == MaterialType::Void)
 					replaceCellBy(m_grid[row + 1][col], row, col, cell);
 				
-				else if (m_grid[row + 1][col - 1].mId == MaterialId::Air && !trespassing(col, GridBorder::Left))
+				else if (m_grid[row + 1][col - 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Left))
 					replaceCellBy(m_grid[row + 1][col - 1], row, col, cell);
 				
-				else if (m_grid[row + 1][col + 1].mId == MaterialId::Air && !trespassing(col, GridBorder::Right))
+				else if (m_grid[row + 1][col + 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Right))
 					replaceCellBy(m_grid[row + 1][col + 1], row, col, cell);
 			}
 			else
-			if (cell.mId == MaterialId::Water)
+			if (cell.material.type == MaterialType::Liquid)
 			{
 				if (trespassing(row, GridBorder::Bottom))
 					continue;
 
-				if (m_grid[row + 1][col].mId == MaterialId::Air)
+				if (m_grid[row + 1][col].material.type == MaterialType::Void)
 					replaceCellBy(m_grid[row + 1][col], row, col, cell);
 
-				else if (m_grid[row][col - 1].mId == MaterialId::Air && !trespassing(col, GridBorder::Left))
+				else if (m_grid[row][col - 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Left))
 					replaceCellBy(m_grid[row][col - 1], row, col, cell);
 
-				else if (m_grid[row][col + 1].mId == MaterialId::Air && !trespassing(col, GridBorder::Right))
+				else if (m_grid[row][col + 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Right))
 					replaceCellBy(m_grid[row][col + 1], row, col, cell);
 
-				else if (m_grid[row + 1][col - 1].mId == MaterialId::Air && !trespassing(col, GridBorder::Left))
+				else if (m_grid[row + 1][col - 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Left))
 					replaceCellBy(m_grid[row + 1][col - 1], row, col, cell);
 
-				else if (m_grid[row + 1][col + 1].mId == MaterialId::Air && !trespassing(col, GridBorder::Right))
+				else if (m_grid[row + 1][col + 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Right))
 					replaceCellBy(m_grid[row + 1][col + 1], row, col, cell);
 			}
 			else
-			if (cell.mId == MaterialId::Gas)
+			if (cell.material.type == MaterialType::Gas)
 			{
 				if (trespassing(row, GridBorder::Upper))
 					continue;
 
-				if (m_grid[row - 1][col].mId == MaterialId::Air)
+				if (m_grid[row - 1][col].material.type == MaterialType::Void)
 					replaceCellBy(m_grid[row - 1][col], row, col, cell);
 
-				else if (m_grid[row][col - 1].mId == MaterialId::Air && !trespassing(col, GridBorder::Left))
+				else if (m_grid[row][col - 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Left))
 					replaceCellBy(m_grid[row][col - 1], row, col, cell);
 
-				else if (m_grid[row][col + 1].mId == MaterialId::Air && !trespassing(col, GridBorder::Right))
+				else if (m_grid[row][col + 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Right))
 					replaceCellBy(m_grid[row][col + 1], row, col, cell);
 
-				else if (m_grid[row - 1][col - 1].mId == MaterialId::Air && !trespassing(col, GridBorder::Left))
+				else if (m_grid[row - 1][col - 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Left))
 					replaceCellBy(m_grid[row - 1][col - 1], row, col, cell);
 
-				else if (m_grid[row - 1][col + 1].mId == MaterialId::Air && !trespassing(col, GridBorder::Right))
+				else if (m_grid[row - 1][col + 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Right))
 					replaceCellBy(m_grid[row - 1][col + 1], row, col, cell);
 			}
 		}
