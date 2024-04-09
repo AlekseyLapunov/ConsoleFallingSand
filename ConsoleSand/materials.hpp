@@ -1,7 +1,6 @@
 #include "common_utils.hpp"
 
-// Unified Material Representation
-enum MaterialsId { Air, Sand, Water, Stone };
+typedef enum { Air = 0, Sand, Water, Stone } materialId;
 
 struct Material
 {
@@ -10,10 +9,10 @@ struct Material
 	std::string displayName;
 };
 
-static const std::unordered_map<int, Material> materials
+static const std::unordered_map<materialId, Material> materials
 {
-  {Air,		{AIR,	BLACK,		"Air"}},
-  {Sand,	{SAND,	YELLOW_BR,	"Sand"}},
-  {Water,	{WATER,	BLUE_BR,	"Water"}},
-  {Stone,	{STONE,	BLACK_BR,	"Stone"}}
+  {Air,		{AIR_SIGN,		BLACK,		"Air"}},
+  {Sand,	{SAND_SIGN,		YELLOW_BR,	"Sand"}},
+  {Water,	{WATER_SIGN,	BLUE_BR,	"Water"}},
+  {Stone,	{STONE_SIGN,	BLACK_BR,	"Stone"}}
 };

@@ -20,15 +20,15 @@ public:
 
 	struct Cell
 	{
-		uint8_t materialId = Air;
-		Material material = materials.at(Air);
+		materialId	mId			= Air;
+		Material	material	= materials.at(Air);
 	};
 
 	Cell** cells();
 
 	void process();
 
-	void spawnMaterial(uint8_t row, uint8_t col, uint8_t materialId);
+	void spawnMaterial(uint8_t row, uint8_t col, materialId mId);
 
 private:
 	const uint8_t m_height;

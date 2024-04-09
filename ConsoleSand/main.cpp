@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
 	viewer.hideCarriage();
 	viewer.displayControlsHint();
 
-	uint8_t currentMaterialId = 0;
+	materialId currentMaterialId = Air;
 
 	while (true)
 	{

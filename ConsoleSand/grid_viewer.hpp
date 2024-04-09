@@ -11,7 +11,7 @@ public:
 
 	void display();
 	void displayControlsHint();
-	void displayMaterialHint(uint8_t materialId);
+	void displayMaterialHint(materialId materialId);
 	void hideCarriage();
 	void showCarriage();
 

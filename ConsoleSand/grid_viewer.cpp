@@ -90,7 +90,7 @@ void GridViewer::displayControlsHint()
 		<< STANDARD_STYLE << ": Space";
 }
 
-void GridViewer::displayMaterialHint(uint8_t materialId)
+void GridViewer::displayMaterialHint(materialId materialId)
 {
 	const Material material = materials.at(materialId);
 

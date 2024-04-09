@@ -11,7 +11,7 @@ public:
 
 	void moveCursor();
 	void cursorVisibility();
-	void materialChoice(uint8_t& choice, uint8_t minId, uint8_t maxId);
+	void materialChoice(materialId& choice, materialId minId, materialId maxId);
 	bool spawnMaterial();
 
 private:

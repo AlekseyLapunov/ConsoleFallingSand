@@ -7,10 +7,10 @@
 #define CURSOR	'4'
 
 // Types to Char
-#define AIR		' '
-#define SAND	'S'
-#define WATER	'W'
-#define STONE	'T'
+#define AIR_SIGN	' '
+#define SAND_SIGN	'S'
+#define WATER_SIGN	'W'
+#define STONE_SIGN	'T'
 
 // Colors escape sequences
 #define YELLOW_BR		"\033[93m"

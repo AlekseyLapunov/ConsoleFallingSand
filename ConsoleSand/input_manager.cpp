@@ -61,21 +61,21 @@ void InputManager::cursorVisibility()
 	}
 }
 
-void InputManager::materialChoice(uint8_t& choice, uint8_t minId, uint8_t maxId)
+void InputManager::materialChoice(materialId& choice, materialId minId, materialId maxId)
 {
 	if (GetKeyState('Q') & 0x8000)
 	{
 		if (choice == minId)
 			choice = maxId;
 		else
-			choice--;
+			choice = static_cast<materialId>(choice - 1);
 	}
 	if (GetKeyState('E') & 0x8000)
 	{
 		if (choice == maxId)
 			choice = minId;
 		else
-			choice++;
+			choice = static_cast<materialId>(choice + 1);;
 	}
 }
 

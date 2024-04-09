@@ -35,27 +35,27 @@ void Grid::process()
 		{
 			Cell& cell = m_grid[row][col];
 
-			if (cell.materialId == Air)
+			if (cell.mId == Air)
 				continue;
 			
-			if (cell.materialId == Sand)
+			if (cell.mId == Sand)
 			{
 				if (row + 1 >= m_height)
 					continue;
 
-				if (m_grid[row + 1][col].materialId == Air)
+				if (m_grid[row + 1][col].mId == Air)
 				{
 					Cell temp = m_grid[row + 1][col];
 					m_grid[row + 1][col] = cell;
 					m_grid[row][col] = temp;
 				} else
-				if (m_grid[row + 1][col - 1].materialId == Air && (col - 1) >= 0)
+				if (m_grid[row + 1][col - 1].mId == Air && (col - 1) >= 0)
 				{
 					Cell temp = m_grid[row + 1][col - 1];
 					m_grid[row + 1][col - 1] = cell;
 					m_grid[row][col] = temp;
 				} else
-				if (m_grid[row + 1][col + 1].materialId == Air && (col + 1) < m_width)
+				if (m_grid[row + 1][col + 1].mId == Air && (col + 1) < m_width)
 				{
 					Cell temp = m_grid[row + 1][col + 1];
 					m_grid[row + 1][col + 1] = cell;
@@ -66,8 +66,8 @@ void Grid::process()
 		}
 }
 
-void Grid::spawnMaterial(uint8_t row, uint8_t col, uint8_t materialId)
+void Grid::spawnMaterial(uint8_t row, uint8_t col, materialId mId)
 {
-	Cell cell =  {materialId, materials.at(materialId)};
+	Cell cell =  {mId, materials.at(mId)};
 	m_grid[row][col] = cell;
 }
