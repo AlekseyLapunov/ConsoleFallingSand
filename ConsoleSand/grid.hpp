@@ -32,7 +32,10 @@ public:
 	void spawnMaterial(uint8_t row, uint8_t col, materialId mId);
 
 private:
-	void clearMoveState();
+	void inline clearMoveState();
+
+	typedef enum class GridBorder { Left = 0, Upper, Right, Bottom } gridBorderSpecify;
+	bool inline trespassing(int8_t val, gridBorderSpecify whatBorder) const;
 
 	const uint8_t m_height;
 	const uint8_t m_width;

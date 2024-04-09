@@ -44,7 +44,7 @@ void Grid::process()
 
 			if (cell.mId == Sand)
 			{
-				if (row + 1 >= m_height)
+				if (trespassing(row, GridBorder::Bottom))
 					continue;
 
 				if (m_grid[row + 1][col].mId == Air)
@@ -55,7 +55,7 @@ void Grid::process()
 					m_grid[row][col] = temp;
 				}
 				else
-					if (m_grid[row + 1][col - 1].mId == Air && (col - 1) >= 0)
+					if (m_grid[row + 1][col - 1].mId == Air && !trespassing(col, GridBorder::Left))
 					{
 						Cell temp = m_grid[row + 1][col - 1];
 						cell.hasMoved = true;
@@ -63,7 +63,7 @@ void Grid::process()
 						m_grid[row][col] = temp;
 					}
 					else
-						if (m_grid[row + 1][col + 1].mId == Air && (col + 1) < m_width)
+						if (m_grid[row + 1][col + 1].mId == Air && !trespassing(col, GridBorder::Right))
 						{
 							Cell temp = m_grid[row + 1][col + 1];
 							cell.hasMoved = true;
@@ -75,7 +75,7 @@ void Grid::process()
 			else
 			if (cell.mId == Water)
 			{
-				if (row + 1 >= m_height)
+				if (trespassing(row, GridBorder::Bottom))
 					continue;
 
 				if (m_grid[row + 1][col].mId == Air)
@@ -85,28 +85,28 @@ void Grid::process()
 					m_grid[row + 1][col] = cell;
 					m_grid[row][col] = temp;
 				}
-				else if (m_grid[row][col - 1].mId == Air && (col - 1) >= 0)
+				else if (m_grid[row][col - 1].mId == Air && !trespassing(col, GridBorder::Left))
 				{
 					Cell temp = m_grid[row][col - 1];
 					cell.hasMoved = true;
 					m_grid[row][col - 1] = cell;
 					m_grid[row][col] = temp;
 				}
-				else if (m_grid[row][col + 1].mId == Air && (col + 1) < m_width)
+				else if (m_grid[row][col + 1].mId == Air && !trespassing(col, GridBorder::Right))
 				{
 					Cell temp = m_grid[row][col + 1];
 					cell.hasMoved = true;
 					m_grid[row][col + 1] = cell;
 					m_grid[row][col] = temp;
 				}
-				else if (m_grid[row + 1][col - 1].mId == Air && (col - 1) >= 0)
+				else if (m_grid[row + 1][col - 1].mId == Air && !trespassing(col, GridBorder::Left))
 				{
 					Cell temp = m_grid[row + 1][col - 1];
 					cell.hasMoved = true;
 					m_grid[row + 1][col - 1] = cell;
 					m_grid[row][col] = temp;
 				}
-				else if (m_grid[row + 1][col + 1].mId == Air && (col + 1) < m_width)
+				else if (m_grid[row + 1][col + 1].mId == Air && !trespassing(col, GridBorder::Right))
 				{
 					Cell temp = m_grid[row + 1][col + 1];
 					cell.hasMoved = true;
@@ -118,7 +118,7 @@ void Grid::process()
 			else
 				if (cell.mId == Gas)
 				{
-					if (row - 1 < 0)
+					if (trespassing(row, GridBorder::Upper))
 						continue;
 
 					if (m_grid[row - 1][col].mId == Air)
@@ -128,28 +128,28 @@ void Grid::process()
 						m_grid[row - 1][col] = cell;
 						m_grid[row][col] = temp;
 					}
-					else if (m_grid[row][col - 1].mId == Air && (col - 1) >= 0)
+					else if (m_grid[row][col - 1].mId == Air && !trespassing(col, GridBorder::Left))
 					{
 						Cell temp = m_grid[row][col - 1];
 						cell.hasMoved = true;
 						m_grid[row][col - 1] = cell;
 						m_grid[row][col] = temp;
 					}
-					else if (m_grid[row][col + 1].mId == Air && (col + 1) < m_width)
+					else if (m_grid[row][col + 1].mId == Air && !trespassing(col, GridBorder::Right))
 					{
 						Cell temp = m_grid[row][col + 1];
 						cell.hasMoved = true;
 						m_grid[row][col + 1] = cell;
 						m_grid[row][col] = temp;
 					}
-					else if (m_grid[row - 1][col - 1].mId == Air && (col - 1) >= 0)
+					else if (m_grid[row - 1][col - 1].mId == Air && !trespassing(col, GridBorder::Left))
 					{
 						Cell temp = m_grid[row - 1][col - 1];
 						cell.hasMoved = true;
 						m_grid[row - 1][col - 1] = cell;
 						m_grid[row][col] = temp;
 					}
-					else if (m_grid[row - 1][col + 1].mId == Air && (col + 1) < m_width)
+					else if (m_grid[row - 1][col + 1].mId == Air && !trespassing(col, GridBorder::Right))
 					{
 						Cell temp = m_grid[row - 1][col + 1];
 						cell.hasMoved = true;
@@ -174,4 +174,18 @@ void inline Grid::clearMoveState()
 	for (int8_t row = 0; row < m_height; row++)
 		for (int8_t col = 0; col < m_width; col++)
 			m_grid[row][col].hasMoved = false;
+}
+
+bool inline Grid::trespassing(int8_t val, gridBorderSpecify whatBorder) const
+{
+	if (whatBorder == GridBorder::Left || whatBorder == GridBorder::Upper)
+		return ((val - 1) < 0);
+
+	if (whatBorder == GridBorder::Right)
+		return ((val + 1) >= m_width);
+
+	if (whatBorder == GridBorder::Bottom)
+		return ((val + 1) >= m_height);
+
+	return false;
 }
