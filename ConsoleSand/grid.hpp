@@ -5,6 +5,7 @@
 #include <string>
 
 #include "common_utils.hpp"
+#include "materials.hpp"
 
 class Grid
 {

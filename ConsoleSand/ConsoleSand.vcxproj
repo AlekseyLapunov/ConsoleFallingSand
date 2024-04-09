@@ -149,6 +149,7 @@
     <ClInclude Include="grid.hpp" />
     <ClInclude Include="grid_viewer.hpp" />
     <ClInclude Include="input_manager.hpp" />
+    <ClInclude Include="materials.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
