@@ -87,6 +87,10 @@ void GridViewer::displayControlsHint() const
 	std::cout << "\n"
 		<< UNDERLINE << "Material placement"
 		<< STANDARD_STYLE << ": Space";
+
+	std::cout << "\n"
+		<< UNDERLINE << "Clear All"
+		<< STANDARD_STYLE << ": C";
 }
 
 void GridViewer::displayMaterialHint(materialId materialId) const
