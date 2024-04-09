@@ -14,6 +14,7 @@ public:
 	void materialChoice(materialId& choice, materialId minId, materialId maxId);
 	bool spawnMaterial();
 	bool clearGrid();
+	bool endSimulation();
 
 private:
 	GridViewer::Cursor* m_cursor;

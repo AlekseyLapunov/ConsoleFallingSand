@@ -42,6 +42,9 @@ int main(int argc, char* argv[])
 		if (inputManager.spawnMaterial())
 			grid.spawnMaterial(cursor->y, cursor->x, currentMaterialId);
 
+		if (inputManager.endSimulation())
+			break;
+
 		std::this_thread::sleep_for(
 			std::chrono::milliseconds(
 				int(1000.0f / FREQUENCY)

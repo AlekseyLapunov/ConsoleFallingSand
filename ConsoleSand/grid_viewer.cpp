@@ -91,6 +91,10 @@ void GridViewer::displayControlsHint() const
 	std::cout << "\n"
 		<< UNDERLINE << "Clear All"
 		<< STANDARD_STYLE << ": C";
+
+	std::cout << "\n"
+		<< UNDERLINE << "End simulation"
+		<< STANDARD_STYLE << ": Escape";
 }
 
 void GridViewer::displayMaterialHint(materialId materialId) const

@@ -99,3 +99,13 @@ bool InputManager::clearGrid()
 	}
 	return false;
 }
+
+bool InputManager::endSimulation()
+{
+	if (KEY_DOWN(VK_ESCAPE))
+	{
+		while (KEY_DOWN(VK_ESCAPE));
+		return true;
+	}
+	return false;
+}
