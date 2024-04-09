@@ -4,7 +4,7 @@
 #include <string>
 #include <unordered_map>
 
-#define CURSOR	'4'
+#define CURSOR	'+'
 
 // Types to Char
 #define AIR_SIGN	' '
