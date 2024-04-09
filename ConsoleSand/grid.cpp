@@ -169,6 +169,19 @@ void Grid::spawnMaterial(uint8_t row, uint8_t col, materialId mId)
 	m_grid[row][col] = cell;
 }
 
+void Grid::clearAll()
+{
+	for (int8_t row = 0; row < m_height; row++)
+		for (int8_t col = 0; col < m_width; col++)
+		{
+			Cell& current = m_grid[row][col];
+
+			current.mId		 = Air;
+			current.material = materials.at(Air);
+			current.hasMoved = false;
+		}
+}
+
 void inline Grid::clearMoveState()
 {
 	for (int8_t row = 0; row < m_height; row++)

@@ -31,6 +31,8 @@ public:
 
 	void spawnMaterial(uint8_t row, uint8_t col, materialId mId);
 
+	void clearAll();
+
 private:
 	void inline clearMoveState();
 
