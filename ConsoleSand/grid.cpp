@@ -28,6 +28,7 @@ Grid::Cell** Grid::cells()
 	return m_grid;
 }
 
+// Not readable code below, it will get optimized in the future
 void Grid::process()
 {
 	for (int8_t row = m_height - 1; row >= 0; row--)
@@ -37,7 +38,7 @@ void Grid::process()
 
 			if (cell.mId == Air)
 				continue;
-			
+
 			if (cell.mId == Sand)
 			{
 				if (row + 1 >= m_height)
@@ -48,20 +49,60 @@ void Grid::process()
 					Cell temp = m_grid[row + 1][col];
 					m_grid[row + 1][col] = cell;
 					m_grid[row][col] = temp;
-				} else
-				if (m_grid[row + 1][col - 1].mId == Air && (col - 1) >= 0)
+				}
+				else
+					if (m_grid[row + 1][col - 1].mId == Air && (col - 1) >= 0)
+					{
+						Cell temp = m_grid[row + 1][col - 1];
+						m_grid[row + 1][col - 1] = cell;
+						m_grid[row][col] = temp;
+					}
+					else
+						if (m_grid[row + 1][col + 1].mId == Air && (col + 1) < m_width)
+						{
+							Cell temp = m_grid[row + 1][col + 1];
+							m_grid[row + 1][col + 1] = cell;
+							m_grid[row][col] = temp;
+						}
+
+			}
+			else
+			if (cell.mId == Water)
+			{
+				if (row + 1 >= m_height)
+					continue;
+
+				if (m_grid[row + 1][col].mId == Air)
+				{
+					Cell temp = m_grid[row + 1][col];
+					m_grid[row + 1][col] = cell;
+					m_grid[row][col] = temp;
+				}
+				else if (m_grid[row][col - 1].mId == Air && (col - 1) >= 0)
+				{
+					Cell temp = m_grid[row][col - 1];
+					m_grid[row][col - 1] = cell;
+					m_grid[row][col] = temp;
+				}
+				else if (m_grid[row][col + 1].mId == Air && (col + 1) < m_width)
+				{
+					Cell temp = m_grid[row][col + 1];
+					m_grid[row][col + 1] = cell;
+					m_grid[row][col] = temp;
+				}
+				else if (m_grid[row + 1][col - 1].mId == Air && (col - 1) >= 0)
 				{
 					Cell temp = m_grid[row + 1][col - 1];
 					m_grid[row + 1][col - 1] = cell;
 					m_grid[row][col] = temp;
-				} else
-				if (m_grid[row + 1][col + 1].mId == Air && (col + 1) < m_width)
+				}
+				else if (m_grid[row + 1][col + 1].mId == Air && (col + 1) < m_width)
 				{
 					Cell temp = m_grid[row + 1][col + 1];
 					m_grid[row + 1][col + 1] = cell;
 					m_grid[row][col] = temp;
 				}
-				
+
 			}
 		}
 }
