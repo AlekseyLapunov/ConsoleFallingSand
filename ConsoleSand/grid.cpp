@@ -30,8 +30,8 @@ Grid::Cell** Grid::cells()
 
 void Grid::process()
 {
-	for (int8_t row = 0; row < m_height; row++)
-		for (int8_t col = 0; col < m_width; col++)
+	for (int8_t row = m_height - 1; row >= 0; row--)
+		for (int8_t col = m_width - 1; col >= 0; col--)
 		{
 			Cell& cell = m_grid[row][col];
 
