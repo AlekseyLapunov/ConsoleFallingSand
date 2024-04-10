@@ -18,7 +18,8 @@ Material choice: Q E
 Spawn material particle: Space
 ```
 Quick Demo GIF:
-![](https://github.com/AlekseyLapunov/ConsoleFallingSand/blob/main/_.gif)
+
+![demo](https://github.com/AlekseyLapunov/ConsoleFallingSand/blob/main/_.gif)
 
 Output Terminal Settings (Windows):
 ```
