@@ -64,7 +64,10 @@ void Grid::clearAll()
 
 void inline Grid::replaceCellBy(Cell& cell, const int8_t& row, const int8_t& col, Cell newCell)
 {
-	Cell temp = cell;
+	if (&m_grid[row][col] == nullptr)
+		return;
+
+	const Cell temp = cell;
 	newCell.hasMoved = true;
 	cell = newCell;
 	m_grid[row][col] = temp;
