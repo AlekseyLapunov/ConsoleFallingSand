@@ -96,66 +96,78 @@ bool inline Grid::trespassing(const int8_t& val, const gridBorderSpecify& whatBo
 
 bool Grid::processPowdery(Cell& cell, const int8_t& row, const int8_t& col)
 {
-	if (cell.material.type != MaterialType::Powdery)
+	const MaterialType& thisType = cell.material.type;
+
+	if (thisType != MaterialType::Powdery)
 		return false;
 	
 	if (trespassing(row, GridBorder::Bottom))
 		return false;
 
-	if (m_grid[row + 1][col].material.type == MaterialType::Void)
+	if (m_grid[row + 1][col].material.type < thisType)
 		replaceCellBy(m_grid[row + 1][col], row, col, cell);
 
-	else if (m_grid[row + 1][col - 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Left))
+	else if (m_grid[row + 1][col - 1].material.type < thisType && !trespassing(col, GridBorder::Left))
 		replaceCellBy(m_grid[row + 1][col - 1], row, col, cell);
 
-	else if (m_grid[row + 1][col + 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Right))
+	else if (m_grid[row + 1][col + 1].material.type < thisType && !trespassing(col, GridBorder::Right))
 		replaceCellBy(m_grid[row + 1][col + 1], row, col, cell);
+
+	return true;
 }
 
 bool Grid::processLiquid(Cell& cell, const int8_t& row, const int8_t& col)
 {
-	if (cell.material.type != MaterialType::Liquid)
+	const MaterialType& thisType = cell.material.type;
+
+	if (thisType != MaterialType::Liquid)
 		return false;
 
 	if (trespassing(row, GridBorder::Bottom))
 		return false;
 
-	if (m_grid[row + 1][col].material.type == MaterialType::Void)
+	if (m_grid[row + 1][col].material.type < thisType)
 		replaceCellBy(m_grid[row + 1][col], row, col, cell);
 
-	else if (m_grid[row][col - 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Left))
+	else if (m_grid[row][col - 1].material.type < thisType && !trespassing(col, GridBorder::Left))
 		replaceCellBy(m_grid[row][col - 1], row, col, cell);
 
-	else if (m_grid[row][col + 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Right))
+	else if (m_grid[row][col + 1].material.type < thisType && !trespassing(col, GridBorder::Right))
 		replaceCellBy(m_grid[row][col + 1], row, col, cell);
 
-	else if (m_grid[row + 1][col - 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Left))
+	else if (m_grid[row + 1][col - 1].material.type < thisType && !trespassing(col, GridBorder::Left))
 		replaceCellBy(m_grid[row + 1][col - 1], row, col, cell);
 
-	else if (m_grid[row + 1][col + 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Right))
+	else if (m_grid[row + 1][col + 1].material.type < thisType && !trespassing(col, GridBorder::Right))
 		replaceCellBy(m_grid[row + 1][col + 1], row, col, cell);
+
+	return true;
 }
 
 bool Grid::processGas(Cell& cell, const int8_t& row, const int8_t& col)
 {
-	if (cell.material.type != MaterialType::Gas)
+	const MaterialType& thisType = cell.material.type;
+
+	if (thisType != MaterialType::Gas)
 		return false;
 
 	if (trespassing(row, GridBorder::Upper))
 		return false;
 
-	if (m_grid[row - 1][col].material.type == MaterialType::Void)
+	if (m_grid[row - 1][col].material.type < thisType)
 		replaceCellBy(m_grid[row - 1][col], row, col, cell);
 
-	else if (m_grid[row][col - 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Left))
+	else if (m_grid[row][col - 1].material.type < thisType && !trespassing(col, GridBorder::Left))
 		replaceCellBy(m_grid[row][col - 1], row, col, cell);
 
-	else if (m_grid[row][col + 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Right))
+	else if (m_grid[row][col + 1].material.type < thisType && !trespassing(col, GridBorder::Right))
 		replaceCellBy(m_grid[row][col + 1], row, col, cell);
 
-	else if (m_grid[row - 1][col - 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Left))
+	else if (m_grid[row - 1][col - 1].material.type < thisType && !trespassing(col, GridBorder::Left))
 		replaceCellBy(m_grid[row - 1][col - 1], row, col, cell);
 
-	else if (m_grid[row - 1][col + 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Right))
+	else if (m_grid[row - 1][col + 1].material.type < thisType && !trespassing(col, GridBorder::Right))
 		replaceCellBy(m_grid[row - 1][col + 1], row, col, cell);
+
+	return true;
 }
