@@ -32,7 +32,7 @@ public:
 
 	void process();
 
-	void spawnMaterial(uint8_t row, uint8_t col, MaterialId mId);
+	void spawnMaterial(const uint8_t& row, const uint8_t& col, const MaterialId& mId);
 
 	void clearAll();
 
@@ -40,7 +40,7 @@ private:
 	void inline clearMoveState();
 
 	typedef enum class GridBorder { Left = 0, Upper, Right, Bottom } gridBorderSpecify;
-	bool inline trespassing(int8_t val, gridBorderSpecify whatBorder) const;
+	bool inline trespassing(const int8_t& val, const gridBorderSpecify& whatBorder) const;
 
 	void inline replaceCellBy(Cell& cell, const int8_t& row, const int8_t& col, Cell newCell);
 

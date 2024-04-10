@@ -49,7 +49,7 @@ void Grid::process()
 	clearMoveState();
 }
 
-void Grid::spawnMaterial(uint8_t row, uint8_t col, MaterialId mId)
+void Grid::spawnMaterial(const uint8_t& row, const uint8_t& col, const MaterialId& mId)
 {
 	Cell cell(mId);
 	m_grid[row][col] = cell;
@@ -77,7 +77,7 @@ void inline Grid::clearMoveState()
 			m_grid[row][col].hasMoved = false;
 }
 
-bool inline Grid::trespassing(int8_t val, gridBorderSpecify whatBorder) const
+bool inline Grid::trespassing(const int8_t& val, const gridBorderSpecify& whatBorder) const
 {
 	if (whatBorder == GridBorder::Left || whatBorder == GridBorder::Upper)
 		return ((val - 1) < 0);
