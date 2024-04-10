@@ -42,7 +42,11 @@ private:
 	typedef enum class GridBorder { Left = 0, Upper, Right, Bottom } gridBorderSpecify;
 	bool inline trespassing(int8_t val, gridBorderSpecify whatBorder) const;
 
-	void inline replaceCellBy(Cell& cell, int8_t row, int8_t col, Cell newCell);
+	void inline replaceCellBy(Cell& cell, const int8_t& row, const int8_t& col, Cell newCell);
+
+	bool processPowdery(Cell& cell, const int8_t& row, const int8_t& col);
+	bool processLiquid(Cell& cell, const int8_t& row, const int8_t& col);
+	bool processGas(Cell& cell, const int8_t& row, const int8_t& col);
 
 	const uint8_t m_height;
 	const uint8_t m_width;

@@ -41,62 +41,9 @@ void Grid::process()
 			if (cell.hasMoved)
 				continue;
 
-			if (cell.material.type == MaterialType::Powdery)
-			{
-				if (trespassing(row, GridBorder::Bottom))
-					continue;
-
-				if (m_grid[row + 1][col].material.type == MaterialType::Void)
-					replaceCellBy(m_grid[row + 1][col], row, col, cell);
-				
-				else if (m_grid[row + 1][col - 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Left))
-					replaceCellBy(m_grid[row + 1][col - 1], row, col, cell);
-				
-				else if (m_grid[row + 1][col + 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Right))
-					replaceCellBy(m_grid[row + 1][col + 1], row, col, cell);
-			}
-			else
-			if (cell.material.type == MaterialType::Liquid)
-			{
-				if (trespassing(row, GridBorder::Bottom))
-					continue;
-
-				if (m_grid[row + 1][col].material.type == MaterialType::Void)
-					replaceCellBy(m_grid[row + 1][col], row, col, cell);
-
-				else if (m_grid[row][col - 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Left))
-					replaceCellBy(m_grid[row][col - 1], row, col, cell);
-
-				else if (m_grid[row][col + 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Right))
-					replaceCellBy(m_grid[row][col + 1], row, col, cell);
-
-				else if (m_grid[row + 1][col - 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Left))
-					replaceCellBy(m_grid[row + 1][col - 1], row, col, cell);
-
-				else if (m_grid[row + 1][col + 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Right))
-					replaceCellBy(m_grid[row + 1][col + 1], row, col, cell);
-			}
-			else
-			if (cell.material.type == MaterialType::Gas)
-			{
-				if (trespassing(row, GridBorder::Upper))
-					continue;
-
-				if (m_grid[row - 1][col].material.type == MaterialType::Void)
-					replaceCellBy(m_grid[row - 1][col], row, col, cell);
-
-				else if (m_grid[row][col - 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Left))
-					replaceCellBy(m_grid[row][col - 1], row, col, cell);
-
-				else if (m_grid[row][col + 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Right))
-					replaceCellBy(m_grid[row][col + 1], row, col, cell);
-
-				else if (m_grid[row - 1][col - 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Left))
-					replaceCellBy(m_grid[row - 1][col - 1], row, col, cell);
-
-				else if (m_grid[row - 1][col + 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Right))
-					replaceCellBy(m_grid[row - 1][col + 1], row, col, cell);
-			}
+			if		(processPowdery(cell, row, col));
+			else if (processLiquid(cell, row, col));
+			else if (processGas(cell, row, col));
 		}
 
 	clearMoveState();
@@ -115,7 +62,7 @@ void Grid::clearAll()
 			m_grid[row][col] = Cell();
 }
 
-void inline Grid::replaceCellBy(Cell& cell, int8_t row, int8_t col, Cell newCell)
+void inline Grid::replaceCellBy(Cell& cell, const int8_t& row, const int8_t& col, Cell newCell)
 {
 	Cell temp = cell;
 	newCell.hasMoved = true;
@@ -142,4 +89,70 @@ bool inline Grid::trespassing(int8_t val, gridBorderSpecify whatBorder) const
 		return ((val + 1) >= m_height);
 
 	return false;
+}
+
+bool Grid::processPowdery(Cell& cell, const int8_t& row, const int8_t& col)
+{
+	if (cell.material.type != MaterialType::Powdery)
+		return false;
+	
+	if (trespassing(row, GridBorder::Bottom))
+		return false;
+
+	if (m_grid[row + 1][col].material.type == MaterialType::Void)
+		replaceCellBy(m_grid[row + 1][col], row, col, cell);
+
+	else if (m_grid[row + 1][col - 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Left))
+		replaceCellBy(m_grid[row + 1][col - 1], row, col, cell);
+
+	else if (m_grid[row + 1][col + 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Right))
+		replaceCellBy(m_grid[row + 1][col + 1], row, col, cell);
+}
+
+bool Grid::processLiquid(Cell& cell, const int8_t& row, const int8_t& col)
+{
+	if (cell.material.type != MaterialType::Liquid)
+		return false;
+
+	if (trespassing(row, GridBorder::Bottom))
+		return false;
+
+	if (m_grid[row + 1][col].material.type == MaterialType::Void)
+		replaceCellBy(m_grid[row + 1][col], row, col, cell);
+
+	else if (m_grid[row][col - 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Left))
+		replaceCellBy(m_grid[row][col - 1], row, col, cell);
+
+	else if (m_grid[row][col + 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Right))
+		replaceCellBy(m_grid[row][col + 1], row, col, cell);
+
+	else if (m_grid[row + 1][col - 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Left))
+		replaceCellBy(m_grid[row + 1][col - 1], row, col, cell);
+
+	else if (m_grid[row + 1][col + 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Right))
+		replaceCellBy(m_grid[row + 1][col + 1], row, col, cell);
+}
+
+bool Grid::processGas(Cell& cell, const int8_t& row, const int8_t& col)
+{
+	if (cell.material.type != MaterialType::Gas)
+		return false;
+
+	if (trespassing(row, GridBorder::Upper))
+		return false;
+
+	if (m_grid[row - 1][col].material.type == MaterialType::Void)
+		replaceCellBy(m_grid[row - 1][col], row, col, cell);
+
+	else if (m_grid[row][col - 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Left))
+		replaceCellBy(m_grid[row][col - 1], row, col, cell);
+
+	else if (m_grid[row][col + 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Right))
+		replaceCellBy(m_grid[row][col + 1], row, col, cell);
+
+	else if (m_grid[row - 1][col - 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Left))
+		replaceCellBy(m_grid[row - 1][col - 1], row, col, cell);
+
+	else if (m_grid[row - 1][col + 1].material.type == MaterialType::Void && !trespassing(col, GridBorder::Right))
+		replaceCellBy(m_grid[row - 1][col + 1], row, col, cell);
 }
