@@ -1,7 +1,7 @@
 #include "common_utils.hpp"
 
-typedef enum class MaterialId   { Air = 0, Sand, Water, Stone, Gas };
-typedef enum class MaterialType { Void = 0, Solid, Powdery, Liquid, Gas };
+enum class MaterialId   { Air = 0, Sand, Water, Stone, Gas };
+enum class MaterialType { Void = 0, Solid, Powdery, Liquid, Gas };
 
 struct Material
 {
