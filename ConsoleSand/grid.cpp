@@ -112,13 +112,7 @@ void Grid::clearAll()
 {
 	for (int8_t row = 0; row < m_height; row++)
 		for (int8_t col = 0; col < m_width; col++)
-		{
-			Cell& current = m_grid[row][col];
-
-			current.mId		 = MaterialId::Air;
-			current.material = materials.at(MaterialId::Air);
-			current.hasMoved = false;
-		}
+			m_grid[row][col] = Cell();
 }
 
 void inline Grid::replaceCellBy(Cell& cell, int8_t row, int8_t col, Cell newCell)
