@@ -1,6 +1,6 @@
 # ConsoleFallingSand
 
-My take on cellular automata: simple sand simulation (no friction constants, no gravity, no forces, etc) in Console output.
+My take on cellular automata: simple materials simulation in Console output.
 
 Using "windows.h" library functions for getting keyboard input (more: input_manager.hpp & input_manager.cpp).
 
@@ -31,3 +31,5 @@ Font face: Cascadia Mono / Consolas
 Line height: 1.2
 Cursor shape: Bar "|"
 ```
+
+Note: program is using [ANSI escape codes](https://en.wikipedia.org/wiki/ANSI_escape_code) for getting text formatting and colors.
