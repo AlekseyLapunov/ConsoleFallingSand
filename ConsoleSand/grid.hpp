@@ -28,7 +28,7 @@ public:
 		Cell(MaterialId mId) : mId(mId), material(materials.at(mId)), hasMoved(false) {}
 	};
 
-	Cell** cells();
+	Cell** const cells() const;
 
 	void process();
 

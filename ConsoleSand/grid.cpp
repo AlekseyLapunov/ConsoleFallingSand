@@ -23,7 +23,7 @@ std::pair<uint8_t, uint8_t> Grid::size() const
 	return {m_height, m_width};
 }
 
-Grid::Cell** Grid::cells()
+Grid::Cell** const Grid::cells() const
 {
 	return m_grid;
 }
