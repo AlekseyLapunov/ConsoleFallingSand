@@ -32,7 +32,7 @@ public:
 
 	void process();
 
-	void spawnMaterial(const uint8_t& row, const uint8_t& col, const MaterialId& mId);
+	bool spawnMaterial(const uint8_t& row, const uint8_t& col, const MaterialId& mId);
 
 	void clearAll();
 
