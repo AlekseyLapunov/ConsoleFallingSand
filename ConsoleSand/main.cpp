@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
 
 		inputManager.moveCursor();
 		inputManager.cursorVisibility();
-		inputManager.materialChoice(currentMaterialId, MaterialId::Air, MaterialId::Gas);
+		inputManager.materialChoice(currentMaterialId, MaterialId::Air, static_cast<MaterialId>(materials.size() - 1));
 
 		if (inputManager.clearGrid())
 			grid.clearAll();
