@@ -16,6 +16,8 @@ Move cursor: W A S D
 Toggle cursor visibility: H
 Material choice: Q E
 Spawn material particle: Space
+Clear All: C
+End simulation: Escape
 ```
 Quick Demo GIF:
 
