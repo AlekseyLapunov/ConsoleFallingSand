@@ -43,6 +43,11 @@ private:
 	bool inline trespassing(const int8_t& val, const gridBorderSpecify& whatBorder) const;
 
 	void inline replaceCellBy(Cell& cell, const int8_t& row, const int8_t& col, Cell newCell);
+	bool inline clearCell(Cell& cell);
+
+	bool processAcidic(Cell& cell, const int8_t& row, const int8_t& col);
+	bool processFlamable(Cell& cell, const int8_t& row, const int8_t& col);
+	bool processDiffusing(Cell& cell, const int8_t& row, const int8_t& col);
 
 	bool processPowdery(Cell& cell, const int8_t& row, const int8_t& col);
 	bool processLiquid(Cell& cell, const int8_t& row, const int8_t& col);

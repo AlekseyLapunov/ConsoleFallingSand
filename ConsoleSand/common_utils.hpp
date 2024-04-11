@@ -13,6 +13,7 @@
 #define STONE_SIGN	'T'
 #define GAS_SIGN	'G'
 #define POISON_SIGN	'P'
+#define ACID_SIGN	'A'
 
 // Colors escape sequences
 #define YELLOW_BR		"\033[93m"
@@ -21,6 +22,7 @@
 #define WHITE			"\033[97m"
 #define BLACK			"\033[30m"
 #define GREEN			"\033[92m"
+#define GREEN_DK		"\033[32m"
 #define MAGENTA			"\033[35m"
 
 // Text formatting escape sequences

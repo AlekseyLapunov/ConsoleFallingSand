@@ -41,6 +41,10 @@ void Grid::process()
 			if (cell.hasMoved)
 				continue;
 
+			if		(processAcidic(cell, row, col));
+			else if (processFlamable(cell, row, col));
+			else if (processDiffusing(cell, row, col));
+
 			if		(processPowdery(cell, row, col));
 			else if (processLiquid(cell, row, col));
 			else if (processGas(cell, row, col));
@@ -71,6 +75,16 @@ void inline Grid::replaceCellBy(Cell& cell, const int8_t& row, const int8_t& col
 	newCell.hasMoved = true;
 	cell = newCell;
 	m_grid[row][col] = temp;
+}
+
+bool inline Grid::clearCell(Cell& cell)
+{
+	if (&cell == nullptr)
+		return false;
+
+	cell = Cell();
+
+	return true;
 }
 
 void inline Grid::clearMoveState()
@@ -168,6 +182,94 @@ bool Grid::processGas(Cell& cell, const int8_t& row, const int8_t& col)
 
 	else if (m_grid[row - 1][col + 1].material.type < thisType && !trespassing(col, GridBorder::Right))
 		replaceCellBy(m_grid[row - 1][col + 1], row, col, cell);
+
+	return true;
+}
+
+bool Grid::processAcidic(Cell& cell, const int8_t& row, const int8_t& col)
+{
+	const MaterialFeature&	thisFeature = cell.material.feature;
+
+	if (thisFeature != MaterialFeature::Acidic)
+		return false;
+
+	const MaterialType& thisType = cell.material.type;
+
+	bool acted = false;
+
+	if (thisType == MaterialType::Powdery || thisType == MaterialType::Liquid)
+	{
+		if (!trespassing(row, GridBorder::Bottom))
+		{
+			if (m_grid[row + 1][col].mId != cell.mId)
+				acted = clearCell(m_grid[row + 1][col]);
+		} else
+		if (!trespassing(col, GridBorder::Left) && !trespassing(row, GridBorder::Bottom))
+		{
+			if (m_grid[row + 1][col - 1].mId != cell.mId)
+				acted = clearCell(m_grid[row + 1][col - 1]);
+		} else
+		if (!trespassing(col, GridBorder::Right) && !trespassing(row, GridBorder::Bottom))
+		{
+			if (m_grid[row + 1][col + 1].mId != cell.mId)
+				acted = clearCell(m_grid[row + 1][col + 1]);
+		}
+	}
+
+	if (thisType == MaterialType::Gas)
+	{
+		if (!trespassing(row, GridBorder::Upper))
+			if (m_grid[row - 1][col].mId != cell.mId)
+				acted = clearCell(m_grid[row - 1][col]);
+
+		if (!trespassing(col, GridBorder::Left) && !trespassing(row, GridBorder::Upper))
+			if (m_grid[row - 1][col - 1].mId != cell.mId)
+				acted = clearCell(m_grid[row - 1][col - 1]);
+
+		if (!trespassing(col, GridBorder::Right) && !trespassing(row, GridBorder::Upper))
+			if (m_grid[row - 1][col + 1].mId != cell.mId)
+				acted = clearCell(m_grid[row - 1][col + 1]);
+	}
+
+	if (!trespassing(row, GridBorder::Upper) && !acted)
+		if (m_grid[row - 1][col].mId != cell.mId)
+			acted = clearCell(m_grid[row - 1][col]);
+
+	if (!trespassing(row, GridBorder::Bottom) && !acted)
+		if (m_grid[row + 1][col].mId != cell.mId)
+			acted = clearCell(m_grid[row + 1][col]);
+
+	if (!trespassing(col, GridBorder::Left) && !acted)
+		if (m_grid[row][col - 1].mId != cell.mId)
+			acted = clearCell(m_grid[row][col - 1]);
+
+	if (!trespassing(col, GridBorder::Right) && !acted)
+		if (m_grid[row][col + 1].mId != cell.mId)
+			acted = clearCell(m_grid[row][col + 1]);
+		
+	return true;
+}
+
+bool Grid::processFlamable(Cell& cell, const int8_t& row, const int8_t& col)
+{
+	const MaterialFeature&	thisFeature	= cell.material.feature;
+
+	if (thisFeature != MaterialFeature::Flamable)
+		return false;
+
+	const MaterialType& thisType = cell.material.type;
+
+	return true;
+}
+
+bool Grid::processDiffusing(Cell& cell, const int8_t& row, const int8_t& col)
+{
+	const MaterialFeature&	thisFeature = cell.material.feature;
+
+	if (thisFeature != MaterialFeature::Diffusing)
+		return false;
+
+	const MaterialType& thisType = cell.material.type;
 
 	return true;
 }
