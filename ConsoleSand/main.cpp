@@ -4,6 +4,7 @@
 #include "grid.hpp"
 #include "grid_viewer.hpp"
 #include "input_manager.hpp"
+#include "argument_parser.hpp"
 
 #define GRID_HEIGHT	22
 #define GRID_WIDTH	50
@@ -12,11 +13,13 @@
 
 int main(int argc, char* argv[])
 {
+	Args::check(argc, argv);
+
 	Grid grid(GRID_HEIGHT, GRID_WIDTH);
 
 	GridViewer viewer(&grid, CURSOR, GRID_WIDTH/2, GRID_HEIGHT/2);
 
-	GridViewer::Cursor* cursor = viewer.cursor();
+	GridViewer::Cursor* const cursor = viewer.cursor();
 
 	InputManager inputManager(cursor, GRID_WIDTH, GRID_HEIGHT);
 

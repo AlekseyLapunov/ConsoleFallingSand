@@ -145,6 +145,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="argument_parser.hpp" />
     <ClInclude Include="common_utils.hpp" />
     <ClInclude Include="grid.hpp" />
     <ClInclude Include="grid_viewer.hpp" />
