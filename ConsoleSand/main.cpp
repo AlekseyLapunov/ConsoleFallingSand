@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
 {
 	Grid grid(GRID_HEIGHT, GRID_WIDTH);
 
-	GridViewer viewer(&grid, CURSOR, 0, 0);
+	GridViewer viewer(&grid, CURSOR, GRID_WIDTH/2, GRID_HEIGHT/2);
 
 	GridViewer::Cursor* cursor = viewer.cursor();
 
