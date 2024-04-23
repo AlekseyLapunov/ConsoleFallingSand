@@ -1,3 +1,6 @@
+#include <unordered_map>
+#include <string>
+
 #include "common_utils.hpp"
 
 enum class MaterialId		{ Air = 0, Sand, Water, Stone, Gas, Poison, Acid };

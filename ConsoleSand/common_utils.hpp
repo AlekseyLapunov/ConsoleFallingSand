@@ -1,9 +1,5 @@
 #pragma once
 
-#include <stdint.h>
-#include <string>
-#include <unordered_map>
-
 #define CURSOR	'+'
 
 // Types to Char
