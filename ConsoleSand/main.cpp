@@ -7,6 +7,7 @@
 #include "grid_viewer.hpp"
 #include "input_manager.hpp"
 #include "argument_parser.hpp"
+#include "file_manager.h"
 
 #define GRID_HEIGHT	22
 #define GRID_WIDTH	50
@@ -18,19 +19,30 @@ int main(int argc, char* argv[])
 	Args::Codes code = Args::check(argc, argv);
 	if (code != Args::Codes::Good)
 	{
-		std::cout << Args::codeInfo(code) << "\n";
-		std::cout << Args::help() << "\n";
-		return 0;
+		std::cerr << Args::codeInfo(code) << "\n";
+		std::cerr << Args::help() << "\n";
 	}
-	std::cout << Args::fileName(argv);
+	
+	FileManager::Output fm = FileManager::readFile(Args::fileName(argv));
+	
+	uint8_t gridHeight = GRID_HEIGHT;
+	uint8_t gridWidth = GRID_WIDTH;
 
-	Grid grid(GRID_HEIGHT, GRID_WIDTH);
+	if (!fm.ok)
+		std::cerr << fm.description << "\n";
+	else
+	{
+		gridHeight = fm.rows;
+		gridHeight = fm.cols;
+	}
 
-	GridViewer viewer(&grid, CURSOR, GRID_WIDTH/2, GRID_HEIGHT/2);
+	Grid grid(gridHeight, gridWidth);
+
+	GridViewer viewer(&grid, CURSOR, gridWidth/2, gridHeight/2);
 
 	GridViewer::Cursor* const cursor = viewer.cursor();
 
-	InputManager inputManager(cursor, GRID_WIDTH, GRID_HEIGHT);
+	InputManager inputManager(cursor, gridWidth, gridHeight);
 
 	viewer.hideCarriage();
 	viewer.displayControlsHint();
