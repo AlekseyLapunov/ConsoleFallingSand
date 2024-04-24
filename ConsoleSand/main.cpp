@@ -1,3 +1,5 @@
+
+#include <iostream>
 #include <chrono>
 #include <thread>
 
@@ -13,7 +15,14 @@
 
 int main(int argc, char* argv[])
 {
-	Args::check(argc, argv);
+	Args::Codes code = Args::check(argc, argv);
+	if (code != Args::Codes::Good)
+	{
+		std::cout << Args::codeInfo(code) << "\n";
+		std::cout << Args::help() << "\n";
+		return 0;
+	}
+	std::cout << Args::fileName(argv);
 
 	Grid grid(GRID_HEIGHT, GRID_WIDTH);
 
