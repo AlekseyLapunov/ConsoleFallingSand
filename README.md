@@ -2,7 +2,7 @@
 
 My take on cellular automata: simple materials simulation in Console output.
 
-Using "windows.h" library functions for getting keyboard input (more: input_manager.hpp & input_manager.cpp).
+Using "windows.h" library functions for getting keyboard input (more: [input_manager.hpp](https://github.com/AlekseyLapunov/ConsoleFallingSand/blob/main/ConsoleSand/input_manager.hpp) & [input_manager.cpp](https://github.com/AlekseyLapunov/ConsoleFallingSand/blob/main/ConsoleSand/input_manager.cpp)).
 
 Project can be built either via Visual Studio or using compilers such as MinGW:
 
