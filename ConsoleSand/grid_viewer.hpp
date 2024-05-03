@@ -11,7 +11,7 @@ public:
 
 	void display() const;
 	void displayControlsHint() const;
-	void displayMaterialHint(MaterialId materialId) const;
+	void displayMaterialHint(Materials::Id materialId) const;
 	void hideCarriage() const;
 	void showCarriage() const;
 
@@ -26,6 +26,9 @@ public:
 	Cursor* cursor() const;
 
 private:
-	Grid* const m_gridPtr;
+	//Grid* const m_gridPtr;
+	Grid::Cell** const m_cells;
+	uint8_t m_height;
+	uint8_t m_width;
 	Cursor* m_cursor;
 };

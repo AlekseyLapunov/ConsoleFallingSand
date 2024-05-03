@@ -39,6 +39,9 @@ Example usage: app.exe file.txt";
 
 	static const std::string fileName(const char* const argv[])
 	{
+		if (argv[1] == nullptr)
+			return "";
+
 		return argv[1];
 	}
 }

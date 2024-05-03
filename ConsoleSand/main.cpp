@@ -3,11 +3,12 @@
 #include <chrono>
 #include <thread>
 
+#include "argument_parser.hpp"
+#include "file_manager.h"
+#include "materials.hpp"
 #include "grid.hpp"
 #include "grid_viewer.hpp"
 #include "input_manager.hpp"
-#include "argument_parser.hpp"
-#include "file_manager.h"
 
 #define GRID_HEIGHT	22
 #define GRID_WIDTH	50
@@ -36,7 +37,7 @@ int main(int argc, char* argv[])
 		gridHeight = fm.cols;
 	}
 
-	Grid grid(gridHeight, gridWidth);
+	Grid grid(gridHeight, gridWidth, fm.cells);
 
 	GridViewer viewer(&grid, CURSOR, gridWidth/2, gridHeight/2);
 
@@ -47,7 +48,7 @@ int main(int argc, char* argv[])
 	viewer.hideCarriage();
 	viewer.displayControlsHint();
 
-	MaterialId currentMaterialId = MaterialId::Air;
+	Materials::Id currentMaterialId = Materials::Id::Air;
 
 	while (true)
 	{
@@ -58,7 +59,8 @@ int main(int argc, char* argv[])
 
 		inputManager.moveCursor();
 		inputManager.cursorVisibility();
-		inputManager.materialChoice(currentMaterialId, MaterialId::Air, static_cast<MaterialId>(materials.size() - 1));
+		inputManager.materialChoice(currentMaterialId, Materials::Id::Air,
+			static_cast<Materials::Id>(Materials::materials.size() - 1));
 
 		if (inputManager.clearGrid())
 			grid.clearAll();

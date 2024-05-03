@@ -1,21 +1,42 @@
 #include "grid.hpp"
 
-Grid::Grid(const uint8_t height, const uint8_t width)
+Grid::Grid(const uint8_t height, const uint8_t width, Cell** cells)
 	: m_height(height), m_width(width)
 {
-	m_grid = new Cell*[height];
-	for (uint8_t i = 0; i < height; i++)
-		m_grid[i] = new Cell[width];
+	if (cells != nullptr)
+	{
+		m_grid = cells;
+		return;
+	}
+	
+	m_grid = allocate(height, width);
 }
 
 Grid::~Grid()
 {
-	for (uint8_t i = 0; i < m_height; i++)
-		delete[] m_grid[i];
+	if (m_grid == nullptr)
+		return;
 
-	delete[] m_grid;
+	deallocate(m_grid, m_height, m_width);
+}
 
-	m_grid = nullptr;
+inline Grid::Cell** Grid::allocate(uint8_t height, uint8_t width)
+{
+	Cell** cells = new Cell*[height];
+	for (uint8_t i = 0; i < height; i++)
+		cells[i] = new Cell[width];
+
+	return cells;
+}
+
+inline void Grid::deallocate(Cell** cells, uint8_t height, uint8_t width)
+{
+	for (uint8_t i = 0; i < height; i++)
+		delete[] cells[i];
+
+	delete[] cells;
+
+	cells = nullptr;
 }
 
 std::pair<uint8_t, uint8_t> Grid::size() const
@@ -35,7 +56,7 @@ void Grid::process()
 		{
 			Cell& cell = m_grid[row][col];
 
-			if (cell.mId == MaterialId::Air)
+			if (cell.mId == Materials::Id::Air)
 				continue;
 
 			if (cell.hasMoved)
@@ -53,7 +74,7 @@ void Grid::process()
 	clearMoveState();
 }
 
-bool Grid::spawnMaterial(const uint8_t& row, const uint8_t& col, const MaterialId& mId)
+bool Grid::spawnMaterial(const uint8_t& row, const uint8_t& col, const Materials::Id& mId)
 {
 	if (&m_grid[row][col] == nullptr)
 		return false;
@@ -114,9 +135,9 @@ bool inline Grid::trespassing(const int8_t& val, const gridBorderSpecify& whatBo
 
 bool Grid::processPowdery(Cell& cell, const int8_t& row, const int8_t& col)
 {
-	const MaterialType& thisType = cell.material.type;
+	const Materials::Type& thisType = cell.material.type;
 
-	if (thisType != MaterialType::Powdery)
+	if (thisType != Materials::Type::Powdery)
 		return false;
 	
 	if (trespassing(row, GridBorder::Bottom))
@@ -136,9 +157,9 @@ bool Grid::processPowdery(Cell& cell, const int8_t& row, const int8_t& col)
 
 bool Grid::processLiquid(Cell& cell, const int8_t& row, const int8_t& col)
 {
-	const MaterialType& thisType = cell.material.type;
+	const Materials::Type& thisType = cell.material.type;
 
-	if (thisType != MaterialType::Liquid)
+	if (thisType != Materials::Type::Liquid)
 		return false;
 
 	if (trespassing(row, GridBorder::Bottom))
@@ -164,9 +185,9 @@ bool Grid::processLiquid(Cell& cell, const int8_t& row, const int8_t& col)
 
 bool Grid::processGas(Cell& cell, const int8_t& row, const int8_t& col)
 {
-	const MaterialType& thisType = cell.material.type;
+	const Materials::Type& thisType = cell.material.type;
 
-	if (thisType != MaterialType::Gas)
+	if (thisType != Materials::Type::Gas)
 		return false;
 
 	if (trespassing(row, GridBorder::Upper))
@@ -192,16 +213,16 @@ bool Grid::processGas(Cell& cell, const int8_t& row, const int8_t& col)
 
 bool Grid::processAcidic(Cell& cell, const int8_t& row, const int8_t& col)
 {
-	const MaterialFeature&	thisFeature = cell.material.feature;
+	const Materials::Feature&	thisFeature = cell.material.feature;
 
-	if (thisFeature != MaterialFeature::Acidic)
+	if (thisFeature != Materials::Feature::Acidic)
 		return false;
 
-	const MaterialType& thisType = cell.material.type;
+	const Materials::Type& thisType = cell.material.type;
 
 	bool acted = false;
 
-	if (thisType == MaterialType::Powdery || thisType == MaterialType::Liquid)
+	if (thisType == Materials::Type::Powdery || thisType == Materials::Type::Liquid)
 	{
 		if (!trespassing(row, GridBorder::Bottom))
 		{
@@ -220,7 +241,7 @@ bool Grid::processAcidic(Cell& cell, const int8_t& row, const int8_t& col)
 		}
 	}
 
-	if (thisType == MaterialType::Gas)
+	if (thisType == Materials::Type::Gas)
 	{
 		if (!trespassing(row, GridBorder::Upper))
 			if (m_grid[row - 1][col].mId != cell.mId)
@@ -256,41 +277,41 @@ bool Grid::processAcidic(Cell& cell, const int8_t& row, const int8_t& col)
 
 bool Grid::processFlamable(Cell& cell, const int8_t& row, const int8_t& col)
 {
-	const MaterialFeature&	thisFeature	= cell.material.feature;
+	const Materials::Feature&	thisFeature	= cell.material.feature;
 
-	if (thisFeature != MaterialFeature::Flamable)
+	if (thisFeature != Materials::Feature::Flamable)
 		return false;
 
-	const MaterialType& thisType = cell.material.type;
+	const Materials::Type& thisType = cell.material.type;
 
 	return true;
 }
 
 bool Grid::processDiffusing(Cell& cell, const int8_t& row, const int8_t& col)
 {
-	const MaterialFeature&	thisFeature = cell.material.feature;
+	const Materials::Feature&	thisFeature = cell.material.feature;
 
-	if (thisFeature != MaterialFeature::Diffusing)
+	if (thisFeature != Materials::Feature::Diffusing)
 		return false;
 
-	const MaterialType& thisType = cell.material.type;
+	const Materials::Type& thisType = cell.material.type;
 
 	bool acted = false;
 
 	if (!trespassing(row, GridBorder::Upper) && !acted)
-		if (m_grid[row - 1][col].material.type == MaterialType::Liquid && m_grid[row - 1][col].mId != cell.mId)
+		if (m_grid[row - 1][col].material.type == Materials::Type::Liquid && m_grid[row - 1][col].mId != cell.mId)
 			acted = spawnMaterial(row - 1, col, cell.mId);
 
 	if (!trespassing(row, GridBorder::Bottom) && !acted)
-		if (m_grid[row + 1][col].material.type == MaterialType::Liquid && m_grid[row + 1][col].mId != cell.mId)
+		if (m_grid[row + 1][col].material.type == Materials::Type::Liquid && m_grid[row + 1][col].mId != cell.mId)
 			acted = spawnMaterial(row + 1, col, cell.mId);
 
 	if (!trespassing(col, GridBorder::Left) && !acted)
-		if (m_grid[row][col - 1].material.type == MaterialType::Liquid && m_grid[row][col - 1].mId != cell.mId)
+		if (m_grid[row][col - 1].material.type == Materials::Type::Liquid && m_grid[row][col - 1].mId != cell.mId)
 			acted = spawnMaterial(row, col - 1, cell.mId);
 
 	if (!trespassing(col, GridBorder::Right) && !acted)
-		if (m_grid[row][col + 1].material.type == MaterialType::Liquid && m_grid[row][col + 1].mId != cell.mId)
+		if (m_grid[row][col + 1].material.type == Materials::Type::Liquid && m_grid[row][col + 1].mId != cell.mId)
 			acted = spawnMaterial(row, col + 1, cell.mId);
 
 	return true;

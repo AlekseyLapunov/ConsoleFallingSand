@@ -10,29 +10,32 @@
 class Grid
 {
 public:
-	Grid(const uint8_t height, const uint8_t width);
+	struct Cell
+	{
+		Materials::Id	mId;
+		Materials::Material	material;
+		bool		hasMoved = false;
+
+		Cell() : mId(Materials::Id::Air), material(Materials::materials.at(mId)), hasMoved(false) {}
+		Cell(Materials::Id mId) : mId(mId), material(Materials::materials.at(mId)), hasMoved(false) {}
+	};
+
+	Grid(const uint8_t height, const uint8_t width, Cell** cells = nullptr);
 	~Grid();
 
 	Grid(Grid& otherGrid) = delete;
 	Grid& operator= (Grid& otherGrid) = delete;
 
+	static inline Cell** allocate(uint8_t height, uint8_t width);
+	static inline void deallocate(Cell** cells, uint8_t height, uint8_t width);
+
 	std::pair<uint8_t, uint8_t> size() const;
-
-	struct Cell
-	{
-		MaterialId	mId;
-		Material	material;
-		bool		hasMoved	= false;
-
-		Cell() : mId(MaterialId::Air), material(materials.at(mId)), hasMoved(false) {}
-		Cell(MaterialId mId) : mId(mId), material(materials.at(mId)), hasMoved(false) {}
-	};
 
 	Cell** const cells() const;
 
 	void process();
 
-	bool spawnMaterial(const uint8_t& row, const uint8_t& col, const MaterialId& mId);
+	bool spawnMaterial(const uint8_t& row, const uint8_t& col, const Materials::Id& mId);
 
 	void clearAll();
 

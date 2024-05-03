@@ -4,7 +4,7 @@
 
 GridViewer::GridViewer(Grid* const gridPtr, char cursorSymbol,
 						uint8_t cursorPosX, uint8_t cursorPosY)
-	: m_gridPtr(gridPtr)
+	: m_cells(gridPtr->cells()), m_height(gridPtr->size().first), m_width(gridPtr->size().second)
 {
 	m_cursor = new Cursor;
 
@@ -31,28 +31,14 @@ void GridViewer::showCarriage() const
 
 void GridViewer::display() const
 {
-	if (m_gridPtr == nullptr)
-		return;
-
-	Grid::Cell** cells = m_gridPtr->cells();
-
-	uint8_t height = 0;
-	uint8_t width = 0;
-
-	{
-		std::pair<uint8_t, uint8_t> pack = m_gridPtr->size();
-		height = pack.first;
-		width  = pack.second;
-	}
-
-	if (height == 0 || width == 0)
+	if (m_cells == nullptr)
 		return;
 
 	std::cout << MOVE_CARRIAGE_START;
 
-	for (uint8_t row = 0; row < height; row++)
+	for (uint8_t row = 0; row < m_height; row++)
 	{
-		for (uint8_t col = 0; col < width; col++)
+		for (uint8_t col = 0; col < m_width; col++)
 		{
 			if ((!m_cursor->isHidden) && ((m_cursor->x == col) && (m_cursor->y == row)))
 			{
@@ -60,8 +46,8 @@ void GridViewer::display() const
 				continue;
 			}
 
-			std::cout << cells[row][col].material.color.c_str();
-			std::cout << cells[row][col].material.symbol;
+			std::cout << m_cells[row][col].material.color.c_str();
+			std::cout << m_cells[row][col].material.symbol;
 			std::cout << STANDARD_STYLE;
 		}
 
@@ -97,16 +83,16 @@ void GridViewer::displayControlsHint() const
 		<< STANDARD_STYLE << ": Escape";
 }
 
-void GridViewer::displayMaterialHint(MaterialId materialId) const
+void GridViewer::displayMaterialHint(Materials::Id materialId) const
 {
-	const Material material = materials.at(materialId);
+	const Materials::Material material = Materials::materials.at(materialId);
 
 	std::cout << UNDERLINE
 		<< "Current Material"
 		<< STANDARD_STYLE
 		<< ": "
-		<< (materialId == MaterialId::Air ? ""			  : material.color)
-		<< (materialId == MaterialId::Air ? "Air (clear)" : material.displayName)
+		<< (materialId == Materials::Id::Air ? ""			  : material.color)
+		<< (materialId == Materials::Id::Air ? "Air (clear)" : material.displayName)
 		<< "                                               "
 		<< STANDARD_STYLE;
 		
