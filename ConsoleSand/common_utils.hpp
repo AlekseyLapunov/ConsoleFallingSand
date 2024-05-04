@@ -2,7 +2,7 @@
 
 #define CURSOR	'+'
 
-// Types to Char
+// Materials visual representation
 #define AIR_SIGN	' '
 #define SAND_SIGN	'S'
 #define WATER_SIGN	'W'
