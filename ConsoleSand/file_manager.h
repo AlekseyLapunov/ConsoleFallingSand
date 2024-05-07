@@ -43,8 +43,16 @@ namespace FileManager
 
 		for (uint8_t row = 0; row < rows; row++)
 		{
+			bool minusFlag = false;
+
 			for (uint8_t col = 0; col < cols; col++)
 			{
+				if (minusFlag)
+				{
+					col--;
+					minusFlag = false;
+				}
+
 				if (fs.eof())
 					eofTriggered = true;
 
@@ -55,6 +63,12 @@ namespace FileManager
 					fs.get(sign);
 
 					bool innerChanged = false;
+
+					if (sign == '\n')
+					{
+						minusFlag = true;
+						continue;
+					}
 
 					while ((sign == '\n' || fs.eof()) && (col != cols - 1))
 					{
