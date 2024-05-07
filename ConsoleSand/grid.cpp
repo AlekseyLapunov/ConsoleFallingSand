@@ -1,15 +1,26 @@
 #include "grid.hpp"
 
-Grid::Grid(const uint8_t height, const uint8_t width, Cell** cells)
+Grid::Grid(const uint8_t height, const uint8_t width)
 	: m_height(height), m_width(width)
-{
-	if (cells != nullptr)
-	{
-		m_grid = cells;
-		return;
-	}
-	
+{	
 	m_grid = allocate(height, width);
+	clearAll();
+}
+
+Grid::Grid(Grid& otherGrid)
+	: m_height(otherGrid.m_height), m_width(otherGrid.m_width), m_grid(otherGrid.m_grid)
+{
+	otherGrid.m_grid = nullptr;
+}
+
+Grid& Grid::operator= (Grid& otherGrid)
+{
+	otherGrid.m_grid = nullptr;
+	m_height = otherGrid.m_height;
+	m_width = otherGrid.m_width;
+	m_grid = otherGrid.m_grid;
+
+	return *this;
 }
 
 Grid::~Grid()

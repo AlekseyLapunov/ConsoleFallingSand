@@ -2,6 +2,7 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include <memory>
 
 #include "argument_parser.hpp"
 #include "file_manager.h"
@@ -29,17 +30,23 @@ int main(int argc, char* argv[])
 	uint8_t gridHeight = GRID_HEIGHT;
 	uint8_t gridWidth = GRID_WIDTH;
 
+	std::unique_ptr<Grid> gridObj;
+
 	if (!fm.ok)
+	{
+		gridObj = std::make_unique<Grid>(gridHeight, gridWidth);
 		std::cerr << fm.description << "\n";
+	}
 	else
 	{
 		gridHeight = fm.rows;
 		gridHeight = fm.cols;
+		gridObj = std::make_unique<Grid>(*(fm.gridPtr));
 	}
 
-	Grid grid(gridHeight, gridWidth, fm.cells);
+	Grid* grid = gridObj.get();
 
-	GridViewer viewer(&grid, CURSOR, gridWidth/2, gridHeight/2);
+	GridViewer viewer(grid, CURSOR, gridWidth/2, gridHeight/2);
 
 	GridViewer::Cursor* const cursor = viewer.cursor();
 
@@ -52,7 +59,7 @@ int main(int argc, char* argv[])
 
 	while (true)
 	{
-		grid.process();
+		grid->process();
 
 		viewer.display();
 		viewer.displayMaterialHint(currentMaterialId);
@@ -63,10 +70,10 @@ int main(int argc, char* argv[])
 			static_cast<Materials::Id>(Materials::materials.size() - 1));
 
 		if (inputManager.clearGrid())
-			grid.clearAll();
+			grid->clearAll();
 
 		if (inputManager.spawnMaterial())
-			grid.spawnMaterial(cursor->y, cursor->x, currentMaterialId);
+			grid->spawnMaterial(cursor->y, cursor->x, currentMaterialId);
 
 		if (inputManager.endSimulation())
 			break;

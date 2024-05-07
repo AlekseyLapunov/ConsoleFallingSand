@@ -20,14 +20,11 @@ public:
 		Cell(Materials::Id mId) : mId(mId), material(Materials::materials.at(mId)), hasMoved(false) {}
 	};
 
-	Grid(const uint8_t height, const uint8_t width, Cell** cells = nullptr);
+	Grid(const uint8_t height, const uint8_t width);
+	Grid(Grid& otherGrid);
+	Grid& operator= (Grid& otherGrid);
+
 	~Grid();
-
-	Grid(Grid& otherGrid) = delete;
-	Grid& operator= (Grid& otherGrid) = delete;
-
-	static inline Cell** allocate(uint8_t height, uint8_t width);
-	static inline void deallocate(Cell** cells, uint8_t height, uint8_t width);
 
 	std::pair<uint8_t, uint8_t> size() const;
 
@@ -40,6 +37,10 @@ public:
 	void clearAll();
 
 private:
+
+	inline Cell** allocate(uint8_t height, uint8_t width);
+	inline void deallocate(Cell** cells, uint8_t height, uint8_t width);
+
 	void inline clearMoveState();
 
 	typedef enum class GridBorder { Left = 0, Upper, Right, Bottom } gridBorderSpecify;
@@ -56,7 +57,7 @@ private:
 	bool processLiquid(Cell& cell, const int8_t& row, const int8_t& col);
 	bool processGas(Cell& cell, const int8_t& row, const int8_t& col);
 
-	const uint8_t m_height;
-	const uint8_t m_width;
+	uint8_t m_height;
+	uint8_t m_width;
 	Cell** m_grid;
 };

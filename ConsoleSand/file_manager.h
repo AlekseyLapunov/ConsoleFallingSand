@@ -14,7 +14,7 @@ namespace FileManager
 		int16_t rows = 0;
 		int16_t cols = 0;
 		std::string description = "";
-		Grid::Cell** cells = nullptr;
+		Grid* gridPtr = nullptr;
 	};
 
 	static void inline skipToEndline(std::fstream& fs)
@@ -26,37 +26,55 @@ namespace FileManager
 		} while (cur != '\n');
 	}
 
-	static void parseGrid(Grid::Cell** cells, uint16_t rows, uint16_t cols, std::fstream &fs)
+	static void parseGrid(Grid* gridPtr, uint16_t rows, uint16_t cols, std::fstream &fs)
 	{
 		if (!fs.is_open())
 			return;
 
 		fs.seekg(0, std::ios::beg);
+		skipToEndline(fs);
+
+		bool eofTriggered = false;
 		
+		Grid::Cell** cells = gridPtr->cells();
+
+		if (cells == nullptr)
+			return;
+
 		for (uint8_t row = 0; row < rows; row++)
 		{
 			for (uint8_t col = 0; col < cols; col++)
 			{
 				if (fs.eof())
-					return;
+					eofTriggered = true;
 
-				char cur = ' ';
+				char sign = ' ';
 
-				fs.get(cur);
+				if (!eofTriggered)
+				{
+					fs.get(sign);
 
-				if (cur == '\n')
-					break;
+					bool innerChanged = false;
 
-				Materials::Id matId = Materials::matIdBySign(cur);
+					while ((sign == '\n' || fs.eof()) && (col != cols - 1))
+					{
+						cells[row][col] = Grid::Cell();
+						col++;
+						innerChanged = true;
+					}
 
-				Grid::Cell cell;
-				cell.mId = matId;
-				//cell.material = materials.at(matId);
+					if (innerChanged)
+						break;
+				}
+
+				Materials::Id matId;
+				
+				matId = Materials::matIdBySign(sign);
+
+				Grid::Cell cell(matId);
 
 				cells[row][col] = cell;
 			}
-
-			skipToEndline(fs);
 		}
 	}
 
@@ -84,12 +102,12 @@ namespace FileManager
 		if ((rows < 1 || rows > 50) || (cols < 1 || cols > 100))
 			return { false, 0, 0, "Grid bounds violation: rows[1;50] & cols[1;100]", nullptr };
 
-		Grid::Cell** cells = Grid::allocate(rows, cols);
+		Grid* gridPtr = new Grid(rows, cols);
 
-		parseGrid(cells, rows, cols, fs);
+		parseGrid(gridPtr, rows, cols, fs);
 
 		fs.close();
 
-		return { true, rows, cols, "File parsed", cells };
+		return { true, rows, cols, "File parsed", gridPtr };
 	}
 }
