@@ -48,7 +48,7 @@ int main(int argc, char* argv[])
 
 	GridViewer viewer(grid, CURSOR, gridWidth/2, gridHeight/2);
 
-	GridViewer::Cursor* const cursor = viewer.cursor();
+	GridViewer::Cursor& const cursor = viewer.cursor();
 
 	InputManager inputManager(cursor, gridWidth, gridHeight);
 
@@ -73,7 +73,7 @@ int main(int argc, char* argv[])
 			grid->clearAll();
 
 		if (inputManager.spawnMaterial())
-			grid->spawnMaterial(cursor->x, cursor->y, currentMaterialId);
+			grid->spawnMaterial(cursor.x, cursor.y, currentMaterialId);
 
 		if (inputManager.endSimulation())
 			break;

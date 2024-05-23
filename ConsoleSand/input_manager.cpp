@@ -4,7 +4,7 @@
 
 #define KEY_DOWN(key) GetKeyState(key) & 0x8000
 
-InputManager::InputManager(GridViewer::Cursor* const cursorPtr, uint8_t xBound, uint8_t yBound)
+InputManager::InputManager(GridViewer::Cursor& const cursorPtr, uint8_t xBound, uint8_t yBound)
 	: m_cursor(cursorPtr)
 {
 	m_boundaries.x = xBound;
@@ -16,42 +16,39 @@ InputManager::~InputManager()
 
 void InputManager::moveCursor()
 {
-	if (m_cursor == nullptr)
-		return;
+	if (m_cursor.x >= m_boundaries.x)
+		m_cursor.x = m_boundaries.x - 1;
 
-	if (m_cursor->x >= m_boundaries.x)
-		m_cursor->x = m_boundaries.x - 1;
-
-	if (m_cursor->y >= m_boundaries.y)
-		m_cursor->y = m_boundaries.y - 1;
+	if (m_cursor.y >= m_boundaries.y)
+		m_cursor.y = m_boundaries.y - 1;
 
 	if (KEY_DOWN('A'))
 	{
-		if (m_cursor->x == 0)
-			m_cursor->x = m_boundaries.x - 1;
+		if (m_cursor.x == 0)
+			m_cursor.x = m_boundaries.x - 1;
 		else
-			m_cursor->x -= 1;
+			m_cursor.x -= 1;
 	}
 	if (KEY_DOWN('D'))
 	{
-		if (m_cursor->x == m_boundaries.x - 1)
-			m_cursor->x = 0;
+		if (m_cursor.x == m_boundaries.x - 1)
+			m_cursor.x = 0;
 		else
-			m_cursor->x += 1;
+			m_cursor.x += 1;
 	}
 	if (KEY_DOWN('W'))
 	{
-		if (m_cursor->y == 0)
-			m_cursor->y = m_boundaries.y - 1;
+		if (m_cursor.y == 0)
+			m_cursor.y = m_boundaries.y - 1;
 		else
-			m_cursor->y -= 1;
+			m_cursor.y -= 1;
 	}
 	if (KEY_DOWN('S'))
 	{
-		if (m_cursor->y == m_boundaries.y - 1)
-			m_cursor->y = 0;
+		if (m_cursor.y == m_boundaries.y - 1)
+			m_cursor.y = 0;
 		else
-			m_cursor->y += 1;
+			m_cursor.y += 1;
 	}
 }
 
@@ -59,7 +56,7 @@ void InputManager::cursorVisibility()
 {
 	if (KEY_DOWN('H'))
 	{
-		m_cursor->isHidden = !m_cursor->isHidden;
+		m_cursor.isHidden = !m_cursor.isHidden;
 	}
 }
 

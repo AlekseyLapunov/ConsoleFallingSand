@@ -23,12 +23,13 @@ public:
 		bool	isHidden = false;
 	};
 
-	Cursor* cursor() const;
+	Cursor& cursor();
 
 private:
 	//Grid* const m_gridPtr;
 	Grid::Cell** const m_cells;
 	uint8_t m_height;
 	uint8_t m_width;
-	Cursor* m_cursor;
+	//Cursor* m_cursor;
+	Cursor m_cursor;
 };

@@ -6,17 +6,17 @@ GridViewer::GridViewer(Grid* const gridPtr, char cursorSymbol,
 						uint8_t cursorPosX, uint8_t cursorPosY)
 	: m_cells(gridPtr->cells()), m_height(gridPtr->size().first), m_width(gridPtr->size().second)
 {
-	m_cursor = new Cursor;
+	m_cursor = Cursor();
 
-	m_cursor->symbol = cursorSymbol;
-	m_cursor->x = cursorPosX;
-	m_cursor->y = cursorPosY;
+	m_cursor.symbol = cursorSymbol;
+	m_cursor.x = cursorPosX;
+	m_cursor.y = cursorPosY;
 }
 
 GridViewer::~GridViewer()
 {
-	delete m_cursor;
-	m_cursor = nullptr;
+	//delete m_cursor;
+	//m_cursor = nullptr;
 }
 
 void GridViewer::hideCarriage() const
@@ -40,9 +40,9 @@ void GridViewer::display() const
 	{
 		for (uint8_t col = 0; col < m_width; col++)
 		{
-			if ((!m_cursor->isHidden) && ((m_cursor->x == col) && (m_cursor->y == row)))
+			if ((!m_cursor.isHidden) && ((m_cursor.x == col) && (m_cursor.y == row)))
 			{
-				std::cout << m_cursor->symbol;
+				std::cout << m_cursor.symbol;
 				continue;
 			}
 
@@ -98,7 +98,7 @@ void GridViewer::displayMaterialHint(Materials::Id materialId) const
 		
 }
 
-GridViewer::Cursor* GridViewer::cursor() const
+GridViewer::Cursor& GridViewer::cursor()
 {
 	return m_cursor;
 }
