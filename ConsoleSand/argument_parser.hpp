@@ -6,13 +6,11 @@
 
 namespace Args
 {
-	enum class Codes { Good, Limit, Unknown, General };
+	enum class Codes { Good, Limit };
 	static const std::unordered_map<Codes, std::string> codeInfoMap =
 	{
-	{Codes::Good, "Arguments parsed"},
-	{Codes::Limit, "Too much arguments"},
-	{Codes::Unknown, "Unknown argument"},
-	{Codes::General, "General error"}
+		{Codes::Good, "Arguments parsed"},
+		{Codes::Limit, "Too much arguments"}
 	};
 
 	static const Codes check(const int& argc, const char* const argv[])
