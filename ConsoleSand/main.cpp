@@ -73,7 +73,7 @@ int main(int argc, char* argv[])
 			grid->clearAll();
 
 		if (inputManager.spawnMaterial())
-			grid->spawnMaterial(cursor->y, cursor->x, currentMaterialId);
+			grid->spawnMaterial(cursor->x, cursor->y, currentMaterialId);
 
 		if (inputManager.endSimulation())
 			break;

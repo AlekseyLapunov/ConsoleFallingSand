@@ -85,13 +85,13 @@ void Grid::process()
 	clearMoveState();
 }
 
-bool Grid::spawnMaterial(const uint8_t& row, const uint8_t& col, const Materials::Id& mId)
+bool Grid::spawnMaterial(const uint8_t& x, const uint8_t& y, const Materials::Id& mId)
 {
-	if (&m_grid[row][col] == nullptr)
+	if (&m_grid[y][x] == nullptr)
 		return false;
 
 	Cell cell(mId);
-	m_grid[row][col] = cell;
+	m_grid[y][x] = cell;
 	return true;
 }
 
