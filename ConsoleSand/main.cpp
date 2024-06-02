@@ -75,7 +75,7 @@ int main(int argc, char* argv[])
 
 		std::this_thread::sleep_for(
 			std::chrono::milliseconds(
-				int(1000.0f / Config::frequency)
+				Config::refreshMilliseconds(Config::frequency)
 			)
 		);
 	}

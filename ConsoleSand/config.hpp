@@ -49,4 +49,9 @@ namespace Config
 	}
 
 	static const uint16_t frequency = 60;
+
+	static constexpr uint16_t refreshMilliseconds(const uint16_t& frequency) 
+	{
+		return (1000.f / frequency);
+	}
 }
