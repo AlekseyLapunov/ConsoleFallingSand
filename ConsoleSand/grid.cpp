@@ -311,19 +311,19 @@ bool Grid::processDiffusing(Cell& cell, const int8_t& row, const int8_t& col)
 
 	if (!trespassing(row, GridBorder::Upper) && !acted)
 		if (m_grid[row - 1][col].material.type == Materials::Type::Liquid && m_grid[row - 1][col].mId != cell.mId)
-			acted = spawnMaterial(row - 1, col, cell.mId);
+			acted = spawnMaterial(col, row - 1, cell.mId);
 
 	if (!trespassing(row, GridBorder::Bottom) && !acted)
 		if (m_grid[row + 1][col].material.type == Materials::Type::Liquid && m_grid[row + 1][col].mId != cell.mId)
-			acted = spawnMaterial(row + 1, col, cell.mId);
+			acted = spawnMaterial(col, row + 1, cell.mId);
 
 	if (!trespassing(col, GridBorder::Left) && !acted)
 		if (m_grid[row][col - 1].material.type == Materials::Type::Liquid && m_grid[row][col - 1].mId != cell.mId)
-			acted = spawnMaterial(row, col - 1, cell.mId);
+			acted = spawnMaterial(col - 1, row, cell.mId);
 
 	if (!trespassing(col, GridBorder::Right) && !acted)
 		if (m_grid[row][col + 1].material.type == Materials::Type::Liquid && m_grid[row][col + 1].mId != cell.mId)
-			acted = spawnMaterial(row, col + 1, cell.mId);
+			acted = spawnMaterial(col + 1, row, cell.mId);
 
 	return true;
 }
