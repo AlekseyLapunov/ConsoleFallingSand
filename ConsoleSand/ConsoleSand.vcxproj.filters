@@ -47,7 +47,7 @@
     <ClInclude Include="argument_parser.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="file_manager.h">
+    <ClInclude Include="file_manager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

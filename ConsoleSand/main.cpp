@@ -5,7 +5,7 @@
 #include <memory>
 
 #include "argument_parser.hpp"
-#include "file_manager.h"
+#include "file_manager.hpp"
 #include "materials.hpp"
 #include "grid.hpp"
 #include "grid_viewer.hpp"
