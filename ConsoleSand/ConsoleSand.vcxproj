@@ -146,7 +146,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="argument_parser.hpp" />
-    <ClInclude Include="common_utils.hpp" />
+    <ClInclude Include="config.hpp" />
     <ClInclude Include="file_manager.hpp" />
     <ClInclude Include="grid.hpp" />
     <ClInclude Include="grid_viewer.hpp" />

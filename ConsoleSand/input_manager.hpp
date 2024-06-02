@@ -1,7 +1,6 @@
 #pragma once
 
 #include "grid_viewer.hpp"
-#include "common_utils.hpp"
 
 class InputManager
 {

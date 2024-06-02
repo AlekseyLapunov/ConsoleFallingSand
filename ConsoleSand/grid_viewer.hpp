@@ -5,8 +5,7 @@
 class GridViewer
 {
 public:
-	GridViewer(Grid* const gridPtr, char cursorSymbol,
-			   uint8_t cursorPosX, uint8_t cursorPosY);
+	GridViewer(Grid* const gridPtr, uint8_t cursorPosX, uint8_t cursorPosY);
 	~GridViewer();
 
 	void display() const;
@@ -26,10 +25,8 @@ public:
 	Cursor& cursor();
 
 private:
-	//Grid* const m_gridPtr;
 	Grid::Cell** const m_cells;
 	uint8_t m_height;
 	uint8_t m_width;
-	//Cursor* m_cursor;
 	Cursor m_cursor;
 };

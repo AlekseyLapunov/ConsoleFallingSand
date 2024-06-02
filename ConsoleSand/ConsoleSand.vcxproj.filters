@@ -35,7 +35,7 @@
     <ClInclude Include="grid_viewer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="common_utils.hpp">
+    <ClInclude Include="config.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="input_manager.hpp">

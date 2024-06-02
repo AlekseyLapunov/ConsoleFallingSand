@@ -3,7 +3,7 @@
 #include <unordered_map>
 #include <string>
 
-#include "common_utils.hpp"
+#include "config.hpp"
 
 namespace Materials
 {
@@ -22,13 +22,13 @@ namespace Materials
 
 	static const std::unordered_map<Id, Material> materials
 	{
-	  {Id::Air,		{AIR_SIGN,		BLACK,		"Air",		Type::Void,		Feature::None}},
-	  {Id::Sand,	{SAND_SIGN,		YELLOW_BR,	"Sand",		Type::Powdery,	Feature::None}},
-	  {Id::Water,	{WATER_SIGN,	BLUE_BR,	"Water",	Type::Liquid,	Feature::None}},
-	  {Id::Stone,	{STONE_SIGN,	BLACK_BR,	"Stone",	Type::Solid,	Feature::None}},
-	  {Id::Gas,		{GAS_SIGN,		GREEN,		"Gas",		Type::Gas,		Feature::Flamable}},
-	  {Id::Poison,	{POISON_SIGN,	MAGENTA,	"Poison",	Type::Liquid,	Feature::Diffusing}},
-	  {Id::Acid,	{ACID_SIGN,		GREEN_DK,	"Acid",		Type::Liquid,	Feature::Acidic}}
+	  {Id::Air,		{Config::Signs::air,	Config::Escape::Colors::black,			"Air",		Type::Void,		Feature::None}},
+	  {Id::Sand,	{Config::Signs::sand,	Config::Escape::Colors::yellowBright,	"Sand",		Type::Powdery,	Feature::None}},
+	  {Id::Water,	{Config::Signs::water,	Config::Escape::Colors::blueBright,		"Water",	Type::Liquid,	Feature::None}},
+	  {Id::Stone,	{Config::Signs::stone,	Config::Escape::Colors::blackBright,	"Stone",	Type::Solid,	Feature::None}},
+	  {Id::Gas,		{Config::Signs::gas,	Config::Escape::Colors::green,			"Gas",		Type::Gas,		Feature::Flamable}},
+	  {Id::Poison,	{Config::Signs::poison,	Config::Escape::Colors::magenta,		"Poison",	Type::Liquid,	Feature::Diffusing}},
+	  {Id::Acid,	{Config::Signs::acid,	Config::Escape::Colors::greenDark,		"Acid",		Type::Liquid,	Feature::Acidic}}
 	};
 
 	static const Id matIdBySign(char sign)

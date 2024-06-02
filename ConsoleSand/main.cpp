@@ -1,20 +1,15 @@
-
 #include <iostream>
 #include <chrono>
 #include <thread>
 #include <memory>
 
 #include "argument_parser.hpp"
+#include "config.hpp"
 #include "file_manager.hpp"
 #include "materials.hpp"
 #include "grid.hpp"
 #include "grid_viewer.hpp"
 #include "input_manager.hpp"
-
-#define GRID_HEIGHT	22
-#define GRID_WIDTH	50
-
-#define FREQUENCY 500
 
 int main(int argc, char* argv[])
 {
@@ -27,8 +22,8 @@ int main(int argc, char* argv[])
 	
 	FileManager::Output fm = FileManager::readFile(Args::fileName(argv));
 	
-	uint8_t gridHeight = GRID_HEIGHT;
-	uint8_t gridWidth = GRID_WIDTH;
+	uint8_t gridHeight = Config::Grid::height;
+	uint8_t gridWidth  = Config::Grid::width;
 
 	std::unique_ptr<Grid> gridObj;
 
@@ -46,7 +41,7 @@ int main(int argc, char* argv[])
 
 	Grid* grid = gridObj.get();
 
-	GridViewer viewer(grid, CURSOR, gridWidth/2, gridHeight/2);
+	GridViewer viewer(grid, gridWidth/2, gridHeight/2);
 
 	GridViewer::Cursor& const cursor = viewer.cursor();
 
@@ -80,7 +75,7 @@ int main(int argc, char* argv[])
 
 		std::this_thread::sleep_for(
 			std::chrono::milliseconds(
-				int(1000.0f / FREQUENCY)
+				int(1000.0f / Config::frequency)
 			)
 		);
 	}
