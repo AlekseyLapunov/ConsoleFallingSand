@@ -3,22 +3,24 @@
 Grid::Grid(const uint8_t height, const uint8_t width)
 	: m_height(height), m_width(width)
 {	
-	m_grid = allocate(height, width);
+	m_grid = allocate(m_height, m_width);
 	clearAll();
 }
 
 Grid::Grid(Grid& otherGrid)
-	: m_height(otherGrid.m_height), m_width(otherGrid.m_width), m_grid(otherGrid.m_grid)
+	: m_height(otherGrid.m_height), m_width(otherGrid.m_width)
 {
-	otherGrid.m_grid = nullptr;
+	m_grid = allocate(m_height, m_width);
+	copyCells(otherGrid.m_grid);
 }
 
 Grid& Grid::operator= (Grid& otherGrid)
 {
-	otherGrid.m_grid = nullptr;
 	m_height = otherGrid.m_height;
 	m_width = otherGrid.m_width;
-	m_grid = otherGrid.m_grid;
+
+	m_grid = allocate(m_height, m_width);
+	copyCells(otherGrid.m_grid);
 
 	return *this;
 }
@@ -48,6 +50,13 @@ inline void Grid::deallocate(Cell** cells, uint8_t height, uint8_t width)
 	delete[] cells;
 
 	cells = nullptr;
+}
+
+inline void Grid::copyCells(Cell** const cells)
+{
+	for (uint8_t x = 0; x < m_width; x++)
+		for (uint8_t y = 0; y < m_height; y++)
+			m_grid[x][y] = cells[x][y];
 }
 
 std::pair<uint8_t, uint8_t> Grid::size() const

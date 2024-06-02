@@ -52,6 +52,6 @@ namespace Config
 
 	static constexpr uint16_t refreshMilliseconds(const uint16_t& frequency) 
 	{
-		return (1000.f / frequency);
+		return static_cast<uint16_t>(1000.f / frequency);
 	}
 }

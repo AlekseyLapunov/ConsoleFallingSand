@@ -13,13 +13,25 @@ public:
 	{
 		Materials::Id	mId;
 		Materials::Material	material;
-		bool		hasMoved = false;
+		bool hasMoved = false;
 
-		Cell() : mId(Materials::Id::Air), material(Materials::materials.at(mId)), hasMoved(false) {}
-		Cell(Materials::Id mId) : mId(mId), material(Materials::materials.at(mId)), hasMoved(false) {}
+		Cell()
+			: mId(Materials::Id::Air), material(Materials::materials.at(mId)), hasMoved(false) {}
+		Cell(Materials::Id mId)
+			: mId(mId), material(Materials::materials.at(mId)), hasMoved(false) {}
+		Cell (const Cell& other)
+			: mId(other.mId), material(other.material), hasMoved(other.hasMoved) {}
+		Cell& operator= (const Cell& other)
+		{
+			mId = other.mId;
+			material = other.material;
+			hasMoved = other.hasMoved;
+			return *this;
+		}
 	};
 
 	Grid(const uint8_t height, const uint8_t width);
+
 	Grid(Grid& otherGrid);
 	Grid& operator= (Grid& otherGrid);
 
@@ -39,6 +51,7 @@ private:
 
 	inline Cell** allocate(uint8_t height, uint8_t width);
 	inline void deallocate(Cell** cells, uint8_t height, uint8_t width);
+	inline void copyCells(Cell** const cells);
 
 	void inline clearMoveState();
 
