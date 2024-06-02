@@ -56,7 +56,7 @@ inline void Grid::copyCells(Cell** const cells)
 {
 	for (uint8_t x = 0; x < m_width; x++)
 		for (uint8_t y = 0; y < m_height; y++)
-			m_grid[x][y] = cells[x][y];
+			m_grid[y][x] = cells[y][x];
 }
 
 std::pair<uint8_t, uint8_t> Grid::size() const
