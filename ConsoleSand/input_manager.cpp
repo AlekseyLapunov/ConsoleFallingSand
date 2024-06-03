@@ -3,11 +3,13 @@
 #ifdef _WIN32
 #include <windows.h>
 #define KEY_DOWN(key) (GetKeyState(key) & 0x8000)
-#define ESCAPE VK_ESCAPE
+#define ESCAPE_KEY VK_ESCAPE
+#define SPACE_KEY VK_SPACE
 #else
 #include <ncurses.h>
 #define KEY_DOWN(key) (key == getch())
-#define ESCAPE ' '
+#define ESCAPE_KEY 27
+#define SPACE_KEY ' '
 #endif
 
 InputManager::InputManager(GridViewer::Cursor& cursorPtr, uint8_t xBound, uint8_t yBound)
@@ -102,7 +104,7 @@ void InputManager::materialChoice(Materials::Id& choice, Materials::Id minId, Ma
 
 bool InputManager::spawnMaterial() const
 {
-	return KEY_DOWN(VK_SPACE);
+	return KEY_DOWN(SPACE_KEY);
 }
 
 bool InputManager::clearGrid() const
@@ -117,9 +119,9 @@ bool InputManager::clearGrid() const
 
 bool InputManager::endSimulation() const
 {
-	if (KEY_DOWN(ESCAPE))
+	if (KEY_DOWN(ESCAPE_KEY))
 	{
-		while (KEY_DOWN(ESCAPE));
+		while (KEY_DOWN(ESCAPE_KEY));
 		return true;
 	}
 	return false;
