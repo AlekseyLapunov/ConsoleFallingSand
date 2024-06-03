@@ -1,15 +1,15 @@
-#include <iostream>
 #include <chrono>
-#include <thread>
+#include <iostream>
 #include <memory>
+#include <thread>
 
 #include "argument_parser.hpp"
 #include "config.hpp"
 #include "file_manager.hpp"
-#include "materials.hpp"
+#include "input_manager.hpp"
 #include "grid.hpp"
 #include "grid_viewer.hpp"
-#include "input_manager.hpp"
+#include "materials.hpp"
 
 int main(int argc, char* argv[])
 {
