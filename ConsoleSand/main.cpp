@@ -11,8 +11,6 @@
 #include "grid_viewer.hpp"
 #include "materials.hpp"
 
-#define _WIN32
-
 int main(int argc, char* argv[])
 {
 	Args::Codes code = Args::check(argc, argv);
