@@ -3,8 +3,8 @@
 #include <fstream>
 #include <string>
 
-#include "grid.hpp"
-#include "materials.hpp"
+#include "../grid/grid.hpp"
+#include "../common/materials.hpp"
 
 namespace FileManager
 {

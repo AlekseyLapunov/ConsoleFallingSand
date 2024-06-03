@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <string>
 
-#include "materials.hpp"
+#include "../common/materials.hpp"
 
 class Grid
 {

@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "config.hpp"
+#include "../common/config.hpp"
 #include "grid_viewer.hpp"
 
 GridViewer::GridViewer(Grid* const gridPtr, uint8_t cursorPosX, uint8_t cursorPosY)

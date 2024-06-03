@@ -3,13 +3,13 @@
 #include <memory>
 #include <thread>
 
-#include "argument_parser.hpp"
-#include "config.hpp"
-#include "file_manager.hpp"
-#include "input_manager.hpp"
-#include "grid.hpp"
-#include "grid_viewer.hpp"
-#include "materials.hpp"
+#include "common/config.hpp"
+#include "common/materials.hpp"
+#include "helpers/argument_parser.hpp"
+#include "helpers/file_manager.hpp"
+#include "helpers/input_manager.hpp"
+#include "grid/grid.hpp"
+#include "grid/grid_viewer.hpp"
 
 int main(int argc, char* argv[])
 {

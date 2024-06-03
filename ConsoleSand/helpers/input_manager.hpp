@@ -1,6 +1,6 @@
 #pragma once
 
-#include "grid_viewer.hpp"
+#include "../grid/grid_viewer.hpp"
 
 class InputManager
 {

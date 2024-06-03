@@ -18,36 +18,36 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="grid.cpp">
+    <ClCompile Include="helpers\input_manager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="grid_viewer.cpp">
+    <ClCompile Include="grid\grid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="input_manager.cpp">
+    <ClCompile Include="grid\grid_viewer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="grid.hpp">
+    <ClInclude Include="grid\grid.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="grid_viewer.hpp">
+    <ClInclude Include="grid\grid_viewer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="config.hpp">
+    <ClInclude Include="helpers\argument_parser.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="input_manager.hpp">
+    <ClInclude Include="helpers\file_manager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="materials.hpp">
+    <ClInclude Include="helpers\input_manager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="argument_parser.hpp">
+    <ClInclude Include="common\config.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="file_manager.hpp">
+    <ClInclude Include="common\materials.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
