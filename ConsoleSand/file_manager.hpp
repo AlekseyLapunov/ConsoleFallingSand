@@ -11,8 +11,8 @@ namespace FileManager
 	struct Output
 	{
 		bool ok = false;
-		int16_t rows = 0;
 		int16_t cols = 0;
+		int16_t rows = 0;
 		std::string description = "";
 		Grid* gridPtr = nullptr;
 	};
@@ -26,7 +26,7 @@ namespace FileManager
 		} while (cur != '\n');
 	}
 
-	static void parseGrid(Grid* gridPtr, uint16_t rows, uint16_t cols, std::fstream &fs)
+	static void parseGrid(Grid* gridPtr, uint16_t cols, uint16_t rows, std::fstream &fs)
 	{
 		if (!fs.is_open())
 			return;
@@ -41,15 +41,15 @@ namespace FileManager
 		if (cells == nullptr)
 			return;
 
-		for (uint8_t row = 0; row < rows; row++)
+		for (uint8_t x = 0; x < cols; x++)
 		{
 			bool minusFlag = false;
 
-			for (uint8_t col = 0; col < cols; col++)
+			for (uint8_t y = 0; y < rows; y++)
 			{
 				if (minusFlag)
 				{
-					col--;
+					y--;
 					minusFlag = false;
 				}
 
@@ -70,10 +70,10 @@ namespace FileManager
 						continue;
 					}
 
-					while ((sign == '\n' || fs.eof()) && (col != cols - 1))
+					while ((sign == '\n' || fs.eof()) && (x != cols - 1))
 					{
-						cells[row][col] = Grid::Cell();
-						col++;
+						cells[x][y] = Grid::Cell();
+						y++;
 						innerChanged = true;
 					}
 
@@ -87,7 +87,7 @@ namespace FileManager
 
 				Grid::Cell cell(matId);
 
-				cells[row][col] = cell;
+				cells[x][y] = cell;
 			}
 		}
 	}
@@ -104,24 +104,24 @@ namespace FileManager
 		if (!fs.is_open())
 			return { false, 0, 0, "Cannot open file " + fileName, nullptr };
 
-		int16_t rows = 0;
 		int16_t cols = 0;
+		int16_t rows = 0;
 
 		fs.clear();
 		fs.seekg(0, std::ios::beg);
 
-		fs >> rows;
 		fs >> cols;
+		fs >> rows;
 
-		if ((rows < 1 || rows > 50) || (cols < 1 || cols > 100))
-			return { false, 0, 0, "Grid bounds violation: rows[1;50] & cols[1;100]", nullptr };
+		if ((cols < 1 || cols > 100) || (rows < 1 || rows > 50))
+			return { false, 0, 0, "Grid bounds violation: width[1;100] (cols) and height[1;50] (rows)", nullptr };
 
-		Grid* gridPtr = new Grid(rows, cols);
+		Grid* gridPtr = new Grid(cols, rows);
 
-		parseGrid(gridPtr, rows, cols, fs);
+		parseGrid(gridPtr, cols, rows, fs);
 
 		fs.close();
 
-		return { true, rows, cols, "File parsed", gridPtr };
+		return { true, cols, rows, "File parsed", gridPtr };
 	}
 }

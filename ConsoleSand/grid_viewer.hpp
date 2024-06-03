@@ -26,7 +26,7 @@ public:
 
 private:
 	Grid::Cell** const m_cells;
-	uint8_t m_height;
-	uint8_t m_width;
+	const uint8_t m_width;
+	const uint8_t m_height;
 	Cursor m_cursor;
 };

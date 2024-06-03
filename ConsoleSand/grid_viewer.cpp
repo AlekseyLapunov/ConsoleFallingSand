@@ -4,7 +4,7 @@
 #include "grid_viewer.hpp"
 
 GridViewer::GridViewer(Grid* const gridPtr, uint8_t cursorPosX, uint8_t cursorPosY)
-	: m_cells(gridPtr->cells()), m_height(gridPtr->size().first), m_width(gridPtr->size().second)
+	: m_cells(gridPtr->cells()), m_width(gridPtr->size().first), m_height(gridPtr->size().second)
 {
 	m_cursor = Cursor();
 
@@ -34,18 +34,18 @@ void GridViewer::display() const
 
 	std::cout << Config::Escape::Carriage::moveStart;
 
-	for (uint8_t row = 0; row < m_height; row++)
+	for (uint8_t y = 0; y < m_height; y++)
 	{
-		for (uint8_t col = 0; col < m_width; col++)
+		for (uint8_t x = 0; x < m_width; x++)
 		{
-			if ((!m_cursor.isHidden) && ((m_cursor.x == col) && (m_cursor.y == row)))
+			if ((!m_cursor.isHidden) && ((m_cursor.x == x) && (m_cursor.y == y)))
 			{
 				std::cout << m_cursor.symbol;
 				continue;
 			}
 
-			std::cout << m_cells[row][col].material.color.c_str();
-			std::cout << m_cells[row][col].material.symbol;
+			std::cout << m_cells[x][y].material.color.c_str();
+			std::cout << m_cells[x][y].material.symbol;
 			std::cout << Config::Escape::Formatting::standart;
 		}
 
@@ -89,7 +89,7 @@ void GridViewer::displayMaterialHint(Materials::Id materialId) const
 		<< "Current Material"
 		<< Config::Escape::Formatting::standart
 		<< ": "
-		<< (materialId == Materials::Id::Air ? ""			  : material.color)
+		<< (materialId == Materials::Id::Air ? ""			 : material.color)
 		<< (materialId == Materials::Id::Air ? "Air (clear)" : material.displayName)
 		<< "                "
 		<< Config::Escape::Formatting::standart;

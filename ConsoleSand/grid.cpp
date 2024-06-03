@@ -1,25 +1,25 @@
 #include "grid.hpp"
 
-Grid::Grid(const uint8_t height, const uint8_t width)
-	: m_height(height), m_width(width)
+Grid::Grid(const uint8_t width, const uint8_t height)
+	: m_width(width), m_height(height)
 {	
-	m_grid = allocate(m_height, m_width);
+	m_grid = allocate(m_width, m_height);
 	clearAll();
 }
 
 Grid::Grid(Grid& otherGrid)
-	: m_height(otherGrid.m_height), m_width(otherGrid.m_width)
+	: m_width(otherGrid.m_height), m_height(otherGrid.m_width)
 {
-	m_grid = allocate(m_height, m_width);
+	m_grid = allocate(m_width, m_height);
 	copyCells(otherGrid.m_grid);
 }
 
 Grid& Grid::operator= (Grid& otherGrid)
 {
-	m_height = otherGrid.m_height;
 	m_width = otherGrid.m_width;
+	m_height = otherGrid.m_height;
 
-	m_grid = allocate(m_height, m_width);
+	m_grid = allocate(m_width, m_height);
 	copyCells(otherGrid.m_grid);
 
 	return *this;
@@ -30,21 +30,21 @@ Grid::~Grid()
 	if (m_grid == nullptr)
 		return;
 
-	deallocate(m_grid, m_height, m_width);
+	deallocate(m_grid, m_width);
 }
 
-inline Grid::Cell** Grid::allocate(uint8_t height, uint8_t width)
+inline Grid::Cell** Grid::allocate(uint8_t width, uint8_t height)
 {
-	Cell** cells = new Cell*[height];
-	for (uint8_t i = 0; i < height; i++)
-		cells[i] = new Cell[width];
+	Cell** cells = new Cell*[width];
+	for (uint8_t i = 0; i < width; i++)
+		cells[i] = new Cell[height];
 
 	return cells;
 }
 
-inline void Grid::deallocate(Cell** cells, uint8_t height, uint8_t width)
+inline void Grid::deallocate(Cell** cells, uint8_t width)
 {
-	for (uint8_t i = 0; i < height; i++)
+	for (uint8_t i = 0; i < width; i++)
 		delete[] cells[i];
 
 	delete[] cells;
@@ -56,12 +56,12 @@ inline void Grid::copyCells(Cell** const cells)
 {
 	for (uint8_t x = 0; x < m_width; x++)
 		for (uint8_t y = 0; y < m_height; y++)
-			m_grid[y][x] = cells[y][x];
+			m_grid[x][y] = cells[x][y];
 }
 
 std::pair<uint8_t, uint8_t> Grid::size() const
 {
-	return {m_height, m_width};
+	return {m_width, m_height};
 }
 
 Grid::Cell** const Grid::cells() const
@@ -71,10 +71,10 @@ Grid::Cell** const Grid::cells() const
 
 void Grid::process()
 {
-	for (int8_t row = m_height - 1; row >= 0; row--)
-		for (int8_t col = m_width - 1; col >= 0; col--)
+	for (int8_t x = m_width - 1; x >= 0; x--)
+		for (int8_t y = m_height - 1; y >= 0; y--)
 		{
-			Cell& cell = m_grid[row][col];
+			Cell& cell = m_grid[x][y];
 
 			if (cell.mId == Materials::Id::Air)
 				continue;
@@ -82,13 +82,13 @@ void Grid::process()
 			if (cell.hasMoved)
 				continue;
 
-			if		(processAcidic(cell, row, col));
-			else if (processFlamable(cell, row, col));
-			else if (processDiffusing(cell, row, col));
+			if		(processAcidic(cell, x, y));
+			else if (processFlamable(cell, x, y));
+			else if (processDiffusing(cell, x, y));
 
-			if		(processPowdery(cell, row, col));
-			else if (processLiquid(cell, row, col));
-			else if (processGas(cell, row, col));
+			if		(processPowdery(cell, x, y));
+			else if (processLiquid(cell, x, y));
+			else if (processGas(cell, x, y));
 		}
 
 	clearMoveState();
@@ -96,30 +96,30 @@ void Grid::process()
 
 bool Grid::spawnMaterial(const uint8_t& x, const uint8_t& y, const Materials::Id& mId)
 {
-	if (&m_grid[y][x] == nullptr)
+	if (&m_grid[x][y] == nullptr)
 		return false;
 
 	Cell cell(mId);
-	m_grid[y][x] = cell;
+	m_grid[x][y] = cell;
 	return true;
 }
 
-void Grid::clearAll()
+inline void Grid::clearAll()
 {
-	for (int8_t row = 0; row < m_height; row++)
-		for (int8_t col = 0; col < m_width; col++)
-			m_grid[row][col] = Cell();
+	for (int8_t x = 0; x < m_width; x++)
+		for (int8_t y = 0; y < m_height; y++)
+			m_grid[x][y] = Cell();
 }
 
-void inline Grid::replaceCellBy(Cell& cell, const int8_t& row, const int8_t& col, Cell newCell)
+void inline Grid::replaceCellBy(Cell& cell, const int8_t& x, const int8_t& y, Cell newCell)
 {
-	if (&m_grid[row][col] == nullptr)
+	if (&m_grid[x][y] == nullptr)
 		return;
 
 	const Cell temp = cell;
 	newCell.hasMoved = true;
 	cell = newCell;
-	m_grid[row][col] = temp;
+	m_grid[x][y] = temp;
 }
 
 bool inline Grid::clearCell(Cell& cell)
@@ -134,9 +134,9 @@ bool inline Grid::clearCell(Cell& cell)
 
 void inline Grid::clearMoveState()
 {
-	for (int8_t row = 0; row < m_height; row++)
-		for (int8_t col = 0; col < m_width; col++)
-			m_grid[row][col].hasMoved = false;
+	for (int8_t x = 0; x < m_width; x++)
+		for (int8_t y = 0; y < m_height; y++)
+			m_grid[x][y].hasMoved = false;
 }
 
 bool inline Grid::trespassing(const int8_t& val, const gridBorderSpecify& whatBorder) const
@@ -153,87 +153,78 @@ bool inline Grid::trespassing(const int8_t& val, const gridBorderSpecify& whatBo
 	return false;
 }
 
-bool Grid::processPowdery(Cell& cell, const int8_t& row, const int8_t& col)
+bool Grid::processPowdery(Cell& cell, const int8_t& x, const int8_t& y)
 {
 	const Materials::Type& thisType = cell.material.type;
 
 	if (thisType != Materials::Type::Powdery)
 		return false;
-	
-	if (trespassing(row, GridBorder::Bottom))
-		return false;
 
-	if (m_grid[row + 1][col].material.type < thisType)
-		replaceCellBy(m_grid[row + 1][col], row, col, cell);
+	if (!trespassing(y, GridBorder::Bottom) && m_grid[x][y + 1].material.type < thisType)
+		replaceCellBy(m_grid[x][y + 1], x, y, cell);
 
-	else if (m_grid[row + 1][col - 1].material.type < thisType && !trespassing(col, GridBorder::Left))
-		replaceCellBy(m_grid[row + 1][col - 1], row, col, cell);
+	else if (!trespassing(x, GridBorder::Left) && !trespassing(y, GridBorder::Bottom) && m_grid[x - 1][y + 1].material.type < thisType)
+		replaceCellBy(m_grid[x - 1][y + 1], x, y, cell);
 
-	else if (m_grid[row + 1][col + 1].material.type < thisType && !trespassing(col, GridBorder::Right))
-		replaceCellBy(m_grid[row + 1][col + 1], row, col, cell);
+	else if (!trespassing(x, GridBorder::Right) && !trespassing(y, GridBorder::Bottom) && m_grid[x + 1][y + 1].material.type < thisType)
+		replaceCellBy(m_grid[x + 1][y + 1], x, y, cell);
 
 	return true;
 }
 
-bool Grid::processLiquid(Cell& cell, const int8_t& row, const int8_t& col)
+bool Grid::processLiquid(Cell& cell, const int8_t& x, const int8_t& y)
 {
 	const Materials::Type& thisType = cell.material.type;
 
 	if (thisType != Materials::Type::Liquid)
 		return false;
 
-	if (trespassing(row, GridBorder::Bottom))
-		return false;
+	if (!trespassing(y, GridBorder::Bottom) && m_grid[x][y + 1].material.type < thisType)
+		replaceCellBy(m_grid[x][y + 1], x, y, cell);
 
-	if (m_grid[row + 1][col].material.type < thisType)
-		replaceCellBy(m_grid[row + 1][col], row, col, cell);
+	else if (!trespassing(x, GridBorder::Left) && m_grid[x - 1][y].material.type < thisType)
+		replaceCellBy(m_grid[x - 1][y], x, y, cell);
 
-	else if (m_grid[row][col - 1].material.type < thisType && !trespassing(col, GridBorder::Left))
-		replaceCellBy(m_grid[row][col - 1], row, col, cell);
+	else if (!trespassing(x, GridBorder::Right) && m_grid[x + 1][y].material.type < thisType)
+		replaceCellBy(m_grid[x + 1][y], x, y, cell);
 
-	else if (m_grid[row][col + 1].material.type < thisType && !trespassing(col, GridBorder::Right))
-		replaceCellBy(m_grid[row][col + 1], row, col, cell);
+	else if (!trespassing(x, GridBorder::Left) && !trespassing(y, GridBorder::Bottom) && m_grid[x - 1][y + 1].material.type < thisType)
+		replaceCellBy(m_grid[x - 1][y + 1], x, y, cell);
 
-	else if (m_grid[row + 1][col - 1].material.type < thisType && !trespassing(col, GridBorder::Left))
-		replaceCellBy(m_grid[row + 1][col - 1], row, col, cell);
-
-	else if (m_grid[row + 1][col + 1].material.type < thisType && !trespassing(col, GridBorder::Right))
-		replaceCellBy(m_grid[row + 1][col + 1], row, col, cell);
+	else if (!trespassing(x, GridBorder::Right) && !trespassing(y, GridBorder::Bottom) && m_grid[x + 1][y + 1].material.type < thisType)
+		replaceCellBy(m_grid[x + 1][y + 1], x, y, cell);
 
 	return true;
 }
 
-bool Grid::processGas(Cell& cell, const int8_t& row, const int8_t& col)
+bool Grid::processGas(Cell& cell, const int8_t& x, const int8_t& y)
 {
 	const Materials::Type& thisType = cell.material.type;
 
 	if (thisType != Materials::Type::Gas)
 		return false;
 
-	if (trespassing(row, GridBorder::Upper))
-		return false;
+	if (!trespassing(y, GridBorder::Upper) && m_grid[x][y - 1].material.type < thisType)
+		replaceCellBy(m_grid[x][y - 1], x, y, cell);
 
-	if (m_grid[row - 1][col].material.type < thisType)
-		replaceCellBy(m_grid[row - 1][col], row, col, cell);
+	else if (!trespassing(x, GridBorder::Left) && m_grid[x - 1][y].material.type < thisType)
+		replaceCellBy(m_grid[x - 1][y], x, y, cell);
 
-	else if (m_grid[row][col - 1].material.type < thisType && !trespassing(col, GridBorder::Left))
-		replaceCellBy(m_grid[row][col - 1], row, col, cell);
+	else if (!trespassing(x, GridBorder::Right) && m_grid[x + 1][y].material.type < thisType)
+		replaceCellBy(m_grid[x + 1][y], x, y, cell);
 
-	else if (m_grid[row][col + 1].material.type < thisType && !trespassing(col, GridBorder::Right))
-		replaceCellBy(m_grid[row][col + 1], row, col, cell);
+	else if (!trespassing(y, GridBorder::Upper) && !trespassing(x, GridBorder::Left) && m_grid[x - 1][y - 1].material.type < thisType)
+		replaceCellBy(m_grid[x - 1][y - 1], x, y, cell);
 
-	else if (m_grid[row - 1][col - 1].material.type < thisType && !trespassing(col, GridBorder::Left))
-		replaceCellBy(m_grid[row - 1][col - 1], row, col, cell);
-
-	else if (m_grid[row - 1][col + 1].material.type < thisType && !trespassing(col, GridBorder::Right))
-		replaceCellBy(m_grid[row - 1][col + 1], row, col, cell);
+	else if (!trespassing(y, GridBorder::Upper) && !trespassing(x, GridBorder::Right) && m_grid[x + 1][y - 1].material.type < thisType)
+		replaceCellBy(m_grid[x + 1][y - 1], x, y, cell);
 
 	return true;
 }
 
-bool Grid::processAcidic(Cell& cell, const int8_t& row, const int8_t& col)
+bool Grid::processAcidic(Cell& cell, const int8_t& x, const int8_t& y)
 {
-	const Materials::Feature&	thisFeature = cell.material.feature;
+	const Materials::Feature& thisFeature = cell.material.feature;
 
 	if (thisFeature != Materials::Feature::Acidic)
 		return false;
@@ -244,58 +235,58 @@ bool Grid::processAcidic(Cell& cell, const int8_t& row, const int8_t& col)
 
 	if (thisType == Materials::Type::Powdery || thisType == Materials::Type::Liquid)
 	{
-		if (!trespassing(row, GridBorder::Bottom))
+		if (!trespassing(y, GridBorder::Bottom))
 		{
-			if (m_grid[row + 1][col].mId != cell.mId)
-				acted = clearCell(m_grid[row + 1][col]);
+			if (m_grid[x][y + 1].mId != cell.mId)
+				acted = clearCell(m_grid[x][y + 1]);
 		} else
-		if (!trespassing(col, GridBorder::Left) && !trespassing(row, GridBorder::Bottom))
+		if (!trespassing(x, GridBorder::Left) && !trespassing(y, GridBorder::Bottom))
 		{
-			if (m_grid[row + 1][col - 1].mId != cell.mId)
-				acted = clearCell(m_grid[row + 1][col - 1]);
+			if (m_grid[x - 1][y + 1].mId != cell.mId)
+				acted = clearCell(m_grid[x - 1][y + 1]);
 		} else
-		if (!trespassing(col, GridBorder::Right) && !trespassing(row, GridBorder::Bottom))
+		if (!trespassing(x, GridBorder::Right) && !trespassing(y, GridBorder::Bottom))
 		{
-			if (m_grid[row + 1][col + 1].mId != cell.mId)
-				acted = clearCell(m_grid[row + 1][col + 1]);
+			if (m_grid[x + 1][y + 1].mId != cell.mId)
+				acted = clearCell(m_grid[x + 1][y + 1]);
 		}
 	}
 
 	if (thisType == Materials::Type::Gas)
 	{
-		if (!trespassing(row, GridBorder::Upper))
-			if (m_grid[row - 1][col].mId != cell.mId)
-				acted = clearCell(m_grid[row - 1][col]);
+		if (!trespassing(y, GridBorder::Upper))
+			if (m_grid[x][y - 1].mId != cell.mId)
+				acted = clearCell(m_grid[x][y - 1]);
 
-		if (!trespassing(col, GridBorder::Left) && !trespassing(row, GridBorder::Upper))
-			if (m_grid[row - 1][col - 1].mId != cell.mId)
-				acted = clearCell(m_grid[row - 1][col - 1]);
+		if (!trespassing(x, GridBorder::Left) && !trespassing(y, GridBorder::Upper))
+			if (m_grid[x - 1][y - 1].mId != cell.mId)
+				acted = clearCell(m_grid[x - 1][y - 1]);
 
-		if (!trespassing(col, GridBorder::Right) && !trespassing(row, GridBorder::Upper))
-			if (m_grid[row - 1][col + 1].mId != cell.mId)
-				acted = clearCell(m_grid[row - 1][col + 1]);
+		if (!trespassing(x, GridBorder::Right) && !trespassing(y, GridBorder::Upper))
+			if (m_grid[x + 1][y - 1].mId != cell.mId)
+				acted = clearCell(m_grid[x + 1][y - 1]);
 	}
 
-	if (!trespassing(row, GridBorder::Upper) && !acted)
-		if (m_grid[row - 1][col].mId != cell.mId)
-			acted = clearCell(m_grid[row - 1][col]);
+	if (!trespassing(y, GridBorder::Upper) && !acted)
+		if (m_grid[x][y - 1].mId != cell.mId)
+			acted = clearCell(m_grid[x][y - 1]);
 
-	if (!trespassing(row, GridBorder::Bottom) && !acted)
-		if (m_grid[row + 1][col].mId != cell.mId)
-			acted = clearCell(m_grid[row + 1][col]);
+	if (!trespassing(y, GridBorder::Bottom) && !acted)
+		if (m_grid[x][y + 1].mId != cell.mId)
+			acted = clearCell(m_grid[x][y + 1]);
 
-	if (!trespassing(col, GridBorder::Left) && !acted)
-		if (m_grid[row][col - 1].mId != cell.mId)
-			acted = clearCell(m_grid[row][col - 1]);
+	if (!trespassing(x, GridBorder::Left) && !acted)
+		if (m_grid[x - 1][y].mId != cell.mId)
+			acted = clearCell(m_grid[x - 1][y]);
 
-	if (!trespassing(col, GridBorder::Right) && !acted)
-		if (m_grid[row][col + 1].mId != cell.mId)
-			acted = clearCell(m_grid[row][col + 1]);
+	if (!trespassing(x, GridBorder::Right) && !acted)
+		if (m_grid[x + 1][y].mId != cell.mId)
+			acted = clearCell(m_grid[x + 1][y]);
 		
 	return true;
 }
 
-bool Grid::processFlamable(Cell& cell, const int8_t& row, const int8_t& col)
+bool Grid::processFlamable(Cell& cell, const int8_t& x, const int8_t& y)
 {
 	const Materials::Feature&	thisFeature	= cell.material.feature;
 
@@ -307,9 +298,9 @@ bool Grid::processFlamable(Cell& cell, const int8_t& row, const int8_t& col)
 	return true;
 }
 
-bool Grid::processDiffusing(Cell& cell, const int8_t& row, const int8_t& col)
+bool Grid::processDiffusing(Cell& cell, const int8_t& x, const int8_t& y)
 {
-	const Materials::Feature&	thisFeature = cell.material.feature;
+	const Materials::Feature& thisFeature = cell.material.feature;
 
 	if (thisFeature != Materials::Feature::Diffusing)
 		return false;
@@ -318,21 +309,21 @@ bool Grid::processDiffusing(Cell& cell, const int8_t& row, const int8_t& col)
 
 	bool acted = false;
 
-	if (!trespassing(row, GridBorder::Upper) && !acted)
-		if (m_grid[row - 1][col].material.type == Materials::Type::Liquid && m_grid[row - 1][col].mId != cell.mId)
-			acted = spawnMaterial(col, row - 1, cell.mId);
+	if (!trespassing(y, GridBorder::Upper) && !acted)
+		if (m_grid[x][y - 1].material.type == Materials::Type::Liquid && m_grid[x][y - 1].mId != cell.mId)
+			acted = spawnMaterial(x, y - 1, cell.mId);
 
-	if (!trespassing(row, GridBorder::Bottom) && !acted)
-		if (m_grid[row + 1][col].material.type == Materials::Type::Liquid && m_grid[row + 1][col].mId != cell.mId)
-			acted = spawnMaterial(col, row + 1, cell.mId);
+	if (!trespassing(y, GridBorder::Bottom) && !acted)
+		if (m_grid[x][y + 1].material.type == Materials::Type::Liquid && m_grid[x][y + 1].mId != cell.mId)
+			acted = spawnMaterial(x, y + 1, cell.mId);
 
-	if (!trespassing(col, GridBorder::Left) && !acted)
-		if (m_grid[row][col - 1].material.type == Materials::Type::Liquid && m_grid[row][col - 1].mId != cell.mId)
-			acted = spawnMaterial(col - 1, row, cell.mId);
+	if (!trespassing(x, GridBorder::Left) && !acted)
+		if (m_grid[x - 1][y].material.type == Materials::Type::Liquid && m_grid[x - 1][y].mId != cell.mId)
+			acted = spawnMaterial(x - 1, y, cell.mId);
 
-	if (!trespassing(col, GridBorder::Right) && !acted)
-		if (m_grid[row][col + 1].material.type == Materials::Type::Liquid && m_grid[row][col + 1].mId != cell.mId)
-			acted = spawnMaterial(col + 1, row, cell.mId);
+	if (!trespassing(x, GridBorder::Right) && !acted)
+		if (m_grid[x + 1][y].material.type == Materials::Type::Liquid && m_grid[x + 1][y].mId != cell.mId)
+			acted = spawnMaterial(x + 1, y, cell.mId);
 
 	return true;
 }

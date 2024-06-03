@@ -22,24 +22,24 @@ int main(int argc, char* argv[])
 	
 	FileManager::Output fm = FileManager::readFile(Args::fileName(argv));
 	
-	uint8_t gridHeight = Config::Grid::height;
 	uint8_t gridWidth  = Config::Grid::width;
+	uint8_t gridHeight = Config::Grid::height;
 
 	std::unique_ptr<Grid> gridObj;
 
 	if (!fm.ok)
 	{
-		gridObj = std::make_unique<Grid>(gridHeight, gridWidth);
+		gridObj = std::make_unique<Grid>(gridWidth, gridHeight);
 		std::cerr << fm.description << "\n";
 	}
 	else
 	{
+		gridWidth = fm.cols;
 		gridHeight = fm.rows;
-		gridHeight = fm.cols;
-		gridObj = std::make_unique<Grid>(*(fm.gridPtr));
+		gridObj = std::make_unique<Grid>(*fm.gridPtr);
 	}
 
-	Grid* grid = gridObj.get();
+	Grid* const grid = gridObj.get();
 
 	GridViewer viewer(grid, gridWidth/2, gridHeight/2);
 
