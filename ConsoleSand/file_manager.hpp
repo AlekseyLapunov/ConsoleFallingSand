@@ -11,8 +11,8 @@ namespace FileManager
 	struct Output
 	{
 		bool ok = false;
-		int16_t cols = 0;
-		int16_t rows = 0;
+		uint8_t cols = 0;
+		uint8_t rows = 0;
 		std::string description = "";
 		Grid* gridPtr = nullptr;
 	};
@@ -104,8 +104,8 @@ namespace FileManager
 		if (!fs.is_open())
 			return { false, 0, 0, "Cannot open file " + fileName, nullptr };
 
-		int16_t cols = 0;
-		int16_t rows = 0;
+		uint8_t cols = 0;
+		uint8_t rows = 0;
 
 		fs.clear();
 		fs.seekg(0, std::ios::beg);
