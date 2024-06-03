@@ -13,42 +13,57 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\grid">
+      <UniqueIdentifier>{141005d1-2ad5-41b7-b9c9-bc1fbb460132}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\grid">
+      <UniqueIdentifier>{fe1e2599-f293-44e2-8632-7d6d8db0a47f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\common">
+      <UniqueIdentifier>{43af2e27-a2f5-4c0e-8364-db6e6f806972}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\helpers">
+      <UniqueIdentifier>{fe7ddd00-b831-43e0-9bd4-d0634c2158a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\helpers">
+      <UniqueIdentifier>{6b2473ea-fd09-463c-8679-648879301d23}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="helpers\input_manager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="grid\grid.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\grid</Filter>
     </ClCompile>
     <ClCompile Include="grid\grid_viewer.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\grid</Filter>
+    </ClCompile>
+    <ClCompile Include="helpers\input_manager.cpp">
+      <Filter>Source Files\helpers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="grid\grid.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\grid</Filter>
     </ClInclude>
     <ClInclude Include="grid\grid_viewer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="helpers\argument_parser.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="helpers\file_manager.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="helpers\input_manager.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\grid</Filter>
     </ClInclude>
     <ClInclude Include="common\config.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\common</Filter>
     </ClInclude>
     <ClInclude Include="common\materials.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\common</Filter>
+    </ClInclude>
+    <ClInclude Include="helpers\argument_parser.hpp">
+      <Filter>Header Files\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="helpers\file_manager.hpp">
+      <Filter>Header Files\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="helpers\input_manager.hpp">
+      <Filter>Header Files\helpers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
