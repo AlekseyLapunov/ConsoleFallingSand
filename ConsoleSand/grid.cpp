@@ -96,13 +96,13 @@ void Grid::process()
 			if (cell.hasMoved)
 				continue;
 
-			if		(processAcidic(cell, x, y));
-			else if (processFlamable(cell, x, y));
-			else if (processDiffusing(cell, x, y));
+			if (processAcidic(cell, x, y)) {}
+			else if (processFlamable(cell, x, y)) {}
+			else if (processDiffusing(cell, x, y)) {}
 
-			if		(processPowdery(cell, x, y));
-			else if (processLiquid(cell, x, y));
-			else if (processGas(cell, x, y));
+			if (processPowdery(cell, x, y)) {}
+			else if (processLiquid(cell, x, y)) {}
+			else if (processGas(cell, x, y)) {}
 		}
 
 	clearMoveState();
