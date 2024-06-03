@@ -10,10 +10,10 @@ public:
 
 	void moveCursor();
 	void cursorVisibility();
-	void materialChoice(Materials::Id& choice, Materials::Id minId, Materials::Id maxId);
-	bool spawnMaterial();
-	bool clearGrid();
-	bool endSimulation();
+	void materialChoice(Materials::Id& choice, Materials::Id minId, Materials::Id maxId) const;
+	bool spawnMaterial() const;
+	bool clearGrid() const;
+	bool endSimulation() const;
 
 private:
 	GridViewer::Cursor& m_cursor;

@@ -1,18 +1,36 @@
 #include "input_manager.hpp"
 
+#ifdef _WIN32
 #include <windows.h>
-
-#define KEY_DOWN(key) GetKeyState(key) & 0x8000
+#define KEY_DOWN(key) (GetKeyState(key) & 0x8000)
+#define ESCAPE VK_ESCAPE
+#else
+#include <ncurses.h>
+#define KEY_DOWN(key) (key == getch())
+#define ESCAPE ' '
+#endif
 
 InputManager::InputManager(GridViewer::Cursor& cursorPtr, uint8_t xBound, uint8_t yBound)
 	: m_cursor(cursorPtr)
 {
 	m_boundaries.x = xBound;
 	m_boundaries.y = yBound;
+
+#ifndef _WIN32
+	initscr();
+	cbreak();
+	noecho();
+	nodelay(stdscr, TRUE);
+	keypad(stdscr, TRUE);
+#endif
 }
 
 InputManager::~InputManager()
-{}
+{
+#ifndef _WIN32
+	closeInput();
+#endif
+}
 
 void InputManager::moveCursor()
 {
@@ -60,7 +78,7 @@ void InputManager::cursorVisibility()
 	}
 }
 
-void InputManager::materialChoice(Materials::Id& choice, Materials::Id minId, Materials::Id maxId)
+void InputManager::materialChoice(Materials::Id& choice, Materials::Id minId, Materials::Id maxId) const
 {
 	if (KEY_DOWN('Q'))
 	{
@@ -82,12 +100,12 @@ void InputManager::materialChoice(Materials::Id& choice, Materials::Id minId, Ma
 	}
 }
 
-bool InputManager::spawnMaterial()
+bool InputManager::spawnMaterial() const
 {
 	return KEY_DOWN(VK_SPACE);
 }
 
-bool InputManager::clearGrid()
+bool InputManager::clearGrid() const
 {
 	if (KEY_DOWN('C'))
 	{
@@ -97,11 +115,11 @@ bool InputManager::clearGrid()
 	return false;
 }
 
-bool InputManager::endSimulation()
+bool InputManager::endSimulation() const
 {
-	if (KEY_DOWN(VK_ESCAPE))
+	if (KEY_DOWN(ESCAPE))
 	{
-		while (KEY_DOWN(VK_ESCAPE));
+		while (KEY_DOWN(ESCAPE));
 		return true;
 	}
 	return false;
