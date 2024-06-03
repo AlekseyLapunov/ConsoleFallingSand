@@ -5,7 +5,7 @@
 class InputManager
 {
 public:
-	InputManager(GridViewer::Cursor& const cursorPtr, uint8_t xBound, uint8_t yBound);
+	InputManager(GridViewer::Cursor& cursorPtr, uint8_t xBound, uint8_t yBound);
 	~InputManager();
 
 	void moveCursor();

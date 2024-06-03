@@ -4,7 +4,7 @@
 
 #define KEY_DOWN(key) GetKeyState(key) & 0x8000
 
-InputManager::InputManager(GridViewer::Cursor& const cursorPtr, uint8_t xBound, uint8_t yBound)
+InputManager::InputManager(GridViewer::Cursor& cursorPtr, uint8_t xBound, uint8_t yBound)
 	: m_cursor(cursorPtr)
 {
 	m_boundaries.x = xBound;
