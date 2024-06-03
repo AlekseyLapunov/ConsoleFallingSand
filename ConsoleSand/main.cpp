@@ -43,7 +43,7 @@ int main(int argc, char* argv[])
 
 	GridViewer viewer(grid, gridWidth/2, gridHeight/2);
 
-	GridViewer::Cursor& const cursor = viewer.cursor();
+	GridViewer::Cursor& cursor = viewer.cursor();
 
 	InputManager inputManager(cursor, gridWidth, gridHeight);
 
