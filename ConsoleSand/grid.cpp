@@ -33,6 +33,20 @@ Grid::~Grid()
 	deallocate(m_grid, m_width);
 }
 
+Grid::Cell::Cell() : mId(Materials::Id::Air), material(Materials::materials.at(mId)), hasMoved(false) {}
+
+Grid::Cell::Cell(Materials::Id mId) : mId(mId), material(Materials::materials.at(mId)), hasMoved(false) {}
+
+Grid::Cell::Cell(const Cell& other) : mId(other.mId), material(other.material), hasMoved(other.hasMoved) {}
+
+Grid::Cell& Grid::Cell::operator= (const Grid::Cell& other)
+{
+	mId = other.mId;
+	material = other.material;
+	hasMoved = other.hasMoved;
+	return *this;
+}
+
 inline Grid::Cell** Grid::allocate(uint8_t width, uint8_t height)
 {
 	Cell** cells = new Cell*[width];

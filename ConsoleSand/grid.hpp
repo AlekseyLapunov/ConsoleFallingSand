@@ -23,19 +23,10 @@ public:
 		Materials::Material	material;
 		bool hasMoved = false;
 
-		Cell()
-			: mId(Materials::Id::Air), material(Materials::materials.at(mId)), hasMoved(false) {}
-		Cell(Materials::Id mId)
-			: mId(mId), material(Materials::materials.at(mId)), hasMoved(false) {}
-		Cell(const Cell& other)
-			: mId(other.mId), material(other.material), hasMoved(other.hasMoved) {}
-		Cell& operator= (const Cell& other)
-		{
-			mId = other.mId;
-			material = other.material;
-			hasMoved = other.hasMoved;
-			return *this;
-		}
+		Cell();
+		Cell(Materials::Id mId);
+		Cell(const Cell& other);
+		Cell& operator= (const Cell& other);
 	};
 
 	Cell** const cells() const;
