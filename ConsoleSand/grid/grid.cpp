@@ -199,17 +199,17 @@ bool Grid::processLiquid(Cell& cell, const int8_t& x, const int8_t& y)
 	if (!trespassing(y, GridBorder::Bottom) && m_grid[x][y + 1].material.type < thisType)
 		swapCells(m_grid[x][y + 1], cell);
 
-	else if (!trespassing(x, GridBorder::Left) && m_grid[x - 1][y].material.type < thisType)
-		swapCells(m_grid[x - 1][y], cell);
-
-	else if (!trespassing(x, GridBorder::Right) && m_grid[x + 1][y].material.type < thisType)
-		swapCells(m_grid[x + 1][y], cell);
-
 	else if (!trespassing(x, GridBorder::Left) && !trespassing(y, GridBorder::Bottom) && m_grid[x - 1][y + 1].material.type < thisType)
 		swapCells(m_grid[x - 1][y + 1], cell);
 
 	else if (!trespassing(x, GridBorder::Right) && !trespassing(y, GridBorder::Bottom) && m_grid[x + 1][y + 1].material.type < thisType)
 		swapCells(m_grid[x + 1][y + 1], cell);
+
+	else if (!trespassing(x, GridBorder::Left) && m_grid[x - 1][y].material.type < thisType)
+		swapCells(m_grid[x - 1][y], cell);
+
+	else if (!trespassing(x, GridBorder::Right) && m_grid[x + 1][y].material.type < thisType)
+		swapCells(m_grid[x + 1][y], cell);
 
 	return true;
 }
