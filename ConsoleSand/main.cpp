@@ -5,47 +5,19 @@
 
 #include "common/config.hpp"
 #include "common/materials.hpp"
-#include "helpers/argument_parser.hpp"
-#include "helpers/file_manager.hpp"
 #include "helpers/input_manager.hpp"
 #include "grid/grid.hpp"
 #include "grid/grid_viewer.hpp"
 
 int main(int argc, char* argv[])
 {
-	Args::Codes code = Args::check(argc, argv);
-	if (code != Args::Codes::Good)
-	{
-		std::cerr << Args::codeInfo(code) << "\n";
-		std::cerr << Args::help() << "\n";
-	}
-	
-	FileManager::Output fm = FileManager::readFile(Args::fileName(argv));
-	
-	uint8_t gridWidth  = Config::Grid::width;
-	uint8_t gridHeight = Config::Grid::height;
+	Grid grid(Config::Grid::width, Config::Grid::height);
 
-	std::unique_ptr<Grid> gridObj;
-
-	if (!fm.ok)
-	{
-		gridObj = std::make_unique<Grid>(gridWidth, gridHeight);
-		std::cerr << fm.description << "\n";
-	}
-	else
-	{
-		gridWidth = fm.cols;
-		gridHeight = fm.rows;
-		gridObj = std::make_unique<Grid>(*fm.gridPtr);
-	}
-
-	Grid* const grid = gridObj.get();
-
-	GridViewer viewer(grid, gridWidth/2, gridHeight/2);
+	GridViewer viewer(&grid, Config::Grid::width/2, Config::Grid::height/2);
 
 	GridViewer::Cursor& cursor = viewer.cursor();
 
-	InputManager inputManager(cursor, gridWidth, gridHeight);
+	InputManager inputManager(cursor, Config::Grid::width, Config::Grid::height);
 
 	viewer.hideCarriage();
 	viewer.displayControlsHint();
@@ -54,7 +26,7 @@ int main(int argc, char* argv[])
 
 	while (true)
 	{
-		grid->process();
+		grid.process();
 
 		viewer.display();
 		viewer.displayMaterialHint(currentMaterialId);
@@ -65,10 +37,10 @@ int main(int argc, char* argv[])
 			static_cast<Materials::Id>(Materials::materials.size() - 1));
 
 		if (inputManager.clearGrid())
-			grid->clearAll();
+			grid.clearAll();
 
 		if (inputManager.spawnMaterial())
-			grid->spawnMaterial(cursor.x, cursor.y, currentMaterialId);
+			grid.spawnMaterial(cursor.x, cursor.y, currentMaterialId);
 
 		if (inputManager.endSimulation())
 			break;

@@ -42,10 +42,10 @@ namespace Config
 		}
 	}
 
-	namespace Grid 
+	namespace Grid
 	{
-		static const uint8_t height	= 22;
-		static const uint8_t width	= 50;
+		static const uint8_t width = 50;
+		static const uint8_t height = 22;
 	}
 
 	static const uint16_t frequency = 60;

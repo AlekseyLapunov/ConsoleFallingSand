@@ -56,12 +56,6 @@
     <ClInclude Include="common\materials.hpp">
       <Filter>Header Files\common</Filter>
     </ClInclude>
-    <ClInclude Include="helpers\argument_parser.hpp">
-      <Filter>Header Files\helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="helpers\file_manager.hpp">
-      <Filter>Header Files\helpers</Filter>
-    </ClInclude>
     <ClInclude Include="helpers\input_manager.hpp">
       <Filter>Header Files\helpers</Filter>
     </ClInclude>

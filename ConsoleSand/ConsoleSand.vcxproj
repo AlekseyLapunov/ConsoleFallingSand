@@ -149,8 +149,6 @@
     <ClInclude Include="common\materials.hpp" />
     <ClInclude Include="grid\grid.hpp" />
     <ClInclude Include="grid\grid_viewer.hpp" />
-    <ClInclude Include="helpers\argument_parser.hpp" />
-    <ClInclude Include="helpers\file_manager.hpp" />
     <ClInclude Include="helpers\input_manager.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
