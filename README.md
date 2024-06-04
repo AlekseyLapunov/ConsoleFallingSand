@@ -4,12 +4,6 @@ My take on cellular automata: simple materials simulation in Console output.
 
 Using "windows.h" library (and "ncurses.h" for Linux) functions for getting keyboard input (more: [input_manager.hpp](https://github.com/AlekseyLapunov/ConsoleFallingSand/blob/main/ConsoleSand/helpers/input_manager.hpp) & [input_manager.cpp](https://github.com/AlekseyLapunov/ConsoleFallingSand/blob/main/ConsoleSand/helpers/input_manager.cpp)).
 
-Project can be built either via Visual Studio or using compilers such as MinGW:
-
-```
-cd ConsoleSand
-g++ *.cpp -o ./app.exe
-```
 Console Application controls:
 ```
 Move cursor: W A S D
