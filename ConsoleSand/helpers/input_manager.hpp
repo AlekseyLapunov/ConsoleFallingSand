@@ -5,7 +5,7 @@
 class InputManager
 {
 public:
-	InputManager(GridViewer::Cursor& cursorPtr, uint8_t xBound, uint8_t yBound);
+	InputManager(GridViewer::Cursor& cursorPtr, uint16_t xBound, uint16_t yBound);
 	~InputManager();
 
 	void moveCursor();
@@ -20,8 +20,8 @@ private:
 	
 	struct Boundaries
 	{
-		uint8_t x;
-		uint8_t y;
+		uint16_t x;
+		uint16_t y;
 	};
 
 	Boundaries m_boundaries;

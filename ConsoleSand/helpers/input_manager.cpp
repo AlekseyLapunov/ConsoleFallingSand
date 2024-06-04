@@ -12,7 +12,7 @@
 #define SPACE_KEY ' '
 #endif
 
-InputManager::InputManager(GridViewer::Cursor& cursorPtr, uint8_t xBound, uint8_t yBound)
+InputManager::InputManager(GridViewer::Cursor& cursorPtr, uint16_t xBound, uint16_t yBound)
 	: m_cursor(cursorPtr)
 {
 	m_boundaries.x = xBound;
@@ -45,30 +45,30 @@ void InputManager::moveCursor()
 	if (KEY_DOWN('A'))
 	{
 		if (m_cursor.x == 0)
-			m_cursor.x = m_boundaries.x - 1;
-		else
-			m_cursor.x -= 1;
+			return;
+
+		m_cursor.x -= 1;
 	}
 	if (KEY_DOWN('D'))
 	{
 		if (m_cursor.x == m_boundaries.x - 1)
-			m_cursor.x = 0;
-		else
-			m_cursor.x += 1;
+			return;
+		
+		m_cursor.x += 1;
 	}
 	if (KEY_DOWN('W'))
 	{
 		if (m_cursor.y == 0)
-			m_cursor.y = m_boundaries.y - 1;
-		else
-			m_cursor.y -= 1;
+			return;
+		
+		m_cursor.y -= 1;
 	}
 	if (KEY_DOWN('S'))
 	{
 		if (m_cursor.y == m_boundaries.y - 1)
-			m_cursor.y = 0;
-		else
-			m_cursor.y += 1;
+			return;
+		
+		m_cursor.y += 1;
 	}
 }
 
@@ -77,6 +77,8 @@ void InputManager::cursorVisibility()
 	if (KEY_DOWN('H'))
 	{
 		m_cursor.isHidden = !m_cursor.isHidden;
+
+		while (KEY_DOWN('H'));
 	}
 }
 

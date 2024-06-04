@@ -13,7 +13,7 @@ int main(int argc, char* argv[])
 {
 	Grid grid(Config::Grid::width, Config::Grid::height);
 
-	GridViewer viewer(&grid, Config::Grid::width/2, Config::Grid::height/2);
+	GridViewer viewer(&grid, Config::ViewPort::width, Config::ViewPort::height);
 
 	GridViewer::Cursor& cursor = viewer.cursor();
 

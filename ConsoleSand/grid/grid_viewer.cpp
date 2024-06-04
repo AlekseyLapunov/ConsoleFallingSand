@@ -3,14 +3,23 @@
 #include "../common/config.hpp"
 #include "grid_viewer.hpp"
 
-GridViewer::GridViewer(Grid* const gridPtr, uint8_t cursorPosX, uint8_t cursorPosY)
-	: m_cells(gridPtr->cells()), m_width(gridPtr->size().first), m_height(gridPtr->size().second)
+GridViewer::GridViewer(Grid* const gridPtr, uint8_t viewPortWidth, uint8_t viewPortHeight)
+	: m_cells(gridPtr->cells()), m_gridWidth(gridPtr->size().first), m_gridHeight(gridPtr->size().second)
 {
-	m_cursor = Cursor();
+	m_cursor = { static_cast<uint16_t>(viewPortWidth/2), static_cast<uint16_t>(m_gridHeight - viewPortHeight/2), Config::Signs::cursor, false};
+	m_viewPort = {viewPortWidth, viewPortHeight};
 
-	m_cursor.symbol = Config::Signs::cursor;
-	m_cursor.x = cursorPosX;
-	m_cursor.y = cursorPosY;
+	m_viewPort.corners[ViewPort::UpperLeft][ViewPort::X] = 0;
+	m_viewPort.corners[ViewPort::UpperLeft][ViewPort::Y] = m_gridHeight - static_cast<uint16_t>(viewPortHeight);
+
+	m_viewPort.corners[ViewPort::UpperRight][ViewPort::X] = m_viewPort.width - 1;
+	m_viewPort.corners[ViewPort::UpperRight][ViewPort::Y] = m_gridHeight - static_cast<uint16_t>(viewPortHeight);
+
+	m_viewPort.corners[ViewPort::BottomLeft][ViewPort::X] = 0;
+	m_viewPort.corners[ViewPort::BottomLeft][ViewPort::Y] = m_gridHeight - 1;
+
+	m_viewPort.corners[ViewPort::BottomRight][ViewPort::X] = m_viewPort.width - 1;
+	m_viewPort.corners[ViewPort::BottomRight][ViewPort::Y] = m_gridHeight - 1;
 }
 
 GridViewer::~GridViewer()
@@ -34,9 +43,9 @@ void GridViewer::display() const
 
 	std::cout << Config::Escape::Carriage::moveStart;
 
-	for (uint8_t y = 0; y < m_height; y++)
+	for (uint16_t y = m_viewPort.corners[ViewPort::UpperLeft][ViewPort::Y]; y <= m_viewPort.corners[ViewPort::BottomRight][ViewPort::Y]; y++)
 	{
-		for (uint8_t x = 0; x < m_width; x++)
+		for (uint16_t x = m_viewPort.corners[ViewPort::UpperLeft][ViewPort::X]; x <= m_viewPort.corners[ViewPort::BottomRight][ViewPort::X]; x++)
 		{
 			if ((!m_cursor.isHidden) && ((m_cursor.x == x) && (m_cursor.y == y)))
 			{

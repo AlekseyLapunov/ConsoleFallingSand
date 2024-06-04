@@ -1,6 +1,6 @@
 #include "grid.hpp"
 
-Grid::Grid(const uint8_t width, const uint8_t height)
+Grid::Grid(const uint16_t width, const uint16_t height)
 	: m_width(width), m_height(height)
 {	
 	m_grid = allocate(m_width, m_height);
@@ -47,18 +47,18 @@ Grid::Cell& Grid::Cell::operator= (const Grid::Cell& other)
 	return *this;
 }
 
-inline Grid::Cell** Grid::allocate(uint8_t width, uint8_t height)
+inline Grid::Cell** Grid::allocate(uint16_t width, uint16_t height)
 {
 	Cell** cells = new Cell*[width];
-	for (uint8_t i = 0; i < width; i++)
+	for (uint16_t i = 0; i < width; i++)
 		cells[i] = new Cell[height];
 
 	return cells;
 }
 
-inline void Grid::deallocate(Cell** cells, uint8_t width)
+inline void Grid::deallocate(Cell** cells, uint16_t width)
 {
-	for (uint8_t i = 0; i < width; i++)
+	for (uint16_t i = 0; i < width; i++)
 		delete[] cells[i];
 
 	delete[] cells;
@@ -68,12 +68,12 @@ inline void Grid::deallocate(Cell** cells, uint8_t width)
 
 inline void Grid::copyCells(Cell** const cells)
 {
-	for (uint8_t x = 0; x < m_width; x++)
-		for (uint8_t y = 0; y < m_height; y++)
+	for (uint16_t x = 0; x < m_width; x++)
+		for (uint16_t y = 0; y < m_height; y++)
 			m_grid[x][y] = cells[x][y];
 }
 
-std::pair<uint8_t, uint8_t> Grid::size() const
+std::pair<uint16_t, uint16_t> Grid::size() const
 {
 	return {m_width, m_height};
 }
@@ -85,8 +85,8 @@ Grid::Cell** const Grid::cells() const
 
 void Grid::process()
 {
-	for (int8_t x = m_width - 1; x >= 0; x--)
-		for (int8_t y = m_height - 1; y >= 0; y--)
+	for (int16_t x = m_width - 1; x >= 0; x--)
+		for (int16_t y = m_height - 1; y >= 0; y--)
 		{
 			Cell& cell = m_grid[x][y];
 
@@ -108,7 +108,7 @@ void Grid::process()
 	clearMoveState();
 }
 
-bool Grid::spawnMaterial(const uint8_t& x, const uint8_t& y, const Materials::Id& mId)
+bool Grid::spawnMaterial(const uint16_t& x, const uint16_t& y, const Materials::Id& mId)
 {
 	if (&m_grid[x][y] == nullptr)
 		return false;
@@ -120,8 +120,8 @@ bool Grid::spawnMaterial(const uint8_t& x, const uint8_t& y, const Materials::Id
 
 inline void Grid::clearAll()
 {
-	for (int8_t x = 0; x < m_width; x++)
-		for (int8_t y = 0; y < m_height; y++)
+	for (int16_t x = 0; x < m_width; x++)
+		for (int16_t y = 0; y < m_height; y++)
 			m_grid[x][y] = Cell();
 }
 
@@ -151,12 +151,12 @@ bool inline Grid::clearCell(Cell& cell)
 
 void inline Grid::clearMoveState()
 {
-	for (int8_t x = 0; x < m_width; x++)
-		for (int8_t y = 0; y < m_height; y++)
+	for (int16_t x = 0; x < m_width; x++)
+		for (int16_t y = 0; y < m_height; y++)
 			m_grid[x][y].hasMoved = false;
 }
 
-bool inline Grid::trespassing(const int8_t& val, const gridBorderSpecify& whatBorder) const
+bool inline Grid::trespassing(const int16_t& val, const gridBorderSpecify& whatBorder) const
 {
 	if (whatBorder == GridBorder::Left || whatBorder == GridBorder::Upper)
 		return ((val - 1) < 0);
@@ -170,7 +170,7 @@ bool inline Grid::trespassing(const int8_t& val, const gridBorderSpecify& whatBo
 	return false;
 }
 
-bool Grid::processPowdery(Cell& cell, const int8_t& x, const int8_t& y)
+bool Grid::processPowdery(Cell& cell, const int16_t& x, const int16_t& y)
 {
 	const Materials::Type& thisType = cell.material.type;
 
@@ -189,7 +189,7 @@ bool Grid::processPowdery(Cell& cell, const int8_t& x, const int8_t& y)
 	return true;
 }
 
-bool Grid::processLiquid(Cell& cell, const int8_t& x, const int8_t& y)
+bool Grid::processLiquid(Cell& cell, const int16_t& x, const int16_t& y)
 {
 	const Materials::Type& thisType = cell.material.type;
 
@@ -214,7 +214,7 @@ bool Grid::processLiquid(Cell& cell, const int8_t& x, const int8_t& y)
 	return true;
 }
 
-bool Grid::processGas(Cell& cell, const int8_t& x, const int8_t& y)
+bool Grid::processGas(Cell& cell, const int16_t& x, const int16_t& y)
 {
 	const Materials::Type& thisType = cell.material.type;
 
@@ -239,7 +239,7 @@ bool Grid::processGas(Cell& cell, const int8_t& x, const int8_t& y)
 	return true;
 }
 
-bool Grid::processAcidic(Cell& cell, const int8_t& x, const int8_t& y)
+bool Grid::processAcidic(Cell& cell, const int16_t& x, const int16_t& y)
 {
 	const Materials::Feature& thisFeature = cell.material.feature;
 
@@ -303,7 +303,7 @@ bool Grid::processAcidic(Cell& cell, const int8_t& x, const int8_t& y)
 	return true;
 }
 
-bool Grid::processFlamable(Cell& cell, const int8_t& x, const int8_t& y)
+bool Grid::processFlamable(Cell& cell, const int16_t& x, const int16_t& y)
 {
 	const Materials::Feature&	thisFeature	= cell.material.feature;
 
@@ -315,7 +315,7 @@ bool Grid::processFlamable(Cell& cell, const int8_t& x, const int8_t& y)
 	return true;
 }
 
-bool Grid::processDiffusing(Cell& cell, const int8_t& x, const int8_t& y)
+bool Grid::processDiffusing(Cell& cell, const int16_t& x, const int16_t& y)
 {
 	const Materials::Feature& thisFeature = cell.material.feature;
 
