@@ -34,42 +34,38 @@ InputManager::~InputManager()
 #endif
 }
 
-void InputManager::moveCursor()
+GridViewer::ViewPort::Move InputManager::move()
 {
-	if (m_cursor.x >= m_boundaries.x)
-		m_cursor.x = m_boundaries.x - 1;
-
-	if (m_cursor.y >= m_boundaries.y)
-		m_cursor.y = m_boundaries.y - 1;
-
 	if (KEY_DOWN('A'))
 	{
 		if (m_cursor.x == 0)
-			return;
+			return GridViewer::ViewPort::Move::None;
 
-		m_cursor.x -= 1;
-	}
+		return GridViewer::ViewPort::Move::Left;
+	} 
 	if (KEY_DOWN('D'))
 	{
 		if (m_cursor.x == m_boundaries.x - 1)
-			return;
+			return GridViewer::ViewPort::Move::None;
 		
-		m_cursor.x += 1;
-	}
+		return GridViewer::ViewPort::Move::Right;
+	} 
 	if (KEY_DOWN('W'))
 	{
 		if (m_cursor.y == 0)
-			return;
+			return GridViewer::ViewPort::Move::None;
 		
-		m_cursor.y -= 1;
-	}
+		return GridViewer::ViewPort::Move::Up;
+	} 
 	if (KEY_DOWN('S'))
 	{
 		if (m_cursor.y == m_boundaries.y - 1)
-			return;
-		
-		m_cursor.y += 1;
+			return GridViewer::ViewPort::Move::None;
+
+		return GridViewer::ViewPort::Move::Down;
 	}
+
+	return GridViewer::ViewPort::Move::None;
 }
 
 void InputManager::cursorVisibility()

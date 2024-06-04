@@ -30,8 +30,9 @@ int main(int argc, char* argv[])
 
 		viewer.display();
 		viewer.displayMaterialHint(currentMaterialId);
+		viewer.displayCursorCoords(cursor.x, cursor.y);
+		viewer.move(inputManager.move());
 
-		inputManager.moveCursor();
 		inputManager.cursorVisibility();
 		inputManager.materialChoice(currentMaterialId, Materials::Id::Air,
 			static_cast<Materials::Id>(Materials::materials.size() - 1));

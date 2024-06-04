@@ -36,6 +36,87 @@ void GridViewer::showCarriage() const
 	std::cout << Config::Escape::Carriage::show;
 }
 
+void GridViewer::move(ViewPort::Move direction)
+{
+	switch (direction)
+	{
+		case ViewPort::Move::Up:
+		{
+			if (m_viewPort.corners[ViewPort::UpperLeft][ViewPort::Y] != 0 ||
+				m_viewPort.corners[ViewPort::UpperRight][ViewPort::Y] != 0)
+			{
+				if (m_cursor.centeredAtY(m_viewPort))
+					m_viewPort.shift(0, -1);
+			}
+
+			if (m_cursor.y != 0)
+				m_cursor.y--;
+
+			break;
+		}
+		case ViewPort::Move::Right:
+		{
+			if (m_viewPort.corners[ViewPort::BottomRight][ViewPort::X] != (m_gridWidth - 1) ||
+				m_viewPort.corners[ViewPort::UpperRight][ViewPort::X] != (m_gridWidth - 1))
+			{
+				if (m_cursor.centeredAtX(m_viewPort))
+					m_viewPort.shift(1, 0);
+			}
+
+			if (m_cursor.x != (m_gridWidth - 1))
+				m_cursor.x++;
+
+			break;
+		}
+		case ViewPort::Move::Down:
+		{
+			if (m_viewPort.corners[ViewPort::BottomLeft][ViewPort::Y] != (m_gridHeight - 1) ||
+				m_viewPort.corners[ViewPort::BottomRight][ViewPort::Y] != (m_gridHeight - 1))
+			{
+				if (m_cursor.centeredAtY(m_viewPort))
+					m_viewPort.shift(0, 1);
+			}
+
+			if (m_cursor.y != (m_gridHeight - 1))
+				m_cursor.y++;
+
+			break;
+		}
+		case ViewPort::Move::Left:
+		{
+			if (m_viewPort.corners[ViewPort::UpperLeft][ViewPort::X] != 0 ||
+				m_viewPort.corners[ViewPort::BottomLeft][ViewPort::X] != 0)
+			{
+				if (m_cursor.centeredAtX(m_viewPort))
+					m_viewPort.shift(-1, 0);
+			}
+
+			if (m_cursor.x != 0)
+				m_cursor.x--;
+
+			break;
+		}
+		case ViewPort::Move::None:
+		default:
+			break;
+	};
+}
+
+void GridViewer::ViewPort::shift(int8_t offsetX, int8_t offsetY)
+{
+	corners[ViewPort::UpperLeft][ViewPort::X] += offsetX;
+	corners[ViewPort::UpperLeft][ViewPort::Y] += offsetY;
+
+	corners[ViewPort::UpperRight][ViewPort::X] += offsetX;
+	corners[ViewPort::UpperRight][ViewPort::Y] += offsetY;
+
+	corners[ViewPort::BottomLeft][ViewPort::X] += offsetX;
+	corners[ViewPort::BottomLeft][ViewPort::Y] += offsetY;
+
+	corners[ViewPort::BottomRight][ViewPort::X] += offsetX;
+	corners[ViewPort::BottomRight][ViewPort::Y] += offsetY;
+}
+
 void GridViewer::display() const
 {
 	if (m_cells == nullptr)
@@ -64,7 +145,9 @@ void GridViewer::display() const
 
 void GridViewer::displayControlsHint() const
 {
-	display();
+	for (uint8_t i = 0; i <= m_viewPort.height; i++)
+		std::cout << "\n";
+
 	std::cout << "\n" << Config::Escape::Formatting::underline
 		<< "Move cursor"
 		<< Config::Escape::Formatting::standart << ": W A S D";
@@ -101,8 +184,18 @@ void GridViewer::displayMaterialHint(Materials::Id materialId) const
 		<< (materialId == Materials::Id::Air ? ""			 : material.color)
 		<< (materialId == Materials::Id::Air ? "Air (clear)" : material.displayName)
 		<< "                "
-		<< Config::Escape::Formatting::standart;
+		<< Config::Escape::Formatting::standart
+		<< "\n";
 		
+}
+
+void GridViewer::displayCursorCoords(uint16_t x, uint16_t y)
+{
+	std::cout << Config::Escape::Formatting::underline
+		<< "Cursor Position"
+		<< Config::Escape::Formatting::standart
+		<< ": "
+		<< x << ", " << y << "                 ";
 }
 
 GridViewer::Cursor& GridViewer::cursor()
@@ -110,3 +203,13 @@ GridViewer::Cursor& GridViewer::cursor()
 	return m_cursor;
 }
 
+inline bool GridViewer::Cursor::centeredAtX(const GridViewer::ViewPort& viewPort) const
+{
+	return (x == (viewPort.corners[ViewPort::BottomLeft][ViewPort::X] + viewPort.width / 2));
+}
+
+inline bool GridViewer::Cursor::centeredAtY(const GridViewer::ViewPort& viewPort) const
+{
+
+	return (y == (viewPort.corners[ViewPort::UpperLeft][ViewPort::Y] + viewPort.height / 2));
+}

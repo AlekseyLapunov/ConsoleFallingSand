@@ -45,7 +45,7 @@ namespace Config
 	namespace Grid
 	{
 		static const uint16_t width = 128;
-		static const uint16_t height = 256;
+		static const uint16_t height = 128;
 	}
 
 	namespace ViewPort

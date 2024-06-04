@@ -8,20 +8,6 @@ public:
 	GridViewer(Grid* const gridPtr, uint8_t viewPortWidth, uint8_t viewPortHeight);
 	~GridViewer();
 
-	void display() const;
-	void displayControlsHint() const;
-	void displayMaterialHint(Materials::Id materialId) const;
-	void hideCarriage() const;
-	void showCarriage() const;
-
-	struct Cursor
-	{
-		uint16_t x;
-		uint16_t y;
-		char symbol;
-		bool isHidden = false;
-	};
-
 	struct ViewPort
 	{
 		uint8_t width;
@@ -35,7 +21,29 @@ public:
 
 		enum Corners { UpperLeft, UpperRight, BottomLeft, BottomRight };
 		enum Coords  { X, Y };
+		enum class Move { None, Up, Right, Down, Left };
+
+		void shift(int8_t offsetX, int8_t offsetY);
 	};
+
+	struct Cursor
+	{
+		uint16_t x;
+		uint16_t y;
+		char symbol;
+		bool isHidden = false;
+
+		inline bool centeredAtX(const GridViewer::ViewPort& viewPort) const;
+		inline bool centeredAtY(const GridViewer::ViewPort& viewPort) const;
+	};
+
+	void display() const;
+	void displayControlsHint() const;
+	void displayMaterialHint(Materials::Id materialId) const;
+	void displayCursorCoords(uint16_t x, uint16_t y);
+	void hideCarriage() const;
+	void showCarriage() const;
+	void move(ViewPort::Move direction);
 
 	Cursor& cursor();
 
