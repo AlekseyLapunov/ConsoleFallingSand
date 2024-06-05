@@ -21,11 +21,11 @@ namespace Config
 			static const char yellowBright[]	= "\033[93m";
 			static const char blueBright[]		= "\033[94m";
 			static const char blackBright[]		= "\033[90m";
-			static const char white[]			= "\033[97m";
-			static const char black[]			= "\033[30m";
-			static const char green[]			= "\033[92m";
+			static const char white[]		= "\033[97m";
+			static const char black[]		= "\033[30m";
+			static const char green[]		= "\033[92m";
 			static const char greenDark[]		= "\033[32m";
-			static const char magenta[]			= "\033[35m";
+			static const char magenta[]		= "\033[35m";
 		}
 
 		namespace Formatting
@@ -36,8 +36,8 @@ namespace Config
 
 		namespace Carriage
 		{
-			static const char hide[]		= "\033[?25l";
-			static const char show[]		= "\033[?25h";
+			static const char hide[]	= "\033[?25l";
+			static const char show[]	= "\033[?25h";
 			static const char moveStart[]	= "\033[0;0H";
 		}
 	}
