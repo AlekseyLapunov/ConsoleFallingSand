@@ -22,22 +22,20 @@ namespace Materials
 
 	static const std::unordered_map<Id, Material> materials
 	{
-	  {Id::Air,		{Config::Signs::air,	Config::Escape::Colors::black,			"Air",		Type::Void,		Feature::None}},
+	  {Id::Air,	{Config::Signs::air,	Config::Escape::Colors::black,		"Air",		Type::Void,	Feature::None}},
 	  {Id::Sand,	{Config::Signs::sand,	Config::Escape::Colors::yellowBright,	"Sand",		Type::Powdery,	Feature::None}},
-	  {Id::Water,	{Config::Signs::water,	Config::Escape::Colors::blueBright,		"Water",	Type::Liquid,	Feature::None}},
+	  {Id::Water,	{Config::Signs::water,	Config::Escape::Colors::blueBright,	"Water",	Type::Liquid,	Feature::None}},
 	  {Id::Stone,	{Config::Signs::stone,	Config::Escape::Colors::blackBright,	"Stone",	Type::Solid,	Feature::None}},
-	  {Id::Gas,		{Config::Signs::gas,	Config::Escape::Colors::green,			"Gas",		Type::Gas,		Feature::Flamable}},
-	  {Id::Poison,	{Config::Signs::poison,	Config::Escape::Colors::magenta,		"Poison",	Type::Liquid,	Feature::Diffusing}},
-	  {Id::Acid,	{Config::Signs::acid,	Config::Escape::Colors::greenDark,		"Acid",		Type::Liquid,	Feature::Acidic}}
+	  {Id::Gas,	{Config::Signs::gas,	Config::Escape::Colors::green,		"Gas",		Type::Gas,	Feature::Flamable}},
+	  {Id::Poison,	{Config::Signs::poison,	Config::Escape::Colors::magenta,	"Poison",	Type::Liquid,	Feature::Diffusing}},
+	  {Id::Acid,	{Config::Signs::acid,	Config::Escape::Colors::greenDark,	"Acid",		Type::Liquid,	Feature::Acidic}}
 	};
 
 	static const Id matIdBySign(char sign)
 	{
 		for (auto& material : materials)
-		{
 			if (sign == material.second.symbol)
 				return material.first;
-		}
 
 		return Id::Air;
 	}
