@@ -2,14 +2,8 @@
 
 My take on cellular automata: simple materials simulation in Console output.
 
-Using "windows.h" library (and "ncurses.h" for Linux) functions for getting keyboard input (more: [input_manager.hpp](https://github.com/AlekseyLapunov/ConsoleFallingSand/blob/main/ConsoleSand/input_manager.hpp) & [input_manager.cpp](https://github.com/AlekseyLapunov/ConsoleFallingSand/blob/main/ConsoleSand/input_manager.cpp)).
+Using "windows.h" library (and "ncurses.h" for Linux) functions for getting keyboard input (more: [input_manager.hpp](https://github.com/AlekseyLapunov/ConsoleFallingSand/blob/main/ConsoleSand/helpers/input_manager.hpp) & [input_manager.cpp](https://github.com/AlekseyLapunov/ConsoleFallingSand/blob/main/ConsoleSand/helpers/input_manager.cpp)).
 
-Project can be built either via Visual Studio or using compilers such as MinGW:
-
-```
-cd ConsoleSand
-g++ *.cpp -o ./app.exe
-```
 Console Application controls:
 ```
 Move cursor: W A S D
@@ -26,9 +20,9 @@ Quick Demo GIF:
 Output Terminal Settings (Windows):
 ```
 Type: Developer PowerShell
-Size at launch (characters): 120 x 30 (Columns x Rows)
+Size at launch (characters, Columns x Rows): 120 x 30
 Color scheme: Campbell
-Font size: 12 (in points)
+Font size (points): 12
 Font face: Cascadia Mono / Consolas
 Line height: 1.2
 Cursor shape: Bar "|"
