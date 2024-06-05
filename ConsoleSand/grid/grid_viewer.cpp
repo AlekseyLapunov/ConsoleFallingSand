@@ -181,7 +181,7 @@ void GridViewer::displayMaterialHint(Materials::Id materialId) const
 		<< "Current Material"
 		<< Config::Escape::Formatting::standart
 		<< ": "
-		<< (materialId == Materials::Id::Air ? ""			 : material.color)
+		<< (materialId == Materials::Id::Air ? "" : material.color)
 		<< (materialId == Materials::Id::Air ? "Air (clear)" : material.displayName)
 		<< "                "
 		<< Config::Escape::Formatting::standart
