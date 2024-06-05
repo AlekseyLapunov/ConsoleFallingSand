@@ -17,7 +17,7 @@ public:
 		static const uint8_t numCoords = 2;
 
 		uint16_t corners[numCorners][numCoords] = { {0, 0}, {0, 0},
-													{0, 0}, {0, 0} };
+							   {0, 0}, {0, 0} };
 
 		enum Corners { UpperLeft, UpperRight, BottomLeft, BottomRight };
 		enum Coords  { X, Y };
