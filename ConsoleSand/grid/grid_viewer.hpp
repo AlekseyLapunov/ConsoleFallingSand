@@ -41,13 +41,15 @@ public:
 	void displayControlsHint() const;
 	void displayMaterialHint(Materials::Id materialId) const;
 	void displayCursorCoords(uint16_t x, uint16_t y);
-	void hideCarriage() const;
-	void showCarriage() const;
+	void start() const;
 	void move(ViewPort::Move direction);
 
 	Cursor& cursor();
 
 private:
+	void hideCarriage() const;
+	void showCarriage() const;
+
 	Grid::Cell** const m_cells;
 	const uint16_t m_gridWidth;
 	const uint16_t m_gridHeight;

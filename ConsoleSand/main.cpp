@@ -19,10 +19,9 @@ int main(int argc, char* argv[])
 
 	InputManager inputManager(cursor, Config::Grid::width, Config::Grid::height);
 
-	viewer.hideCarriage();
-	viewer.displayControlsHint();
-
 	Materials::Id currentMaterialId = Materials::Id::Air;
+
+	viewer.start();
 
 	while (true)
 	{
@@ -52,8 +51,6 @@ int main(int argc, char* argv[])
 			)
 		);
 	}
-
-	viewer.showCarriage();
 
 	return 0;
 }

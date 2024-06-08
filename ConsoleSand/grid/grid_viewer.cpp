@@ -24,6 +24,7 @@ GridViewer::GridViewer(Grid* const gridPtr, uint8_t viewPortWidth, uint8_t viewP
 
 GridViewer::~GridViewer()
 {
+	showCarriage();
 }
 
 void GridViewer::hideCarriage() const
@@ -34,6 +35,12 @@ void GridViewer::hideCarriage() const
 void GridViewer::showCarriage() const
 {
 	std::cout << Config::Escape::Carriage::show;
+}
+
+void GridViewer::start() const
+{
+	hideCarriage();
+	displayControlsHint();
 }
 
 void GridViewer::move(ViewPort::Move direction)
