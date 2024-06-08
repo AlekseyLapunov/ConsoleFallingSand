@@ -38,7 +38,6 @@ public:
 	};
 
 	void display() const;
-	void displayControlsHint() const;
 	void displayMaterialHint(Materials::Id materialId) const;
 	void displayCursorCoords(uint16_t x, uint16_t y);
 	void start() const;
@@ -49,7 +48,10 @@ public:
 private:
 	void hideCarriage() const;
 	void showCarriage() const;
+	void displayControlsHint() const;
+	void controlHint(const std::string& description, const std::string& hotkeys, bool printEndline = true) const;
 
+private:
 	Grid::Cell** const m_cells;
 	const uint16_t m_gridWidth;
 	const uint16_t m_gridHeight;

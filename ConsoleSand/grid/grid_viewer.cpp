@@ -152,32 +152,26 @@ void GridViewer::display() const
 
 void GridViewer::displayControlsHint() const
 {
-	for (uint8_t i = 0; i <= m_viewPort.height; i++)
+	for (uint8_t i = 0; i <= m_viewPort.height + 1; i++)
 		std::cout << "\n";
 
-	std::cout << "\n" << Config::Escape::Formatting::underline
-		<< "Move cursor"
-		<< Config::Escape::Formatting::standart << ": W A S D";
+	controlHint("Move cursor", "W A S D");
+	controlHint("Toggle cursor visibility", "H");
+	controlHint("Material choice", "Q E");
+	controlHint("Material placement", "Space");
+	controlHint("Clear All", "C");
+	controlHint("End simulation", "Escape", false);
+}
 
-	std::cout << "\n"
-		<< Config::Escape::Formatting::underline << "Toggle cursor visibility"
-		<< Config::Escape::Formatting::standart << ": H";
+void GridViewer::controlHint(const std::string& description, const std::string& hotkeys, bool printEndline) const
+{
+	std::string extended = ": " + hotkeys;
 
-	std::cout << "\n"
-		<< Config::Escape::Formatting::underline << "Material choice"
-		<< Config::Escape::Formatting::standart << ": Q E";
-
-	std::cout << "\n"
-		<< Config::Escape::Formatting::underline << "Material placement"
-		<< Config::Escape::Formatting::standart << ": Space";
-
-	std::cout << "\n"
-		<< Config::Escape::Formatting::underline << "Clear All"
-		<< Config::Escape::Formatting::standart << ": C";
-
-	std::cout << "\n"
-		<< Config::Escape::Formatting::underline << "End simulation"
-		<< Config::Escape::Formatting::standart << ": Escape";
+	std::cout << Config::Escape::Formatting::underline
+		<< description
+		<< Config::Escape::Formatting::standart
+		<< extended
+		<< (printEndline ? "\n" : "");
 }
 
 void GridViewer::displayMaterialHint(Materials::Id materialId) const
