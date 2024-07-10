@@ -2,62 +2,65 @@
 
 namespace Config 
 {
-	namespace Signs
-	{
-		static const char cursor	= '+';
-		static const char air		= ' ';
-		static const char sand		= 'S';
-		static const char water		= 'W';
-		static const char stone		= 'T';
-		static const char gas		= 'G';
-		static const char poison	= 'P';
-		static const char acid		= 'A';
-	}
+    using symbol    = const char;
+    using sequence  = const char[];
 
-	namespace Escape
-	{
-		namespace Colors
-		{
-			static const char yellowBright[]	= "\033[93m";
-			static const char blueBright[]		= "\033[94m";
-			static const char blackBright[]		= "\033[90m";
-			static const char white[]		= "\033[97m";
-			static const char black[]		= "\033[30m";
-			static const char green[]		= "\033[92m";
-			static const char greenDark[]		= "\033[32m";
-			static const char magenta[]		= "\033[35m";
-		}
+    namespace Signs
+    {
+        static symbol cursor    = '+';
+        static symbol air       = ' ';
+        static symbol sand      = 'S';
+        static symbol water     = 'W';
+        static symbol stone     = 'T';
+        static symbol gas       = 'G';
+        static symbol poison    = 'P';
+        static symbol acid      = 'A';
+    }
 
-		namespace Formatting
-		{
-			static const char standart[]	= "\033[0m";
-			static const char underline[]	= "\033[4m";
-		}
+    namespace Escape
+    {
+        namespace Colors
+        {
+            static sequence yellowBright    = "\033[93m";
+            static sequence blueBright      = "\033[94m";
+            static sequence blackBright     = "\033[90m";
+            static sequence white           = "\033[97m";
+            static sequence black           = "\033[30m";
+            static sequence green           = "\033[92m";
+            static sequence greenDark       = "\033[32m";
+            static sequence magenta         = "\033[35m";
+        }
 
-		namespace Carriage
-		{
-			static const char hide[]	= "\033[?25l";
-			static const char show[]	= "\033[?25h";
-			static const char moveStart[]	= "\033[0;0H";
-		}
-	}
+        namespace Formatting
+        {
+            static sequence standart    = "\033[0m";
+            static sequence underline   = "\033[4m";
+        }
 
-	namespace Grid
-	{
-		static const uint16_t width = 128;
-		static const uint16_t height = 128;
-	}
+        namespace Carriage
+        {
+            static sequence hide        = "\033[?25l";
+            static sequence show        = "\033[?25h";
+            static sequence moveStart   = "\033[0;0H";
+        }
+    }
 
-	namespace ViewPort
-	{
-		static const uint8_t width = 50;
-		static const uint8_t height = 22;
-	}
+    namespace Grid
+    {
+        static const uint16_t width     = 128;
+        static const uint16_t height    = 128;
+    }
 
-	static const uint16_t frequency = 60;
+    namespace ViewPort
+    {
+        static const uint8_t width  = 50;
+        static const uint8_t height = 22;
+    }
 
-	static constexpr uint16_t refreshMilliseconds(const uint16_t& frequency) 
-	{
-		return static_cast<uint16_t>(1000.f / frequency);
-	}
+    static const uint16_t frequency = 60;
+
+    static constexpr uint16_t refreshMilliseconds(const uint16_t& frequency) 
+    {
+        return static_cast<uint16_t>(1000.f / frequency);
+    }
 }
