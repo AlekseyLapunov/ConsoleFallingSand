@@ -57,7 +57,7 @@ namespace Config
         static const uint8_t height = 22;
     }
 
-    static const uint16_t frequency = 60;
+    static const uint16_t frequency = 25;
 
     static constexpr uint16_t refreshMilliseconds(const uint16_t& frequency) 
     {
