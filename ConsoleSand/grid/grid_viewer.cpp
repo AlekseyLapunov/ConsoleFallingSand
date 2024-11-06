@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 
 #include "../common/config.hpp"
 #include "grid_viewer.hpp"
@@ -129,25 +130,27 @@ void GridViewer::display() const
 	if (m_cells == nullptr)
 		return;
 
-	std::cout << Config::Escape::Carriage::moveStart;
-
+	std::stringstream buffer;
 	for (uint16_t y = m_viewPort.corners[ViewPort::UpperLeft][ViewPort::Y]; y <= m_viewPort.corners[ViewPort::BottomRight][ViewPort::Y]; y++)
 	{
 		for (uint16_t x = m_viewPort.corners[ViewPort::UpperLeft][ViewPort::X]; x <= m_viewPort.corners[ViewPort::BottomRight][ViewPort::X]; x++)
 		{
 			if ((!m_cursor.isHidden) && ((m_cursor.x == x) && (m_cursor.y == y)))
 			{
-				std::cout << m_cursor.symbol;
+				buffer << m_cursor.symbol;
 				continue;
 			}
 
-			std::cout << m_cells[x][y].material.color.c_str();
-			std::cout << m_cells[x][y].material.symbol;
-			std::cout << Config::Escape::Formatting::standart;
+			buffer << m_cells[x][y].material.color.c_str();
+			buffer << m_cells[x][y].material.symbol;
+			buffer << Config::Escape::Formatting::standart;
 		}
 
-		std::cout << '\n';
+		buffer << '\n';
 	}
+
+	std::cout << Config::Escape::Carriage::moveStart;
+	std::cout << buffer.str();
 }
 
 void GridViewer::displayControlsHint() const
